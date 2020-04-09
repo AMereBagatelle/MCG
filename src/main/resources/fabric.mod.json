@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "simplecoordinates",
+  "version": "${version}",
+  "name": "Simplecoordinates",
+  "description": "A mod to list all your coordinates, and that has simple saving of coordinates, so that you don't have to remember them!",
+  "authors": [
+    "AMereBagatelle"
+  ],
+  "contact": {
+    "homepage": "amerebagatelle.github.io",
+    "sources": "https://github.com/AMereBagatelle/SimpleCoordinates.git"
+  },
+  "license": "CC0-1.0",
+  "icon": "assets/simplecoordinates/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "amerebagatelle.github.io.simplecoordinates.SimpleCoordinates"
+    ]
+  },
+  "mixins": [
+    "simplecoordinates.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.8.2+build.194",
+    "fabric": "*",
+    "minecraft": "1.15.2"
+  }
+}
