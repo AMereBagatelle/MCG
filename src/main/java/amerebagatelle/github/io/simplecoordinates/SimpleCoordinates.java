@@ -8,6 +8,6 @@ import net.fabricmc.api.EnvType;
 public class SimpleCoordinates implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
-
+        
     }
 }
