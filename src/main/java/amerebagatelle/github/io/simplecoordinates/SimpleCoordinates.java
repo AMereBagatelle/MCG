@@ -4,10 +4,16 @@ import amerebagatelle.github.io.simplecoordinates.coordinates.CoordinatesManager
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.Environment;
 import net.fabricmc.api.EnvType;
+import net.fabricmc.fabric.api.client.keybinding.FabricKeyBinding;
+import net.fabricmc.fabric.api.client.keybinding.KeyBindingRegistry;
+import net.fabricmc.fabric.api.event.client.ClientTickCallback;
+import net.minecraft.client.util.InputUtil;
+import net.minecraft.util.Identifier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.lwjgl.glfw.GLFW;
 
-import java.io.IOException;
+import java.security.Key;
 
 @Environment(EnvType.CLIENT)
 public class SimpleCoordinates implements ClientModInitializer {
@@ -18,11 +24,7 @@ public class SimpleCoordinates implements ClientModInitializer {
         logger.info("Gathering your coordinates...");
 
         CoordinatesManager.initCoordinates();
-        try {
-            CoordinatesManager.writeToCoordinates("Mesa", 1, 3, 10);
-            System.out.println(CoordinatesManager.loadCoordinates().toString());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        KeybindHandler.initKeybinds();
+        KeybindHandler.registerKeybindActions();
     }
 }

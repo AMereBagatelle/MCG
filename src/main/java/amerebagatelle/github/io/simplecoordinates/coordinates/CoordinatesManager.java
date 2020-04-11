@@ -1,6 +1,7 @@
 package amerebagatelle.github.io.simplecoordinates.coordinates;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -11,13 +12,14 @@ import java.util.*;
 
 public class CoordinatesManager {
     private static final File coordinatesFile = new File("coordinates.json");
+    private static final Logger logger = LogManager.getLogger();
 
     public static void initCoordinates() {
         if(!coordinatesFile.exists()) {
             try {
                 coordinatesFile.createNewFile();
             } catch (IOException e) {
-                System.out.println("");
+                logger.error("Could not create coordinates file, can I write?");
             }
         }
     }
@@ -53,7 +55,7 @@ public class CoordinatesManager {
     public static void writeToCoordinates(String coordinateKey, int x, int y, int z) throws IOException {
         JSONObject coordinatesJSON = new ObjectMapper().readValue(coordinatesFile, JSONObject.class);
 
-        Map m = new LinkedHashMap(3);
+        Map<String, Integer> m = new LinkedHashMap<String, Integer>(3);
         m.put("x", x);
         m.put("y", y);
         m.put("z", z);
