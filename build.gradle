@@ -18,7 +18,17 @@ dependencies {
     mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
     modCompile "net.fabricmc:fabric-loader:${project.loader_version}"
 
+    // Additional mod imports
     modCompile "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+
+    // Non-mod imports
+    compile 'com.googlecode.json-simple:json-simple:1.1.1'
+    include 'com.googlecode.json-simple:json-simple:1.1.1'
+
+    compile 'com.fasterxml.jackson.core:jackson-core:2.6.3'
+    compile 'com.fasterxml.jackson.core:jackson-annotations:2.6.3'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.6.3'
+    compile 'org.projectlombok:lombok:1.16.6'
 }
 
 processResources {
