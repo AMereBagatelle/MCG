@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "simplecoordinates",
   "version": "${version}",
-  "name": "Simplecoordinates",
+  "name": "SimpleCoordinates",
   "description": "A mod to list all your coordinates, and that has simple saving of coordinates, so that you don't have to remember them!",
   "authors": [
     "AMereBagatelle"
@@ -17,6 +17,10 @@
   "entrypoints": {
     "client": [
       "amerebagatelle.github.io.simplecoordinates.SimpleCoordinates"
+    ],
+    "cotton-client-commands": [
+      "amerebagatelle.github.io.simplecoordinates.commands.WriteCoordinateCommand",
+      "amerebagatelle.github.io.simplecoordinates.commands.RemoveCoordinateCommand"
     ]
   },
   "mixins": [
@@ -25,6 +29,7 @@
   "depends": {
     "fabricloader": ">=0.8.2+build.194",
     "fabric": "*",
-    "minecraft": "1.15.2"
+    "minecraft": "1.15.2",
+    "cotton-client-commands": "^1.0.0"
   }
 }

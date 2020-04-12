@@ -67,4 +67,13 @@ public class CoordinatesManager {
         writer.flush();
         writer.close();
     }
+
+    public static void removeCoordinate(String coordinateKey) throws IOException {
+        JSONObject coordinatesJSON = new ObjectMapper().readValue(coordinatesFile, JSONObject.class);
+        coordinatesJSON.remove(coordinateKey);
+        BufferedWriter writer = new BufferedWriter(new PrintWriter(coordinatesFile));
+        writer.write(coordinatesJSON.toJSONString());
+        writer.flush();
+        writer.close();
+    }
 }

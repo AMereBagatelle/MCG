@@ -1,3 +1,6 @@
 {
-
+  "return.simplecoordinates.coordinatewritesuccess": "Coordinates written to file successfully.",
+  "return.simplecoordinates.coordinatewritefail": "Coordinates could not be written.",
+  "return.simplecoordinates.coordinateremovesuccess": "Coordinates removed.",
+  "return.simplecoordinates.coordinateremovefail": "Coordinates could not be removed."
 }

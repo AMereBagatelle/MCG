@@ -10,6 +10,13 @@ archivesBaseName = project.archives_base_name
 version = project.mod_version
 group = project.maven_group
 
+repositories {
+    maven {
+        name = 'CottonMC'
+        url = 'https://server.bbkr.space:443/artifactory/libs-release'
+    }
+}
+
 minecraft {
 }
 
@@ -20,6 +27,9 @@ dependencies {
 
     // Additional mod imports
     modCompile "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+
+    modImplementation "io.github.cottonmc:cotton-client-commands:${project.cotton_client_command_version}"
+    include "io.github.cottonmc:cotton-client-commands:${project.cotton_client_command_version}"
 
     // Non-mod imports
     compile 'com.googlecode.json-simple:json-simple:1.1.1'
