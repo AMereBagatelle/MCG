@@ -14,6 +14,7 @@ import org.apache.logging.log4j.Logger;
 import org.lwjgl.glfw.GLFW;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class KeybindHandler {
     private static FabricKeyBinding coordinatesMenu;
@@ -36,7 +37,12 @@ public class KeybindHandler {
         ClientTickCallback.EVENT.register(keypress -> {
             if(coordinatesMenu.isPressed() && !coordinatesMenuWasPressed) {
                 try {
-                    CoordinatesManager.loadCoordinates().forEach(coordinate -> keypress.inGameHud.addChatMessage(MessageType.SYSTEM, new LiteralText(coordinate.toString())));
+                    ArrayList<ArrayList<String>> coordinates = CoordinatesManager.loadCoordinates();
+                    if(!coordinates.isEmpty()) {
+                        coordinates.forEach(coordinate -> keypress.inGameHud.addChatMessage(MessageType.SYSTEM, new LiteralText(coordinate.toString())));
+                    } else {
+                        keypress.inGameHud.addChatMessage(MessageType.SYSTEM, new LiteralText("No coordinates to display."));
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
