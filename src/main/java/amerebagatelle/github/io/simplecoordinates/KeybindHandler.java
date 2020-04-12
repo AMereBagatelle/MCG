@@ -36,9 +36,7 @@ public class KeybindHandler {
         ClientTickCallback.EVENT.register(keypress -> {
             if(coordinatesMenu.isPressed() && !coordinatesMenuWasPressed) {
                 try {
-                    CoordinatesManager.loadCoordinates().forEach(coordinate -> {
-                       keypress.inGameHud.addChatMessage(MessageType.SYSTEM, new LiteralText(coordinate.toString()));
-                    });
+                    CoordinatesManager.loadCoordinates().forEach(coordinate -> keypress.inGameHud.addChatMessage(MessageType.SYSTEM, new LiteralText(coordinate.toString())));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
