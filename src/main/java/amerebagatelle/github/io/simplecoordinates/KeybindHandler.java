@@ -1,9 +1,11 @@
 package amerebagatelle.github.io.simplecoordinates;
 
 import amerebagatelle.github.io.simplecoordinates.coordinates.CoordinatesManager;
+import amerebagatelle.github.io.simplecoordinates.gui.screen.CoordinatesScreen;
 import net.fabricmc.fabric.api.client.keybinding.FabricKeyBinding;
 import net.fabricmc.fabric.api.client.keybinding.KeyBindingRegistry;
 import net.fabricmc.fabric.api.event.client.ClientTickCallback;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.network.MessageType;
 import net.minecraft.text.LiteralText;
@@ -36,16 +38,8 @@ public class KeybindHandler {
     public static void registerKeybindActions() {
         ClientTickCallback.EVENT.register(keypress -> {
             if(coordinatesMenu.isPressed() && !coordinatesMenuWasPressed) {
-                try {
-                    ArrayList<ArrayList<String>> coordinates = CoordinatesManager.loadCoordinates();
-                    if(!coordinates.isEmpty()) {
-                        coordinates.forEach(coordinate -> keypress.inGameHud.addChatMessage(MessageType.SYSTEM, new LiteralText(coordinate.toString())));
-                    } else {
-                        keypress.inGameHud.addChatMessage(MessageType.SYSTEM, new LiteralText("No coordinates to display."));
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                MinecraftClient mc = MinecraftClient.getInstance();
+                mc.openScreen(new CoordinatesScreen(mc));
             }
             coordinatesMenuWasPressed = coordinatesMenu.isPressed();
         });
