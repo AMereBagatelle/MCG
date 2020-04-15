@@ -26,14 +26,15 @@ public class WriteCoordinateCommand implements ClientCommandPlugin {
                     then(argument("x", integer()).
                         then(argument("y", integer()).
                             then(argument("z", integer()).
-                                executes(WriteCoordinateCommand::run)))));
+                                    then(argument("details", string())).
+                                        executes(WriteCoordinateCommand::run)))));
         commandDispatcher.register(writecoordinates);
     }
 
     private static int run(CommandContext<CottonClientCommandSource> ctx) {
         MinecraftClient mc = MinecraftClient.getInstance();
         try {
-            CoordinatesManager.writeToCoordinates(StringArgumentType.getString(ctx, "name"), IntegerArgumentType.getInteger(ctx, "x"), IntegerArgumentType.getInteger(ctx, "y"), IntegerArgumentType.getInteger(ctx, "z"));
+            CoordinatesManager.writeToCoordinates(StringArgumentType.getString(ctx, "name"), IntegerArgumentType.getInteger(ctx, "x"), IntegerArgumentType.getInteger(ctx, "y"), IntegerArgumentType.getInteger(ctx, "z"), StringArgumentType.getString(ctx, "details"));
             mc.inGameHud.addChatMessage(MessageType.SYSTEM, new TranslatableText("return.simplecoordinates.coordinatewritesuccess"));
             return 1;
         } catch (IOException e) {

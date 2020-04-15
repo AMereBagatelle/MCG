@@ -34,13 +34,13 @@ public class CoordinatesManager {
              coordinateKeys.forEach(key -> {
                  Map coordinate = (Map)coordinateJson.get(key);
                  Iterator<Map.Entry> coordinateItr = coordinate.entrySet().iterator();
-                 ArrayList<String> xyz = new ArrayList<>();
-                 xyz.add(key);
+                 ArrayList<String> xyzd = new ArrayList<>();
+                 xyzd.add(key);
                  while(coordinateItr.hasNext()) {
                      Map.Entry pair = coordinateItr.next();
-                     xyz.add(pair.getValue().toString());
+                     xyzd.add(pair.getValue().toString());
                  }
-                 coordinateList.add(xyz);
+                 coordinateList.add(xyzd);
              });
 
              return coordinateList;
@@ -52,13 +52,15 @@ public class CoordinatesManager {
      }
     }
 
-    public static void writeToCoordinates(String coordinateKey, int x, int y, int z) throws IOException {
+    public static void writeToCoordinates(String coordinateKey, int x, int y, int z, String details) throws IOException {
         JSONObject coordinatesJSON = new ObjectMapper().readValue(coordinatesFile, JSONObject.class);
 
-        Map<String, Integer> m = new LinkedHashMap<String, Integer>(3);
-        m.put("x", x);
-        m.put("y", y);
-        m.put("z", z);
+        Map<String, String> m = new LinkedHashMap<String, String>(4);
+        m.put("x", Integer.toString(x));
+        m.put("y", Integer.toString(y));
+        m.put("z", Integer.toString(z));
+        m.put("details", details);
+
 
         coordinatesJSON.put(coordinateKey, m);
 
