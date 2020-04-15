@@ -62,9 +62,13 @@ public class CoordinatesWidget extends ElementListWidget<CoordinatesWidget.Entry
         @Override
         public boolean mouseClicked(double mouseX, double mouseY, int button) {
             this.gui.select(this);
-            CoordinatesWidget.this.ensureVisible(this);
             System.out.println("Test");
-            return true;
+            return false;
+        }
+
+        @Override
+        public boolean mouseReleased(double mouseX, double mouseY, int button) {
+            return false;
         }
     }
 

@@ -4,6 +4,7 @@ import amerebagatelle.github.io.simplecoordinates.SimpleCoordinates;
 import amerebagatelle.github.io.simplecoordinates.coordinates.CoordinatesManager;
 import amerebagatelle.github.io.simplecoordinates.gui.widget.CoordinatesWidget;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.Element;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.text.Text;
@@ -11,6 +12,7 @@ import net.minecraft.text.TranslatableText;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class CoordinatesScreen extends Screen {
     private MinecraftClient client;
@@ -31,6 +33,7 @@ public class CoordinatesScreen extends Screen {
         } catch (IOException e) {
             SimpleCoordinates.logger.error(I18n.translate("return.simplecoordinates.coordinateloadfail"));
         }
+        this.children.add(coordinatesWidget);
     }
 
     @Override
@@ -53,6 +56,5 @@ public class CoordinatesScreen extends Screen {
 
     public void select(CoordinatesWidget.Entry entry) {
         this.coordinatesWidget.setSelected(entry);
-
     }
 }
