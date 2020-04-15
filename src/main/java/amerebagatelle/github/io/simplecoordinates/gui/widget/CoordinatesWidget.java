@@ -15,21 +15,30 @@ import java.util.List;
 
 public class CoordinatesWidget extends ElementListWidget<CoordinatesWidget.Entry> {
     private ArrayList<ArrayList<String>> coordinatesList;
+    private CoordinatesScreen gui;
 
     public CoordinatesWidget(CoordinatesScreen gui, MinecraftClient client, ArrayList<ArrayList<String>> coordinateList) {
         super(client, gui.width, gui.height/2, 40, gui.height, 20);
+        this.gui = gui;
         this.coordinatesList = coordinateList;
         coordinatesList.forEach(coordinate -> {
-            this.addEntry(new CoordinatesWidget.CoordinateListEntry(coordinate.get(0), coordinate.get(1), coordinate.get(2), coordinate.get(3)));
+            this.addEntry(new CoordinatesWidget.CoordinateListEntry(gui, coordinate.get(0), coordinate.get(1), coordinate.get(2), coordinate.get(3)));
         });
+    }
+
+    public void setSelected(CoordinatesWidget.Entry entry) {
+        super.setSelected(entry);
+        this.ensureVisible(entry);
     }
 
     public class CoordinateListEntry extends CoordinatesWidget.Entry {
         public String name;
         public String x, y, z;
+        private CoordinatesScreen gui;
 
-        public CoordinateListEntry(final String name, final String x, final String y, final String z) {
+        public CoordinateListEntry(CoordinatesScreen gui, final String name, final String x, final String y, final String z) {
             this.name = name;
+            this.gui = gui;
             this.x = x;
             this.y = y;
             this.z = z;
@@ -48,6 +57,14 @@ public class CoordinatesWidget extends ElementListWidget<CoordinatesWidget.Entry
         @Override
         public List<? extends Element> children() {
             return null;
+        }
+
+        @Override
+        public boolean mouseClicked(double mouseX, double mouseY, int button) {
+            this.gui.select(this);
+            CoordinatesWidget.this.ensureVisible(this);
+            System.out.println("Test");
+            return true;
         }
     }
 

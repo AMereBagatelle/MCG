@@ -45,4 +45,14 @@ public class CoordinatesScreen extends Screen {
     public boolean shouldCloseOnEsc() {
         return true;
     }
+
+    @Override
+    public boolean isPauseScreen() {
+        return false;
+    }
+
+    public void select(CoordinatesWidget.Entry entry) {
+        this.coordinatesWidget.setSelected(entry);
+
+    }
 }
