@@ -17,6 +17,7 @@ import java.util.List;
 public class CoordinatesScreen extends Screen {
     private MinecraftClient client;
     public CoordinatesWidget coordinatesWidget;
+    public CoordinatesWidget.Entry selectedEntry;
 
     public CoordinatesScreen(MinecraftClient client) {
         super(new TranslatableText("coordinates.title"));
@@ -56,5 +57,6 @@ public class CoordinatesScreen extends Screen {
 
     public void select(CoordinatesWidget.Entry entry) {
         this.coordinatesWidget.setSelected(entry);
+        selectedEntry = entry;
     }
 }

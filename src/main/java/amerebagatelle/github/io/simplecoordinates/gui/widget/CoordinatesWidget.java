@@ -6,14 +6,14 @@ import amerebagatelle.github.io.simplecoordinates.gui.screen.CoordinatesScreen;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.Element;
-import net.minecraft.client.gui.screen.options.ControlsListWidget;
+import net.minecraft.client.gui.widget.AlwaysSelectedEntryListWidget;
 import net.minecraft.client.gui.widget.ElementListWidget;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CoordinatesWidget extends ElementListWidget<CoordinatesWidget.Entry> {
+public class CoordinatesWidget extends AlwaysSelectedEntryListWidget<CoordinatesWidget.Entry> {
     private ArrayList<ArrayList<String>> coordinatesList;
     private CoordinatesScreen gui;
 
@@ -21,6 +21,7 @@ public class CoordinatesWidget extends ElementListWidget<CoordinatesWidget.Entry
         super(client, gui.width, gui.height/2, 40, gui.height, 20);
         this.gui = gui;
         this.coordinatesList = coordinateList;
+        this.setRenderSelection(true);
         coordinatesList.forEach(coordinate -> {
             this.addEntry(new CoordinatesWidget.CoordinateListEntry(gui, coordinate.get(0), coordinate.get(1), coordinate.get(2), coordinate.get(3)));
         });
@@ -48,10 +49,13 @@ public class CoordinatesWidget extends ElementListWidget<CoordinatesWidget.Entry
         public void render(int index, int y, int x, int width, int height, int mouseX, int mouseY, boolean hovering, float delta) {
             TextRenderer textRenderer = CoordinatesWidget.this.minecraft.textRenderer;
             int color = 16777215;
-            textRenderer.draw(this.name, x, y, color);
-            textRenderer.draw(this.x, x+50, y, color);
-            textRenderer.draw(this.y, x+100, y, color);
-            textRenderer.draw(this.z, x+150, y, color);
+            int drawY = y+CoordinatesWidget.this.itemHeight/2-textRenderer.fontHeight+3;
+            int rowWidth = CoordinatesWidget.this.getRowWidth();
+            int drawX = x;
+            textRenderer.draw(name, x, drawY, color);
+            CoordinatesWidget.this.drawCenteredString(textRenderer, this.x, x+rowWidth/5*2, drawY, color);
+            CoordinatesWidget.this.drawCenteredString(textRenderer, this.y, x+rowWidth/5*3, drawY, color);
+            CoordinatesWidget.this.drawCenteredString(textRenderer, this.z, x+rowWidth/5*4, drawY, color);
         }
 
         @Override
@@ -62,7 +66,6 @@ public class CoordinatesWidget extends ElementListWidget<CoordinatesWidget.Entry
         @Override
         public boolean mouseClicked(double mouseX, double mouseY, int button) {
             this.gui.select(this);
-            System.out.println("Test");
             return false;
         }
 
