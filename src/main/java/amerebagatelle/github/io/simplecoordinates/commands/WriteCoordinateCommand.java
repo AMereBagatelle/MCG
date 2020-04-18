@@ -27,14 +27,27 @@ public class WriteCoordinateCommand implements ClientCommandPlugin {
                         then(argument("y", integer()).
                             then(argument("z", integer()).
                                 then(argument("details", string()).
-                                    executes(WriteCoordinateCommand::run))))));
+                                    executes(WriteCoordinateCommand::runDetails)).
+                                executes(WriteCoordinateCommand::run)))));
         commandDispatcher.register(writecoordinates);
+    }
+
+    private static int runDetails(CommandContext<CottonClientCommandSource> ctx) {
+        MinecraftClient mc = MinecraftClient.getInstance();
+        try {
+            CoordinatesManager.writeToCoordinates(StringArgumentType.getString(ctx, "name"), IntegerArgumentType.getInteger(ctx, "x"), IntegerArgumentType.getInteger(ctx, "y"), IntegerArgumentType.getInteger(ctx, "z"), StringArgumentType.getString(ctx, "details"));
+            mc.inGameHud.addChatMessage(MessageType.SYSTEM, new TranslatableText("return.simplecoordinates.coordinatewritesuccess"));
+            return 1;
+        } catch (IOException e) {
+            mc.inGameHud.addChatMessage(MessageType.SYSTEM, new TranslatableText("return.simplecoordinates.coordinatewritefail"));
+            return 0;
+        }
     }
 
     private static int run(CommandContext<CottonClientCommandSource> ctx) {
         MinecraftClient mc = MinecraftClient.getInstance();
         try {
-            CoordinatesManager.writeToCoordinates(StringArgumentType.getString(ctx, "name"), IntegerArgumentType.getInteger(ctx, "x"), IntegerArgumentType.getInteger(ctx, "y"), IntegerArgumentType.getInteger(ctx, "z"), StringArgumentType.getString(ctx, "details"));
+            CoordinatesManager.writeToCoordinates(StringArgumentType.getString(ctx, "name"), IntegerArgumentType.getInteger(ctx, "x"), IntegerArgumentType.getInteger(ctx, "y"), IntegerArgumentType.getInteger(ctx, "z"), "");
             mc.inGameHud.addChatMessage(MessageType.SYSTEM, new TranslatableText("return.simplecoordinates.coordinatewritesuccess"));
             return 1;
         } catch (IOException e) {
