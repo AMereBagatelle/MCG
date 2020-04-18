@@ -9,5 +9,10 @@
   "screen.writecoordinate.title": "New Coordinate",
   "button.simplecoordinates.writecoordinate": "Write New",
   "button.simplecoordinates.removecoordinate": "Remove",
-  "button.simplecoordinates.refresh": "Refresh"
+  "button.simplecoordinates.refresh": "Refresh",
+  "writecoordinate.enterName": "Name",
+  "writecoordinate.enterX": "X",
+  "writecoordinate.enterY": "Y",
+  "writecoordinate.enterZ": "Z",
+  "writecoordinate.enterDetails": "Details"
 }

@@ -35,7 +35,7 @@ public class CoordinatesScreen extends Screen {
         super.init();
         ArrayList<ArrayList<String>> coordinatesList;
         this.buttonWrite = this.addButton(new ButtonWidget(this.width-200, this.height - 100, 100, 20, I18n.translate("button.simplecoordinates.writecoordinate"), buttonWidget -> {
-
+            client.openScreen(new CreateCoordinateScreen(client, this));
         }));
         this.buttonDelete = this.addButton(new ButtonWidget(this.width-200, this.height - 75, 100, 20, I18n.translate("button.simplecoordinates.removecoordinate"), buttonWidget -> {
             try {
