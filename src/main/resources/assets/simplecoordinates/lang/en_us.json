@@ -5,7 +5,8 @@
   "return.simplecoordinates.coordinateremovefail": "Coordinates could not be removed.",
   "return.simplecoordinates.coordinateloadsuccess": "Coordinates were loaded successfully.",
   "return.simplecoordinates.coordinateloadfail": "Coordinates could not be loaded.",
-  "coordinates.title": "Coordinates List",
+  "screen.coordinates.title": "Coordinates List",
+  "screen.writecoordinate.title": "New Coordinate",
   "button.simplecoordinates.writecoordinate": "Write New",
   "button.simplecoordinates.removecoordinate": "Remove",
   "button.simplecoordinates.refresh": "Refresh"

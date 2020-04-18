@@ -25,7 +25,7 @@ public class CoordinatesScreen extends Screen {
     private ButtonWidget buttonDelete;
 
     public CoordinatesScreen(MinecraftClient client) {
-        super(new TranslatableText("coordinates.title"));
+        super(new TranslatableText("screen.coordinates.title"));
         this.client = client;
         this.textRenderer = client.textRenderer;
     }
