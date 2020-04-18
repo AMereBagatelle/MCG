@@ -6,6 +6,7 @@ import amerebagatelle.github.io.simplecoordinates.gui.widget.CoordinatesWidget;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.text.TranslatableText;
 
@@ -13,11 +14,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class CoordinatesScreen extends Screen {
-    private MinecraftClient client;
+    private final MinecraftClient client;
     public CoordinatesWidget coordinatesWidget;
     public ArrayList<String> selectedCoordinates;
-    private TextRenderer textRenderer;
+    private final TextRenderer textRenderer;
     private final int textColor = 16777215;
+
+    private ButtonWidget buttonWrite;
+    private ButtonWidget buttonRefresh;
+    private ButtonWidget buttonDelete;
 
     public CoordinatesScreen(MinecraftClient client) {
         super(new TranslatableText("coordinates.title"));
@@ -29,6 +34,20 @@ public class CoordinatesScreen extends Screen {
     public void init() {
         super.init();
         ArrayList<ArrayList<String>> coordinatesList;
+        this.buttonWrite = this.addButton(new ButtonWidget(this.width-200, this.height - 100, 100, 20, I18n.translate("button.simplecoordinates.writecoordinate"), buttonWidget -> {
+
+        }));
+        this.buttonDelete = this.addButton(new ButtonWidget(this.width-200, this.height - 75, 100, 20, I18n.translate("button.simplecoordinates.removecoordinate"), buttonWidget -> {
+            try {
+                CoordinatesManager.removeCoordinate(selectedCoordinates.get(0));
+                this.refresh();
+                this.selectedCoordinates = null;
+            } catch (IOException e) {
+                SimpleCoordinates.logger.error("Could not remove coordinate");
+            }
+        }));
+        this.buttonRefresh = this.addButton(new ButtonWidget(this.width-200, this.height - 50, 100, 20, I18n.translate("button.simplecoordinates.refresh"), buttonWidget -> this.refresh()));
+        this.updateButtonStates();
         try {
             coordinatesList = CoordinatesManager.loadCoordinates();
             coordinatesWidget = new CoordinatesWidget(this, client, coordinatesList);
@@ -75,5 +94,14 @@ public class CoordinatesScreen extends Screen {
     public void select(CoordinatesWidget.Entry entry, ArrayList<String> selectedCoordinates) {
         this.coordinatesWidget.setSelected(entry);
         this.selectedCoordinates = selectedCoordinates;
+        this.updateButtonStates();
+    }
+
+    public void refresh() {
+        client.openScreen(this);
+    }
+
+    public void updateButtonStates() {
+        this.buttonDelete.active = selectedCoordinates != null;
     }
 }

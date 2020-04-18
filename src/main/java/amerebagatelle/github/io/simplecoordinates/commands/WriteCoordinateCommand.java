@@ -9,13 +9,14 @@ import com.mojang.brigadier.context.CommandContext;
 import io.github.cottonmc.clientcommands.ClientCommandPlugin;
 import io.github.cottonmc.clientcommands.CottonClientCommandSource;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.command.arguments.BlockPosArgumentType;
 import net.minecraft.network.MessageType;
 import net.minecraft.text.TranslatableText;
+import net.minecraft.util.math.BlockPos;
 
 import java.io.IOException;
 
 import static io.github.cottonmc.clientcommands.ArgumentBuilders.*;
-import static com.mojang.brigadier.arguments.IntegerArgumentType.integer;
 import static com.mojang.brigadier.arguments.StringArgumentType.string;
 
 public class WriteCoordinateCommand implements ClientCommandPlugin {
@@ -23,19 +24,17 @@ public class WriteCoordinateCommand implements ClientCommandPlugin {
     public void registerCommands(CommandDispatcher<CottonClientCommandSource> commandDispatcher) {
         LiteralArgumentBuilder<CottonClientCommandSource> writecoordinates = literal("writecoordinate").
                 then(argument("name", string()).
-                    then(argument("x", integer()).
-                        then(argument("y", integer()).
-                            then(argument("z", integer()).
-                                then(argument("details", string()).
-                                    executes(WriteCoordinateCommand::runDetails)).
-                                executes(WriteCoordinateCommand::run)))));
+                    then(argument("details", string()).
+                        executes(WriteCoordinateCommand::runDetails)).
+                    executes(WriteCoordinateCommand::run));
         commandDispatcher.register(writecoordinates);
     }
 
     private static int runDetails(CommandContext<CottonClientCommandSource> ctx) {
         MinecraftClient mc = MinecraftClient.getInstance();
+        BlockPos coordinate = mc.player.getBlockPos();
         try {
-            CoordinatesManager.writeToCoordinates(StringArgumentType.getString(ctx, "name"), IntegerArgumentType.getInteger(ctx, "x"), IntegerArgumentType.getInteger(ctx, "y"), IntegerArgumentType.getInteger(ctx, "z"), StringArgumentType.getString(ctx, "details"));
+            CoordinatesManager.writeToCoordinates(StringArgumentType.getString(ctx, "name"), coordinate.getX(), coordinate.getY(), coordinate.getZ(), StringArgumentType.getString(ctx, "details"));
             mc.inGameHud.addChatMessage(MessageType.SYSTEM, new TranslatableText("return.simplecoordinates.coordinatewritesuccess"));
             return 1;
         } catch (IOException e) {
@@ -46,8 +45,9 @@ public class WriteCoordinateCommand implements ClientCommandPlugin {
 
     private static int run(CommandContext<CottonClientCommandSource> ctx) {
         MinecraftClient mc = MinecraftClient.getInstance();
+        BlockPos coordinate = mc.player.getBlockPos();
         try {
-            CoordinatesManager.writeToCoordinates(StringArgumentType.getString(ctx, "name"), IntegerArgumentType.getInteger(ctx, "x"), IntegerArgumentType.getInteger(ctx, "y"), IntegerArgumentType.getInteger(ctx, "z"), "");
+            CoordinatesManager.writeToCoordinates(StringArgumentType.getString(ctx, "name"), coordinate.getX(), coordinate.getY(), coordinate.getZ(), "");
             mc.inGameHud.addChatMessage(MessageType.SYSTEM, new TranslatableText("return.simplecoordinates.coordinatewritesuccess"));
             return 1;
         } catch (IOException e) {
