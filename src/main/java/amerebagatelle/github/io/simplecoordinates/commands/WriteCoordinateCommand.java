@@ -26,8 +26,8 @@ public class WriteCoordinateCommand implements ClientCommandPlugin {
                     then(argument("x", integer()).
                         then(argument("y", integer()).
                             then(argument("z", integer()).
-                                    then(argument("details", string())).
-                                        executes(WriteCoordinateCommand::run)))));
+                                then(argument("details", string()).
+                                    executes(WriteCoordinateCommand::run))))));
         commandDispatcher.register(writecoordinates);
     }
 

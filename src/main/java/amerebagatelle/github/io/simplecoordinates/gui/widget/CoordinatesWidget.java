@@ -18,13 +18,11 @@ public class CoordinatesWidget extends AlwaysSelectedEntryListWidget<Coordinates
     private CoordinatesScreen gui;
 
     public CoordinatesWidget(CoordinatesScreen gui, MinecraftClient client, ArrayList<ArrayList<String>> coordinateList) {
-        super(client, gui.width, gui.height/2, 40, gui.height, 20);
+        super(client, gui.width, gui.height/5*4, 40, gui.height, 20);
         this.gui = gui;
         this.coordinatesList = coordinateList;
         this.setRenderSelection(true);
-        coordinatesList.forEach(coordinate -> {
-            this.addEntry(new CoordinatesWidget.CoordinateListEntry(gui, coordinate.get(0), coordinate.get(1), coordinate.get(2), coordinate.get(3)));
-        });
+        coordinatesList.forEach(coordinate -> this.addEntry(new CoordinateListEntry(gui, coordinate)));
     }
 
     public void setSelected(CoordinatesWidget.Entry entry) {
@@ -36,13 +34,15 @@ public class CoordinatesWidget extends AlwaysSelectedEntryListWidget<Coordinates
         public String name;
         public String x, y, z;
         private CoordinatesScreen gui;
+        private ArrayList<String> coordinateList;
 
-        public CoordinateListEntry(CoordinatesScreen gui, final String name, final String x, final String y, final String z) {
-            this.name = name;
+        public CoordinateListEntry(CoordinatesScreen gui, ArrayList<String> coordinateList) {
             this.gui = gui;
-            this.x = x;
-            this.y = y;
-            this.z = z;
+            this.name = coordinateList.get(0);
+            this.x = coordinateList.get(1);
+            this.y = coordinateList.get(2);
+            this.z = coordinateList.get(3);
+            this.coordinateList = coordinateList;
         }
 
         @Override
@@ -51,7 +51,6 @@ public class CoordinatesWidget extends AlwaysSelectedEntryListWidget<Coordinates
             int color = 16777215;
             int drawY = y+CoordinatesWidget.this.itemHeight/2-textRenderer.fontHeight+3;
             int rowWidth = CoordinatesWidget.this.getRowWidth();
-            int drawX = x;
             textRenderer.draw(name, x, drawY, color);
             CoordinatesWidget.this.drawCenteredString(textRenderer, this.x, x+rowWidth/5*2, drawY, color);
             CoordinatesWidget.this.drawCenteredString(textRenderer, this.y, x+rowWidth/5*3, drawY, color);
@@ -59,13 +58,8 @@ public class CoordinatesWidget extends AlwaysSelectedEntryListWidget<Coordinates
         }
 
         @Override
-        public List<? extends Element> children() {
-            return null;
-        }
-
-        @Override
         public boolean mouseClicked(double mouseX, double mouseY, int button) {
-            this.gui.select(this);
+            this.gui.select(this, this.coordinateList);
             return false;
         }
 
@@ -75,7 +69,7 @@ public class CoordinatesWidget extends AlwaysSelectedEntryListWidget<Coordinates
         }
     }
 
-    public abstract class Entry extends ElementListWidget.Entry<CoordinatesWidget.Entry>{
+    public abstract class Entry extends AlwaysSelectedEntryListWidget.Entry<CoordinatesWidget.Entry>{
         public Entry() {
         }
     }

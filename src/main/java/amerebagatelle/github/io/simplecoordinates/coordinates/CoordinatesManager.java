@@ -18,6 +18,11 @@ public class CoordinatesManager {
         if(!coordinatesFile.exists()) {
             try {
                 coordinatesFile.createNewFile();
+
+                BufferedWriter writer = new BufferedWriter(new PrintWriter(coordinatesFile));
+                writer.write("{}");
+                writer.flush();
+                writer.close();
             } catch (IOException e) {
                 logger.error("Could not create coordinates file, can I write?");
             }
@@ -55,7 +60,7 @@ public class CoordinatesManager {
     public static void writeToCoordinates(String coordinateKey, int x, int y, int z, String details) throws IOException {
         JSONObject coordinatesJSON = new ObjectMapper().readValue(coordinatesFile, JSONObject.class);
 
-        Map<String, String> m = new LinkedHashMap<String, String>(4);
+        Map<String, String> m = new LinkedHashMap<>(4);
         m.put("x", Integer.toString(x));
         m.put("y", Integer.toString(y));
         m.put("z", Integer.toString(z));
