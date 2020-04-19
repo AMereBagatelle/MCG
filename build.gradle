@@ -35,10 +35,20 @@ dependencies {
     compile 'com.googlecode.json-simple:json-simple:1.1.1'
     include 'com.googlecode.json-simple:json-simple:1.1.1'
 
+    include "junit:junit:4.10"
+    include "org.hamcrest:hamcrest-core:1.1"
+
     compile 'com.fasterxml.jackson.core:jackson-core:2.6.3'
     compile 'com.fasterxml.jackson.core:jackson-annotations:2.6.3'
     compile 'com.fasterxml.jackson.core:jackson-databind:2.6.3'
     compile 'org.projectlombok:lombok:1.16.6'
+
+    include 'com.fasterxml.jackson.core:jackson-core:2.6.3'
+    include 'com.fasterxml.jackson.core:jackson-annotations:2.6.3'
+    include 'com.fasterxml.jackson.core:jackson-databind:2.6.3'
+
+    compile 'org.projectlombok:lombok:1.16.6'
+    include 'org.projectlombok:lombok:1.16.6'
 }
 
 processResources {
