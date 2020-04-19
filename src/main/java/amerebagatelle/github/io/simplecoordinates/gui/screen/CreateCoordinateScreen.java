@@ -1,29 +1,34 @@
 package amerebagatelle.github.io.simplecoordinates.gui.screen;
 
+import amerebagatelle.github.io.simplecoordinates.SimpleCoordinates;
+import amerebagatelle.github.io.simplecoordinates.coordinates.CoordinatesManager;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.ChatUtil;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.function.Predicate;
 
 public class CreateCoordinateScreen extends Screen {
     private final MinecraftClient client;
-    private final Screen parent;
+    private final CoordinatesScreen parent;
     private final int textColor = 16777215;
     private final Predicate<String> coordinateFilter = (string) -> {
-        if(ChatUtil.isEmpty(string)) {
-            return true;
+        if(string.length() == 0) {
+            return false;
         } else {
             try {
                 Integer.parseInt(string);
-                return false;
-            } catch(Exception e) {
                 return true;
+            } catch(Exception e) {
+                return false;
             }
         }
     };
@@ -34,7 +39,9 @@ public class CreateCoordinateScreen extends Screen {
     public TextFieldWidget coordinateZField;
     public TextFieldWidget coordinateDetailsField;
 
-    public CreateCoordinateScreen(MinecraftClient client, Screen parent) {
+    public ButtonWidget addButton;
+
+    public CreateCoordinateScreen(MinecraftClient client, CoordinatesScreen parent) {
         super(new TranslatableText("screen.writecoordinate.title"));
         this.client = client;
         this.parent = parent;
@@ -58,6 +65,16 @@ public class CreateCoordinateScreen extends Screen {
         this.children.add(coordinateZField);
         this.coordinateDetailsField = new TextFieldWidget(this.font, this.width/2-200, 226, 400, 20, I18n.translate("writecoordinate.enterDetails"));
         this.children.add(coordinateDetailsField);
+        this.addButton = this.addButton(new ButtonWidget(this.width/2-100, this.height-140, 200, 20, I18n.translate("writecoordinate.addCoordinate"), ctx -> this.andAndClose()));
+        this.addButton(new ButtonWidget(this.width/2-100, this.height-100, 200, 20, I18n.translate("writecoordinate.cancelAdd"), ctx -> this.onClose()));
+        if(this.parent.selectedCoordinates != null) {
+            ArrayList<String> selectedCoordinates = this.parent.selectedCoordinates;
+            this.coordinateNameField.setText(selectedCoordinates.get(0));
+            this.coordinateXField.setText(selectedCoordinates.get(1));
+            this.coordinateYField.setText(selectedCoordinates.get(2));
+            this.coordinateZField.setText(selectedCoordinates.get(3));
+            this.coordinateDetailsField.setText(selectedCoordinates.get(4));
+        }
     }
 
     @Override
@@ -74,6 +91,15 @@ public class CreateCoordinateScreen extends Screen {
         this.drawCenteredString(this.font, I18n.translate("writecoordinate.enterDetails"), this.width/2, coordinateDetailsField.y-15, textColor);
         this.coordinateDetailsField.render(mouseX, mouseY, delta);
         super.render(mouseX, mouseY, delta);
+    }
+
+    public void andAndClose() {
+        try {
+            CoordinatesManager.writeToCoordinates(coordinateNameField.getText(), Integer.parseInt(coordinateXField.getText()), Integer.parseInt(coordinateYField.getText()), Integer.parseInt(coordinateZField.getText()), coordinateDetailsField.getText());
+        } catch (IOException e) {
+            SimpleCoordinates.logger.error("Could not write coordinate.");
+        }
+        this.onClose();
     }
 
     @Override

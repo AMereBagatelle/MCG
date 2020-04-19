@@ -34,10 +34,8 @@ public class CoordinatesScreen extends Screen {
     public void init() {
         super.init();
         ArrayList<ArrayList<String>> coordinatesList;
-        this.buttonWrite = this.addButton(new ButtonWidget(this.width-200, this.height - 100, 100, 20, I18n.translate("button.simplecoordinates.writecoordinate"), buttonWidget -> {
-            client.openScreen(new CreateCoordinateScreen(client, this));
-        }));
-        this.buttonDelete = this.addButton(new ButtonWidget(this.width-200, this.height - 75, 100, 20, I18n.translate("button.simplecoordinates.removecoordinate"), buttonWidget -> {
+        this.buttonWrite = this.addButton(new ButtonWidget(this.width-300, this.height - 100, 150, 20, I18n.translate("button.simplecoordinates.writecoordinate"), buttonWidget -> client.openScreen(new CreateCoordinateScreen(client, this))));
+        this.buttonDelete = this.addButton(new ButtonWidget(this.width-300, this.height - 75, 150, 20, I18n.translate("button.simplecoordinates.removecoordinate"), buttonWidget -> {
             try {
                 CoordinatesManager.removeCoordinate(selectedCoordinates.get(0));
                 this.refresh();
@@ -46,7 +44,7 @@ public class CoordinatesScreen extends Screen {
                 SimpleCoordinates.logger.error("Could not remove coordinate");
             }
         }));
-        this.buttonRefresh = this.addButton(new ButtonWidget(this.width-200, this.height - 50, 100, 20, I18n.translate("button.simplecoordinates.refresh"), buttonWidget -> this.refresh()));
+        this.buttonRefresh = this.addButton(new ButtonWidget(this.width-300, this.height - 50, 150, 20, I18n.translate("button.simplecoordinates.refresh"), buttonWidget -> this.refresh()));
         this.updateButtonStates();
         try {
             coordinatesList = CoordinatesManager.loadCoordinates();
