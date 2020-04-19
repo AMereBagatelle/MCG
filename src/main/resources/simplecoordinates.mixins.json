@@ -1,10 +1,11 @@
 {
   "required": true,
-  "package": "amerebagatelle.github.io.simplecoordinates.mixin",
+  "package": "amerebagatelle.github.io.simplecoordinates.mixins",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
   ],
   "client": [
+    "ConnectMixin"
   ],
   "injectors": {
     "defaultRequire": 1

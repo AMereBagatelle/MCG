@@ -1,6 +1,8 @@
 package amerebagatelle.github.io.simplecoordinates.coordinates;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.network.ServerInfo;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.simple.JSONObject;
@@ -11,10 +13,20 @@ import java.io.*;
 import java.util.*;
 
 public class CoordinatesManager {
-    private static final File coordinatesFile = new File("coordinates.json");
+    public static final String coordinatesFolder = "coordinates";
+    public static File coordinatesFile = null;
     private static final Logger logger = LogManager.getLogger();
 
     public static void initCoordinates() {
+        File coordinatesFolderFile = new File(coordinatesFolder);
+        if(!coordinatesFolderFile.exists() || !coordinatesFolderFile.isDirectory()) {
+            coordinatesFolderFile.mkdir();
+        }
+    }
+
+    public static void initCoordinatesForServer(String serverName) {
+        MinecraftClient mc = MinecraftClient.getInstance();
+        coordinatesFile = new File(coordinatesFolder + "/" + serverName);
         if(!coordinatesFile.exists()) {
             try {
                 coordinatesFile.createNewFile();
@@ -31,7 +43,7 @@ public class CoordinatesManager {
 
     public static ArrayList<ArrayList<String>> loadCoordinates() throws IOException {
         // Throws IOException if the coordinates file could not be read
-     if(coordinatesFile.exists()) {
+     if(coordinatesFile != null && coordinatesFile.exists()) {
          try {
              JSONObject coordinateJson = (JSONObject) new JSONParser().parse(new FileReader(coordinatesFile));
              Set<String> coordinateKeys = coordinateJson.keySet();
