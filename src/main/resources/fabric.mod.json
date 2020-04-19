@@ -19,8 +19,7 @@
       "amerebagatelle.github.io.simplecoordinates.SimpleCoordinates"
     ],
     "cotton-client-commands": [
-      "amerebagatelle.github.io.simplecoordinates.commands.WriteCoordinateCommand",
-      "amerebagatelle.github.io.simplecoordinates.commands.RemoveCoordinateCommand"
+      "amerebagatelle.github.io.simplecoordinates.commands.CoordinateCommand"
     ]
   },
   "mixins": [

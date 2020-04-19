@@ -2,7 +2,6 @@ package amerebagatelle.github.io.simplecoordinates.commands;
 
 import amerebagatelle.github.io.simplecoordinates.coordinates.CoordinatesManager;
 import com.mojang.brigadier.CommandDispatcher;
-import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
@@ -18,18 +17,23 @@ import java.io.IOException;
 import static io.github.cottonmc.clientcommands.ArgumentBuilders.*;
 import static com.mojang.brigadier.arguments.StringArgumentType.string;
 
-public class WriteCoordinateCommand implements ClientCommandPlugin {
+public class CoordinateCommand implements ClientCommandPlugin {
+
     @Override
     public void registerCommands(CommandDispatcher<CottonClientCommandSource> commandDispatcher) {
-        LiteralArgumentBuilder<CottonClientCommandSource> writecoordinates = literal("writecoordinate").
+        LiteralArgumentBuilder<CottonClientCommandSource> coordinateCommand = literal("coord").
+            then(literal("add").
                 then(argument("name", string()).
-                    then(argument("details", string()).
-                        executes(WriteCoordinateCommand::runDetails)).
-                    executes(WriteCoordinateCommand::run));
-        commandDispatcher.register(writecoordinates);
+                        then(argument("details", string()).
+                                executes(CoordinateCommand::addCoordDetails)).
+                        executes(CoordinateCommand::addCoord))).
+            then(literal("del").
+                then(argument("coordinateKey", string()).
+                        executes(CoordinateCommand::removeCoord)));
+        commandDispatcher.register(coordinateCommand);
     }
 
-    private static int runDetails(CommandContext<CottonClientCommandSource> ctx) {
+    private static int addCoordDetails(CommandContext<CottonClientCommandSource> ctx) {
         MinecraftClient mc = MinecraftClient.getInstance();
         BlockPos coordinate = mc.player.getBlockPos();
         try {
@@ -42,7 +46,7 @@ public class WriteCoordinateCommand implements ClientCommandPlugin {
         }
     }
 
-    private static int run(CommandContext<CottonClientCommandSource> ctx) {
+    private static int addCoord(CommandContext<CottonClientCommandSource> ctx) {
         MinecraftClient mc = MinecraftClient.getInstance();
         BlockPos coordinate = mc.player.getBlockPos();
         try {
@@ -51,6 +55,18 @@ public class WriteCoordinateCommand implements ClientCommandPlugin {
             return 1;
         } catch (IOException e) {
             mc.inGameHud.addChatMessage(MessageType.SYSTEM, new TranslatableText("return.simplecoordinates.coordinatewritefail"));
+            return 0;
+        }
+    }
+
+    private static int removeCoord(CommandContext<CottonClientCommandSource> ctx) {
+        MinecraftClient mc = MinecraftClient.getInstance();
+        try {
+            CoordinatesManager.removeCoordinate(StringArgumentType.getString(ctx, "coordinateKey"));
+            mc.inGameHud.addChatMessage(MessageType.SYSTEM, new TranslatableText("return.simplecoordinates.coordinateremovesuccess"));
+            return 1;
+        } catch (IOException e) {
+            mc.inGameHud.addChatMessage(MessageType.SYSTEM, new TranslatableText("return.simplecoordinates.coordinateremovefail"));
             return 0;
         }
     }
