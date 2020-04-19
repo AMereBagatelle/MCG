@@ -9,7 +9,6 @@ import com.mojang.brigadier.context.CommandContext;
 import io.github.cottonmc.clientcommands.ClientCommandPlugin;
 import io.github.cottonmc.clientcommands.CottonClientCommandSource;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.command.arguments.BlockPosArgumentType;
 import net.minecraft.network.MessageType;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.math.BlockPos;

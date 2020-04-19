@@ -1,21 +1,15 @@
 package amerebagatelle.github.io.simplecoordinates.gui.widget;
 
-import amerebagatelle.github.io.simplecoordinates.SimpleCoordinates;
-import amerebagatelle.github.io.simplecoordinates.coordinates.CoordinatesManager;
 import amerebagatelle.github.io.simplecoordinates.gui.screen.CoordinatesScreen;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
-import net.minecraft.client.gui.Element;
 import net.minecraft.client.gui.widget.AlwaysSelectedEntryListWidget;
-import net.minecraft.client.gui.widget.ElementListWidget;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class CoordinatesWidget extends AlwaysSelectedEntryListWidget<CoordinatesWidget.Entry> {
-    private ArrayList<ArrayList<String>> coordinatesList;
-    private CoordinatesScreen gui;
+    private final ArrayList<ArrayList<String>> coordinatesList;
+    private final CoordinatesScreen gui;
 
     public CoordinatesWidget(CoordinatesScreen gui, MinecraftClient client, ArrayList<ArrayList<String>> coordinateList) {
         super(client, gui.width, gui.height/5*4, 40, gui.height, 20);
@@ -33,8 +27,8 @@ public class CoordinatesWidget extends AlwaysSelectedEntryListWidget<Coordinates
     public class CoordinateListEntry extends CoordinatesWidget.Entry {
         public String name;
         public String x, y, z;
-        private CoordinatesScreen gui;
-        private ArrayList<String> coordinateList;
+        private final CoordinatesScreen gui;
+        private final ArrayList<String> coordinateList;
 
         public CoordinateListEntry(CoordinatesScreen gui, ArrayList<String> coordinateList) {
             this.gui = gui;

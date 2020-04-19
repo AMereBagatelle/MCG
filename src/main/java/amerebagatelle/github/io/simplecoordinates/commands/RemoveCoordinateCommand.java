@@ -2,7 +2,6 @@ package amerebagatelle.github.io.simplecoordinates.commands;
 
 import amerebagatelle.github.io.simplecoordinates.coordinates.CoordinatesManager;
 import com.mojang.brigadier.CommandDispatcher;
-import com.mojang.brigadier.Message;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
@@ -15,7 +14,6 @@ import net.minecraft.text.TranslatableText;
 import java.io.IOException;
 
 import static io.github.cottonmc.clientcommands.ArgumentBuilders.*;
-import static com.mojang.brigadier.arguments.IntegerArgumentType.integer;
 import static com.mojang.brigadier.arguments.StringArgumentType.string;
 
 public class RemoveCoordinateCommand implements ClientCommandPlugin {
