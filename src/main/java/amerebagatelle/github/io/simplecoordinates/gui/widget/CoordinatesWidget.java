@@ -24,6 +24,21 @@ public class CoordinatesWidget extends AlwaysSelectedEntryListWidget<Coordinates
         this.ensureVisible(entry);
     }
 
+    @Override
+    protected int getScrollbarPosition() {
+        return super.getScrollbarPosition() + 50;
+    }
+
+    @Override
+    public int getRowWidth() {
+        return super.getRowWidth() + 100;
+    }
+
+    @Override
+    protected boolean isFocused() {
+        return this.gui.getFocused() == this;
+    }
+
     public class CoordinateListEntry extends CoordinatesWidget.Entry {
         public String name;
         public String x, y, z;
