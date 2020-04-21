@@ -15,7 +15,6 @@ public class CoordinatesWidget extends AlwaysSelectedEntryListWidget<Coordinates
         super(client, gui.width, gui.height/5*4, 40, gui.height, 20);
         this.gui = gui;
         this.coordinatesList = coordinateList;
-        this.setRenderSelection(true);
         coordinatesList.forEach(coordinate -> this.addEntry(new CoordinateListEntry(gui, coordinate)));
     }
 
@@ -26,7 +25,7 @@ public class CoordinatesWidget extends AlwaysSelectedEntryListWidget<Coordinates
 
     @Override
     protected int getScrollbarPosition() {
-        return super.getScrollbarPosition() + 50;
+        return super.getScrollbarPosition() + 100;
     }
 
     @Override
