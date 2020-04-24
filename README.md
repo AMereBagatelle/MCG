@@ -27,4 +27,4 @@ How to get your coordinates back:
 4. Find the `coordinates` folder in the same directory.  There should be a file inside, named the same as the server you logged into.  
 Just open that file, and paste your coordinates.
 
-Thanks for using my mod!  If you find any issues, just let me know.  Also, open a issue tagged with feature request if you want to suggest something.
+Thanks for using my mod!  If you find any issues, just let me know on discord at AMereBagatelle#6536.  Also, open a issue tagged with feature request if you want to suggest something.
