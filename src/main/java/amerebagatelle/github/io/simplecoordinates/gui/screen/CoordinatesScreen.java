@@ -58,9 +58,10 @@ public class CoordinatesScreen extends Screen {
     @Override
     public void render(int mouseX, int mouseY, float delta) {
         if(coordinatesWidget != null) {
-            this.renderBackground();
+            this.renderDirtBackground(0);
             this.coordinatesWidget.render(mouseX, mouseY, delta);
             this.drawCenteredString(this.font, this.title.asFormattedString(), this.width / 2, 20, 16777215);
+            super.render(mouseX, mouseY, delta);
             if (selectedCoordinates != null) {
                 int coordinatesDrawY = this.height / 7 * 6;
                 int coordinatesDrawX = 100;
@@ -73,7 +74,6 @@ public class CoordinatesScreen extends Screen {
                 this.drawString(textRenderer, z, coordinatesDrawX + textRenderer.getStringWidth(x) + textRenderer.getStringWidth(y) + 40, coordinatesDrawY, textColor);
                 this.drawString(textRenderer, selectedCoordinates.get(4), coordinatesDrawX, coordinatesDrawY + 20, textColor);
             }
-            super.render(mouseX, mouseY, delta);
         } else {
             client.openScreen(null);
         }

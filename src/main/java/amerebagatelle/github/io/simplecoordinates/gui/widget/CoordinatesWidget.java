@@ -4,6 +4,7 @@ import amerebagatelle.github.io.simplecoordinates.gui.screen.CoordinatesScreen;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.widget.AlwaysSelectedEntryListWidget;
+import net.minecraft.client.render.Tessellator;
 
 import java.util.ArrayList;
 
@@ -12,7 +13,7 @@ public class CoordinatesWidget extends AlwaysSelectedEntryListWidget<Coordinates
     private final CoordinatesScreen gui;
 
     public CoordinatesWidget(CoordinatesScreen gui, MinecraftClient client, ArrayList<ArrayList<String>> coordinateList) {
-        super(client, gui.width, gui.height/5*4, 40, gui.height, 20);
+        super(client, gui.width, gui.height/5*4, 40, gui.height-64, 20);
         this.gui = gui;
         this.coordinatesList = coordinateList;
         coordinatesList.forEach(coordinate -> this.addEntry(new CoordinateListEntry(gui, coordinate)));
