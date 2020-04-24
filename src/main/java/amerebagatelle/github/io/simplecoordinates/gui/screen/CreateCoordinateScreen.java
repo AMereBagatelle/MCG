@@ -72,6 +72,7 @@ public class CreateCoordinateScreen extends Screen {
             this.coordinateZField.setText(selectedCoordinates.get(3));
             this.coordinateDetailsField.setText(selectedCoordinates.get(4));
         }
+        this.updateButtonActivationStates();
     }
 
     @Override
@@ -88,6 +89,7 @@ public class CreateCoordinateScreen extends Screen {
         this.drawCenteredString(this.font, I18n.translate("writecoordinate.enterDetails"), this.width/2, coordinateDetailsField.y-15, textColor);
         this.coordinateDetailsField.render(mouseX, mouseY, delta);
         super.render(mouseX, mouseY, delta);
+        this.updateButtonActivationStates();
     }
 
     public void andAndClose() {
@@ -101,6 +103,8 @@ public class CreateCoordinateScreen extends Screen {
 
     @Override
     public void onClose() {
+        this.updateButtonActivationStates();
+        this.parent.selectedCoordinates = null;
         client.openScreen(this.parent);
     }
 
@@ -112,5 +116,9 @@ public class CreateCoordinateScreen extends Screen {
     @Override
     public void removed() {
         client.keyboard.enableRepeatEvents(false);
+    }
+
+    private void updateButtonActivationStates() {
+        addButton.active = coordinateNameField.getText().length() != 0 && coordinateXField.getText().length() != 0 && coordinateYField.getText().length() != 0 && coordinateZField.getText().length() != 0;
     }
 }
