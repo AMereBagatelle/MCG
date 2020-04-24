@@ -34,8 +34,10 @@ public class CoordinatesScreen extends Screen {
     public void init() {
         super.init();
         ArrayList<ArrayList<String>> coordinatesList;
-        this.buttonWrite = this.addButton(new ButtonWidget(this.width-300, this.height - 100, 150, 20, I18n.translate("button.simplecoordinates.writecoordinate"), buttonWidget -> client.openScreen(new CreateCoordinateScreen(client, this))));
-        this.buttonDelete = this.addButton(new ButtonWidget(this.width-300, this.height - 75, 150, 20, I18n.translate("button.simplecoordinates.removecoordinate"), buttonWidget -> {
+        int buttonY = this.height-36;
+        int buttonStartX = this.width-500;
+        this.buttonWrite = this.addButton(new ButtonWidget(buttonStartX, buttonY, 150, 20, I18n.translate("button.simplecoordinates.writecoordinate"), buttonWidget -> client.openScreen(new CreateCoordinateScreen(client, this))));
+        this.buttonDelete = this.addButton(new ButtonWidget(buttonStartX+160, buttonY, 150, 20, I18n.translate("button.simplecoordinates.removecoordinate"), buttonWidget -> {
             try {
                 CoordinatesManager.removeCoordinate(selectedCoordinates.get(0));
                 this.refresh();
@@ -44,7 +46,7 @@ public class CoordinatesScreen extends Screen {
                 SimpleCoordinates.logger.error("Could not remove coordinate");
             }
         }));
-        this.buttonRefresh = this.addButton(new ButtonWidget(this.width-300, this.height - 50, 150, 20, I18n.translate("button.simplecoordinates.refresh"), buttonWidget -> this.refresh()));
+        this.buttonRefresh = this.addButton(new ButtonWidget(buttonStartX+320, buttonY, 150, 20, I18n.translate("button.simplecoordinates.refresh"), buttonWidget -> this.refresh()));
         this.updateButtonStates();
         try {
             coordinatesList = CoordinatesManager.loadCoordinates();
@@ -63,16 +65,16 @@ public class CoordinatesScreen extends Screen {
             this.drawCenteredString(this.font, this.title.asFormattedString(), this.width / 2, 20, 16777215);
             super.render(mouseX, mouseY, delta);
             if (selectedCoordinates != null) {
-                int coordinatesDrawY = this.height / 7 * 6;
-                int coordinatesDrawX = 100;
+                int coordinatesDrawY = this.height-36;
+                int coordinatesDrawX = 10 + textRenderer.getStringWidth("Coordinates:  ");
                 String x = selectedCoordinates.get(1);
                 String y = selectedCoordinates.get(2);
                 String z = selectedCoordinates.get(3);
-                this.drawString(textRenderer, selectedCoordinates.get(0), coordinatesDrawX, coordinatesDrawY - 20, textColor);
-                this.drawString(textRenderer, x, coordinatesDrawX, coordinatesDrawY, textColor);
-                this.drawString(textRenderer, y, coordinatesDrawX + textRenderer.getStringWidth(x) + 20, coordinatesDrawY, textColor);
-                this.drawString(textRenderer, z, coordinatesDrawX + textRenderer.getStringWidth(x) + textRenderer.getStringWidth(y) + 40, coordinatesDrawY, textColor);
-                this.drawString(textRenderer, selectedCoordinates.get(4), coordinatesDrawX, coordinatesDrawY + 20, textColor);
+                this.drawString(textRenderer, "Name: " + selectedCoordinates.get(0), coordinatesDrawX, coordinatesDrawY - 20, textColor);
+                this.drawString(textRenderer, "Coordinates:  " + x, coordinatesDrawX, coordinatesDrawY, textColor);
+                this.drawString(textRenderer, y, coordinatesDrawX + textRenderer.getStringWidth("Coordinates:  ") + textRenderer.getStringWidth(x) + 20, coordinatesDrawY, textColor);
+                this.drawString(textRenderer, z, coordinatesDrawX + textRenderer.getStringWidth("Coordinates:  ") + textRenderer.getStringWidth(x) + textRenderer.getStringWidth(y) + 40, coordinatesDrawY, textColor);
+                this.drawString(textRenderer, "Details: " + selectedCoordinates.get(4), coordinatesDrawX, coordinatesDrawY + 20, textColor);
             }
         } else {
             client.openScreen(null);
