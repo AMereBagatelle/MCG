@@ -66,7 +66,7 @@ public class CoordinatesScreen extends Screen {
             super.render(mouseX, mouseY, delta);
             if (selectedCoordinates != null) {
                 int coordinatesDrawY = this.height-36;
-                int coordinatesDrawX = 10 + textRenderer.getStringWidth("Coordinates:  ");
+                int coordinatesDrawX = 10;
                 String x = selectedCoordinates.get(1);
                 String y = selectedCoordinates.get(2);
                 String z = selectedCoordinates.get(3);
