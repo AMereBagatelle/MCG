@@ -1,6 +1,8 @@
 package amerebagatelle.github.io.simplecoordinates.coordinates;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.resource.language.I18n;
 import org.apache.logging.log4j.LogManager;
@@ -22,8 +24,11 @@ public class CoordinatesManager {
         if(!coordinatesFolderFile.exists() || !coordinatesFolderFile.isDirectory()) {
             coordinatesFolderFile.mkdir();
         }
+        if(new File("coordinates.json").exists()) {
+            logger.warn("Important!!!!  You will not be able to access your coordinates from version <0.1.1 in version 0.2.0.  Please refer to the README on the github page.");
+        }
     }
-
+    @Environment(EnvType.CLIENT)
     public static void initCoordinatesForServer(String serverName) {
         MinecraftClient mc = MinecraftClient.getInstance();
         coordinatesFile = new File(coordinatesFolder + "/" + serverName);

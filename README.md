@@ -17,4 +17,14 @@ There are only 3 things to know.
 Note: `add` adds a coordinate at your current coordinates.  If you want to set other coordinates, use the GUI.
 2. The GUI.  The GUI is opened with a hotkey, set in the Options > Controls menu.  Once you are there, the GUI is easy to understand.
 
+## Important Notes
+Coordinates made with version 0.1.1 or lower will not be accessible in version 0.2.0 or above!
+This is because of a change made for allowing coordinates to be saved to specific servers.
+How to get your coordinates back:
+1. Open Minecraft with the mod installed once, and go into the server you were storing coordinates for.
+2. Find your original coordinates file.  It will be named `coordinates.json` in the main directory.
+3. Open the file and copy the contents to your clipboard.
+4. Find the `coordinates` folder in the same directory.  There should be a file inside, named the same as the server you logged into.  
+Just open that file, and paste your coordinates.
+
 Thanks for using my mod!  If you find any issues, just let me know.  Also, open a issue tagged with feature request if you want to suggest something.
