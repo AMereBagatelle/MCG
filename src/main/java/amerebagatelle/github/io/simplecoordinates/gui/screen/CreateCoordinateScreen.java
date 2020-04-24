@@ -57,6 +57,9 @@ public class CreateCoordinateScreen extends Screen {
         this.coordinateYField = new TextFieldWidget(this.font, this.width/2-100, 146, 200, 20, I18n.translate("writecoordinate.enterY"));
         this.coordinateYField.setTextPredicate(coordinateFilter);
         this.children.add(coordinateYField);
+        if(client.player.getBlockPos() != null) {
+            this.coordinateYField.setText(Integer.toString(client.player.getBlockPos().getY()));
+        }
         this.coordinateZField = new TextFieldWidget(this.font, this.width/2-100, 186, 200, 20, I18n.translate("writecoordinate.enterZ"));
         this.coordinateZField.setTextPredicate(coordinateFilter);
         this.children.add(coordinateZField);
