@@ -9,14 +9,19 @@ import net.minecraft.client.gui.widget.AlwaysSelectedEntryListWidget;
 import java.util.ArrayList;
 
 public class CoordinatesWidget extends AlwaysSelectedEntryListWidget<CoordinatesWidget.Entry> {
-    private final ArrayList<CoordinateSet> coordinatesList;
+    private ArrayList<CoordinateSet> coordinatesList;
     private final CoordinatesScreen gui;
 
-    public CoordinatesWidget(CoordinatesScreen gui, MinecraftClient client, ArrayList<CoordinateSet> coordinateList) {
+    public CoordinatesWidget(CoordinatesScreen gui, MinecraftClient client, ArrayList<CoordinateSet> initialCoordinateList) {
         super(client, gui.width, gui.height, gui.height / 3, gui.height - 64, 20);
         this.gui = gui;
-        this.coordinatesList = coordinateList;
+        this.coordinatesList = initialCoordinateList;
         coordinatesList.forEach(coordinate -> this.addEntry(new CoordinateListEntry(gui, coordinate)));
+    }
+
+    public void setCoordinatesList(ArrayList<CoordinateSet> coordinatesList) {
+        this.coordinatesList = coordinatesList;
+        this.gui.refresh();
     }
 
     public void setSelected(CoordinatesWidget.Entry entry) {
