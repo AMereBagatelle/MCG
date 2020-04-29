@@ -1,6 +1,7 @@
 package amerebagatelle.github.io.simplecoordinates.gui.screen;
 
 import amerebagatelle.github.io.simplecoordinates.SimpleCoordinates;
+import amerebagatelle.github.io.simplecoordinates.coordinates.CoordinateSet;
 import amerebagatelle.github.io.simplecoordinates.coordinates.CoordinatesManager;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
@@ -68,12 +69,12 @@ public class CreateCoordinateScreen extends Screen {
         this.addButton = this.addButton(new ButtonWidget(this.width/2-100, this.height-140, 200, 20, I18n.translate("writecoordinate.addCoordinate"), ctx -> this.andAndClose()));
         this.addButton(new ButtonWidget(this.width/2-100, this.height-100, 200, 20, I18n.translate("writecoordinate.cancelAdd"), ctx -> this.onClose()));
         if(this.parent.selectedCoordinates != null) {
-            ArrayList<String> selectedCoordinates = this.parent.selectedCoordinates;
-            this.coordinateNameField.setText(selectedCoordinates.get(0));
-            this.coordinateXField.setText(selectedCoordinates.get(1));
-            this.coordinateYField.setText(selectedCoordinates.get(2));
-            this.coordinateZField.setText(selectedCoordinates.get(3));
-            this.coordinateDetailsField.setText(selectedCoordinates.get(4));
+            CoordinateSet selectedCoordinates = this.parent.selectedCoordinates;
+            this.coordinateNameField.setText(selectedCoordinates.getName());
+            this.coordinateXField.setText(Integer.toString(selectedCoordinates.getX()));
+            this.coordinateYField.setText(Integer.toString(selectedCoordinates.getY()));
+            this.coordinateZField.setText(Integer.toString(selectedCoordinates.getZ()));
+            this.coordinateDetailsField.setText(selectedCoordinates.getDetails());
         }
         this.updateButtonActivationStates();
     }

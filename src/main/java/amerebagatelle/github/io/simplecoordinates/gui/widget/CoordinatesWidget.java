@@ -1,18 +1,18 @@
 package amerebagatelle.github.io.simplecoordinates.gui.widget;
 
+import amerebagatelle.github.io.simplecoordinates.coordinates.CoordinateSet;
 import amerebagatelle.github.io.simplecoordinates.gui.screen.CoordinatesScreen;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.widget.AlwaysSelectedEntryListWidget;
-import net.minecraft.client.render.Tessellator;
 
 import java.util.ArrayList;
 
 public class CoordinatesWidget extends AlwaysSelectedEntryListWidget<CoordinatesWidget.Entry> {
-    private final ArrayList<ArrayList<String>> coordinatesList;
+    private final ArrayList<CoordinateSet> coordinatesList;
     private final CoordinatesScreen gui;
 
-    public CoordinatesWidget(CoordinatesScreen gui, MinecraftClient client, ArrayList<ArrayList<String>> coordinateList) {
+    public CoordinatesWidget(CoordinatesScreen gui, MinecraftClient client, ArrayList<CoordinateSet> coordinateList) {
         super(client, gui.width, gui.height, 40, gui.height-64, 20);
         this.gui = gui;
         this.coordinatesList = coordinateList;
@@ -41,17 +41,17 @@ public class CoordinatesWidget extends AlwaysSelectedEntryListWidget<Coordinates
 
     public class CoordinateListEntry extends CoordinatesWidget.Entry {
         public String name;
-        public String x, y, z;
+        public int x, y, z;
         private final CoordinatesScreen gui;
-        private final ArrayList<String> coordinateList;
+        private final CoordinateSet coordinateList;
 
-        public CoordinateListEntry(CoordinatesScreen gui, ArrayList<String> coordinateList) {
+        public CoordinateListEntry(CoordinatesScreen gui, CoordinateSet coordinateSet) {
             this.gui = gui;
-            this.name = coordinateList.get(0);
-            this.x = coordinateList.get(1);
-            this.y = coordinateList.get(2);
-            this.z = coordinateList.get(3);
-            this.coordinateList = coordinateList;
+            this.name = coordinateSet.getName();
+            this.x = coordinateSet.getX();
+            this.y = coordinateSet.getY();
+            this.z = coordinateSet.getZ();
+            this.coordinateList = coordinateSet;
         }
 
         @Override
@@ -61,9 +61,9 @@ public class CoordinatesWidget extends AlwaysSelectedEntryListWidget<Coordinates
             int drawY = y+CoordinatesWidget.this.itemHeight/2-textRenderer.fontHeight+3;
             int rowWidth = CoordinatesWidget.this.getRowWidth();
             textRenderer.draw(name, x, drawY, color);
-            CoordinatesWidget.this.drawCenteredString(textRenderer, this.x, x+rowWidth/5*2, drawY, color);
-            CoordinatesWidget.this.drawCenteredString(textRenderer, this.y, x+rowWidth/5*3, drawY, color);
-            CoordinatesWidget.this.drawCenteredString(textRenderer, this.z, x+rowWidth/5*4, drawY, color);
+            CoordinatesWidget.this.drawCenteredString(textRenderer, Integer.toString(this.x), x+rowWidth/5*2, drawY, color);
+            CoordinatesWidget.this.drawCenteredString(textRenderer, Integer.toString(this.y), x+rowWidth/5*3, drawY, color);
+            CoordinatesWidget.this.drawCenteredString(textRenderer, Integer.toString(this.z), x+rowWidth/5*4, drawY, color);
         }
 
         @Override

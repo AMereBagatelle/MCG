@@ -47,22 +47,24 @@ public class CoordinatesManager {
         }
     }
 
-    public static ArrayList<ArrayList<String>> loadCoordinates() throws IOException {
+    public static ArrayList<CoordinateSet> loadCoordinates() throws IOException {
         // Throws IOException if the coordinates file could not be read
      if(coordinatesFile != null && coordinatesFile.exists()) {
          try {
              JSONObject coordinateJson = (JSONObject) new JSONParser().parse(new FileReader(coordinatesFile));
              Set<String> coordinateKeys = coordinateJson.keySet();
-             ArrayList<ArrayList<String>> coordinateList = new ArrayList<>();
+             ArrayList<CoordinateSet> coordinateList = new ArrayList<>();
              coordinateKeys.forEach(key -> {
                  Map coordinate = (Map)coordinateJson.get(key);
                  Iterator<Map.Entry> coordinateItr = coordinate.entrySet().iterator();
-                 ArrayList<String> xyzd = new ArrayList<>();
-                 xyzd.add(key);
-                 while(coordinateItr.hasNext()) {
-                     Map.Entry pair = coordinateItr.next();
-                     xyzd.add(pair.getValue().toString());
-                 }
+                 CoordinateSet xyzd = new CoordinateSet("Unregistered", 0, 0, 0, "Unregistered");
+                 xyzd.setName(key);
+                 Map.Entry pair = coordinateItr.next();
+                 xyzd.setX(Integer.parseInt(pair.getValue().toString()));
+                 pair = coordinateItr.next();
+                 xyzd.setY(Integer.parseInt(pair.getValue().toString()));
+                 pair = coordinateItr.next();
+                 xyzd.setZ(Integer.parseInt(pair.getValue().toString()));
                  coordinateList.add(xyzd);
              });
 
