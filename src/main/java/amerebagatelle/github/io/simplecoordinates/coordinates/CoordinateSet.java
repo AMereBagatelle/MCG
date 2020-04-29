@@ -6,6 +6,7 @@ public class CoordinateSet {
     public int y;
     public int z;
     public String details;
+    public String folder;
 
     public CoordinateSet(String name, int x, int y, int z, String details) {
         this.name = name;
@@ -53,5 +54,13 @@ public class CoordinateSet {
 
     public void setDetails(String details) {
         this.details = details;
+    }
+
+    public String getFolder() {
+        return folder;
+    }
+
+    public void setFolder(String folder) {
+        this.folder = folder;
     }
 }

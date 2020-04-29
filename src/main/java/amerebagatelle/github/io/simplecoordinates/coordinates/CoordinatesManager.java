@@ -55,17 +55,17 @@ public class CoordinatesManager {
              Set<String> coordinateKeys = coordinateJson.keySet();
              ArrayList<CoordinateSet> coordinateList = new ArrayList<>();
              coordinateKeys.forEach(key -> {
-                 Map coordinate = (Map)coordinateJson.get(key);
-                 Iterator<Map.Entry> coordinateItr = coordinate.entrySet().iterator();
-                 CoordinateSet xyzd = new CoordinateSet("Unregistered", 0, 0, 0, "Unregistered");
-                 xyzd.setName(key);
-                 Map.Entry pair = coordinateItr.next();
-                 xyzd.setX(Integer.parseInt(pair.getValue().toString()));
-                 pair = coordinateItr.next();
-                 xyzd.setY(Integer.parseInt(pair.getValue().toString()));
-                 pair = coordinateItr.next();
-                 xyzd.setZ(Integer.parseInt(pair.getValue().toString()));
-                 coordinateList.add(xyzd);
+                 Map keyJSON = (Map)coordinateJson.get(key);
+                if(keyJSON.containsKey("x")) {
+                    coordinateList.add(getCoordinateFromJSON(coordinateJson, key));
+                } else {
+                    Set<String> internalKeySet = keyJSON.keySet();
+                    internalKeySet.forEach(internalKey -> {
+                        CoordinateSet coordinateSet = getCoordinateFromJSON(keyJSON, internalKey);
+                        coordinateSet.setFolder(internalKey);
+                        coordinateList.add(coordinateSet);
+                    });
+                }
              });
 
              return coordinateList;
@@ -75,6 +75,20 @@ public class CoordinatesManager {
      } else {
         throw new IOException("Can't load coordinates");
      }
+    }
+
+    public static CoordinateSet getCoordinateFromJSON(Map JSON, String key) {
+        Map coordinate = (Map)JSON.get(key);
+        Iterator<Map.Entry> coordinateItr = coordinate.entrySet().iterator();
+        CoordinateSet xyzd = new CoordinateSet("Unregistered", 0, 0, 0, "Unregistered");
+        xyzd.setName(key);
+        Map.Entry pair = coordinateItr.next();
+        xyzd.setX(Integer.parseInt(pair.getValue().toString()));
+        pair = coordinateItr.next();
+        xyzd.setY(Integer.parseInt(pair.getValue().toString()));
+        pair = coordinateItr.next();
+        xyzd.setZ(Integer.parseInt(pair.getValue().toString()));
+        return xyzd;
     }
 
     public static void writeToCoordinates(String coordinateKey, int x, int y, int z, String details) throws IOException {
