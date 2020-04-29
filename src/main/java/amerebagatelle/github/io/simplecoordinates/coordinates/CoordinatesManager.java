@@ -38,7 +38,7 @@ public class CoordinatesManager {
                 coordinatesFile.createNewFile();
 
                 BufferedWriter writer = new BufferedWriter(new PrintWriter(coordinatesFile));
-                writer.write("{}");
+                writer.write("{\"default\":{}}");
                 writer.flush();
                 writer.close();
             } catch (IOException e) {
@@ -46,6 +46,20 @@ public class CoordinatesManager {
             }
             logger.info(I18n.translate("coordinatefile.creation"));
         }
+        // ! DATAFIXERS, BEWARE
+        try {
+            JSONObject coordinateJson = (JSONObject) new JSONParser().parse(new FileReader(coordinatesFile));
+            Set<String> coordinateKeys = coordinateJson.keySet();
+            if (!coordinateKeys.contains("default")) {
+                BufferedWriter writer = new BufferedWriter(new PrintWriter(coordinatesFile));
+                writer.write("{\"default\":{}}");
+                writer.flush();
+                writer.close();
+            }
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public static ArrayList<CoordinateSet> loadCoordinates() throws IOException {

@@ -13,7 +13,7 @@ public class CoordinatesWidget extends AlwaysSelectedEntryListWidget<Coordinates
     private final CoordinatesScreen gui;
 
     public CoordinatesWidget(CoordinatesScreen gui, MinecraftClient client, ArrayList<CoordinateSet> coordinateList) {
-        super(client, gui.width, gui.height, 40, gui.height-64, 20);
+        super(client, gui.width, gui.height, gui.height / 3, gui.height - 64, 20);
         this.gui = gui;
         this.coordinatesList = coordinateList;
         coordinatesList.forEach(coordinate -> this.addEntry(new CoordinateListEntry(gui, coordinate)));
