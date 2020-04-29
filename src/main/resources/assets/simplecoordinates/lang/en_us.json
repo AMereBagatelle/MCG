@@ -17,5 +17,6 @@
   "writecoordinate.enterX": "X",
   "writecoordinate.enterY": "Y",
   "writecoordinate.enterZ": "Z",
+  "writecoordinate.enterFolder": "Folder",
   "coordinatefile.creation": "New server/world, creating new coordinates file"
 }

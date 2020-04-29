@@ -36,6 +36,7 @@ public class CreateCoordinateScreen extends Screen {
     public TextFieldWidget coordinateYField;
     public TextFieldWidget coordinateZField;
     public TextFieldWidget coordinateDetailsField;
+    public TextFieldWidget coordinateFolderField;
 
     public ButtonWidget addButton;
 
@@ -66,6 +67,8 @@ public class CreateCoordinateScreen extends Screen {
         this.children.add(coordinateZField);
         this.coordinateDetailsField = new TextFieldWidget(this.font, this.width/2-200, 226, 400, 20, I18n.translate("writecoordinate.enterDetails"));
         this.children.add(coordinateDetailsField);
+        this.coordinateFolderField = new TextFieldWidget(this.font, this.width/2-200, 266, 400, 20, I18n.translate("writecoordinate.enterFolder"));
+        this.children.add(coordinateFolderField);
         this.addButton = this.addButton(new ButtonWidget(this.width/2-100, this.height-140, 200, 20, I18n.translate("writecoordinate.addCoordinate"), ctx -> this.andAndClose()));
         this.addButton(new ButtonWidget(this.width/2-100, this.height-100, 200, 20, I18n.translate("writecoordinate.cancelAdd"), ctx -> this.onClose()));
         if(this.parent.selectedCoordinates != null) {
@@ -92,6 +95,8 @@ public class CreateCoordinateScreen extends Screen {
         this.coordinateZField.render(mouseX, mouseY, delta);
         this.drawCenteredString(this.font, I18n.translate("writecoordinate.enterDetails"), this.width/2, coordinateDetailsField.y-15, textColor);
         this.coordinateDetailsField.render(mouseX, mouseY, delta);
+        this.drawCenteredString(this.font, I18n.translate("writecoordinate.enterFolder"), this.width/2, coordinateFolderField.y-15, textColor);
+        this.coordinateFolderField.render(mouseX, mouseY, delta);
         super.render(mouseX, mouseY, delta);
         this.updateButtonActivationStates();
     }
@@ -99,6 +104,7 @@ public class CreateCoordinateScreen extends Screen {
     public void andAndClose() {
         try {
             CoordinateSet coordinatesToWrite = new CoordinateSet(coordinateNameField.getText(), Integer.parseInt(coordinateXField.getText()), Integer.parseInt(coordinateYField.getText()), Integer.parseInt(coordinateZField.getText()), coordinateDetailsField.getText());
+            coordinatesToWrite.setFolder(coordinateFolderField.getText());
             CoordinatesManager.writeToCoordinates(coordinatesToWrite);
         } catch (IOException e) {
             SimpleCoordinates.logger.error("Could not write coordinate.");
