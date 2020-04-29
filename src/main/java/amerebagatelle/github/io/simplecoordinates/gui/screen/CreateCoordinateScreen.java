@@ -98,7 +98,8 @@ public class CreateCoordinateScreen extends Screen {
 
     public void andAndClose() {
         try {
-            CoordinatesManager.writeToCoordinates(coordinateNameField.getText(), Integer.parseInt(coordinateXField.getText()), Integer.parseInt(coordinateYField.getText()), Integer.parseInt(coordinateZField.getText()), coordinateDetailsField.getText());
+            CoordinateSet coordinatesToWrite = new CoordinateSet(coordinateNameField.getText(), Integer.parseInt(coordinateXField.getText()), Integer.parseInt(coordinateYField.getText()), Integer.parseInt(coordinateZField.getText()), coordinateDetailsField.getText());
+            CoordinatesManager.writeToCoordinates(coordinatesToWrite);
         } catch (IOException e) {
             SimpleCoordinates.logger.error("Could not write coordinate.");
         }

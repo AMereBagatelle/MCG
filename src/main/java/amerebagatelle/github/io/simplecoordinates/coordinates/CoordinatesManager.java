@@ -11,6 +11,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import javax.annotation.Nullable;
 import java.io.*;
 import java.util.*;
 
@@ -91,17 +92,27 @@ public class CoordinatesManager {
         return xyzd;
     }
 
-    public static void writeToCoordinates(String coordinateKey, int x, int y, int z, String details) throws IOException {
+    public static void writeToCoordinates(CoordinateSet coordinates) throws IOException {
         JSONObject coordinatesJSON = new ObjectMapper().readValue(coordinatesFile, JSONObject.class);
+        String coordinateKey = coordinates.getName();
 
         Map<String, String> m = new LinkedHashMap<>(4);
-        m.put("x", Integer.toString(x));
-        m.put("y", Integer.toString(y));
-        m.put("z", Integer.toString(z));
-        m.put("details", details);
+        m.put("x", Integer.toString(coordinates.getX()));
+        m.put("y", Integer.toString(coordinates.getY()));
+        m.put("z", Integer.toString(coordinates.getZ()));
+        m.put("details", coordinates.getDetails());
 
+        String folder = coordinates.getFolder();
 
-        coordinatesJSON.put(coordinateKey, m);
+        if(folder.length() == 0) {
+            Map insertFolder = (Map)coordinatesJSON.get("default");
+            insertFolder.put(coordinateKey, m);
+            coordinatesJSON.put("default", insertFolder);
+        } else {
+            Map insertFolder = (Map)coordinatesJSON.get(folder);
+            insertFolder.put(coordinateKey, m);
+            coordinatesJSON.put(folder, insertFolder);
+        }
 
         BufferedWriter writer = new BufferedWriter(new PrintWriter(coordinatesFile));
         writer.write(coordinatesJSON.toJSONString());

@@ -1,5 +1,6 @@
 package amerebagatelle.github.io.simplecoordinates.commands;
 
+import amerebagatelle.github.io.simplecoordinates.coordinates.CoordinateSet;
 import amerebagatelle.github.io.simplecoordinates.coordinates.CoordinatesManager;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
@@ -7,6 +8,8 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import io.github.cottonmc.clientcommands.ClientCommandPlugin;
 import io.github.cottonmc.clientcommands.CottonClientCommandSource;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.network.MessageType;
 import net.minecraft.text.TranslatableText;
@@ -33,11 +36,12 @@ public class CoordinateCommand implements ClientCommandPlugin {
         commandDispatcher.register(coordinateCommand);
     }
 
+    @Environment(EnvType.CLIENT)
     private static int addCoordDetails(CommandContext<CottonClientCommandSource> ctx) {
         MinecraftClient mc = MinecraftClient.getInstance();
         BlockPos coordinate = mc.player.getBlockPos();
         try {
-            CoordinatesManager.writeToCoordinates(StringArgumentType.getString(ctx, "name"), coordinate.getX(), coordinate.getY(), coordinate.getZ(), StringArgumentType.getString(ctx, "details"));
+            CoordinatesManager.writeToCoordinates(new CoordinateSet(StringArgumentType.getString(ctx, "name"), coordinate.getX(), coordinate.getY(), coordinate.getZ(), StringArgumentType.getString(ctx, "details")));
             mc.inGameHud.addChatMessage(MessageType.SYSTEM, new TranslatableText("return.simplecoordinates.coordinatewritesuccess"));
             return 1;
         } catch (IOException e) {
@@ -46,11 +50,12 @@ public class CoordinateCommand implements ClientCommandPlugin {
         }
     }
 
+    @Environment(EnvType.CLIENT)
     private static int addCoord(CommandContext<CottonClientCommandSource> ctx) {
         MinecraftClient mc = MinecraftClient.getInstance();
         BlockPos coordinate = mc.player.getBlockPos();
         try {
-            CoordinatesManager.writeToCoordinates(StringArgumentType.getString(ctx, "name"), coordinate.getX(), coordinate.getY(), coordinate.getZ(), "");
+            CoordinatesManager.writeToCoordinates(new CoordinateSet(StringArgumentType.getString(ctx, "name"), coordinate.getX(), coordinate.getY(), coordinate.getZ(), ""));
             mc.inGameHud.addChatMessage(MessageType.SYSTEM, new TranslatableText("return.simplecoordinates.coordinatewritesuccess"));
             return 1;
         } catch (IOException e) {
@@ -59,6 +64,7 @@ public class CoordinateCommand implements ClientCommandPlugin {
         }
     }
 
+    @Environment(EnvType.CLIENT)
     private static int removeCoord(CommandContext<CottonClientCommandSource> ctx) {
         MinecraftClient mc = MinecraftClient.getInstance();
         try {
