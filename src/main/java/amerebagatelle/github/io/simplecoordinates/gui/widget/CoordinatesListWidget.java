@@ -10,15 +10,17 @@ import java.util.ArrayList;
 
 public class CoordinatesListWidget extends AlwaysSelectedEntryListWidget<CoordinatesListWidget.Entry> {
     private final ArrayList<CoordinateSet> coordinatesList;
+    private ArrayList<CoordinateSet> currentCoordinateList;
     private final CoordinatesScreen gui;
     private String currentFolder;
 
     public CoordinatesListWidget(CoordinatesScreen gui, MinecraftClient client, ArrayList<CoordinateSet> initialCoordinateList) {
-        super(client, gui.width, gui.height, gui.height / 3, gui.height - 64, 20);
+        super(client, gui.width / 3 * 2 - 20, gui.height, 40, gui.height / 9 * 8, 20);
         this.gui = gui;
         this.coordinatesList = initialCoordinateList;
         currentFolder = "default";
-        coordinatesList.forEach(coordinate -> this.addEntry(new CoordinateListEntry(gui, coordinate)));
+        findEntriesForCurrentFolder();
+        currentCoordinateList.forEach(coordinate -> this.addEntry(new CoordinateListEntry(gui, coordinate)));
     }
 
     @Override
@@ -28,7 +30,22 @@ public class CoordinatesListWidget extends AlwaysSelectedEntryListWidget<Coordin
 
     public void setCoordinatesFolder(String folder) {
         this.currentFolder = folder;
-        this.gui.refresh();
+        findEntriesForCurrentFolder();
+        refreshEntries();
+    }
+
+    public void refreshEntries() {
+        this.clearEntries();
+        currentCoordinateList.forEach(coordinate -> this.addEntry(new CoordinateListEntry(gui, coordinate)));
+    }
+
+    public void findEntriesForCurrentFolder() {
+        currentCoordinateList = new ArrayList<>();
+        coordinatesList.forEach(coordinateSet -> {
+            if (coordinateSet.getFolder().equals(currentFolder)) {
+                currentCoordinateList.add(coordinateSet);
+            }
+        });
     }
 
     public void setSelected(CoordinatesListWidget.Entry entry) {

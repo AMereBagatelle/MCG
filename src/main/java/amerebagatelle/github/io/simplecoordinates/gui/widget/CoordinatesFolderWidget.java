@@ -11,19 +11,26 @@ public class CoordinatesFolderWidget extends AlwaysSelectedEntryListWidget<Coord
     private final ArrayList<CoordinateSet> coordinatesList;
     private final CoordinatesScreen gui;
     private final ArrayList<String> folders = new ArrayList<>();
+    private final CoordinatesListWidget coordinatesListWidget;
 
-    public CoordinatesFolderWidget(CoordinatesScreen gui, MinecraftClient client, ArrayList<CoordinateSet> coordinateList) {
-        super(client, gui.width, gui.height, 40, gui.height / 3 - 16, 20);
+    public CoordinatesFolderWidget(CoordinatesScreen gui, MinecraftClient client, ArrayList<CoordinateSet> coordinateList, CoordinatesListWidget coordinatesListWidget) {
+        super(client, gui.width / 3 - 10, gui.height, 40, gui.height / 9 * 8, 20);
         this.gui = gui;
         this.coordinatesList = coordinateList;
+        this.coordinatesListWidget = coordinatesListWidget;
         for (CoordinateSet coordinateSet : coordinateList) {
             if (coordinateSet.getFolder() != null && !folders.contains(coordinateSet.getFolder())) {
                 folders.add(coordinateSet.getFolder());
             }
         }
-        for (String folder : folders) {
+        folders.forEach(folder -> {
             this.addEntry(new CoordinateFolderEntry(gui, folder, client));
-        }
+        });
+    }
+
+    public void setSelected(CoordinatesFolderWidget.Entry entry) {
+        super.setSelected(entry);
+        this.ensureVisible(entry);
     }
 
     @Override
@@ -54,7 +61,19 @@ public class CoordinatesFolderWidget extends AlwaysSelectedEntryListWidget<Coord
 
         @Override
         public void render(int index, int y, int x, int width, int height, int mouseX, int mouseY, boolean hovering, float delta) {
-            CoordinatesFolderWidget.this.drawCenteredString(client.textRenderer, folder, gui.width / 2, y - height / 2, 16777215);
+            CoordinatesFolderWidget.this.drawCenteredString(client.textRenderer, folder, width / 2, y + height / 2, 16777215);
+        }
+
+        @Override
+        public boolean mouseClicked(double mouseX, double mouseY, int button) {
+            CoordinatesFolderWidget.this.setSelected(this);
+            CoordinatesFolderWidget.this.coordinatesListWidget.setCoordinatesFolder(folder);
+            return false;
+        }
+
+        @Override
+        public boolean mouseReleased(double mouseX, double mouseY, int button) {
+            return false;
         }
     }
 

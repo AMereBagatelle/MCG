@@ -3,6 +3,7 @@ package amerebagatelle.github.io.simplecoordinates.gui.screen;
 import amerebagatelle.github.io.simplecoordinates.SimpleCoordinates;
 import amerebagatelle.github.io.simplecoordinates.coordinates.CoordinateSet;
 import amerebagatelle.github.io.simplecoordinates.coordinates.CoordinatesManager;
+import amerebagatelle.github.io.simplecoordinates.gui.widget.CoordinatesFolderWidget;
 import amerebagatelle.github.io.simplecoordinates.gui.widget.CoordinatesListWidget;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 public class CoordinatesScreen extends Screen {
     private final MinecraftClient client;
     public CoordinatesListWidget coordinatesListWidget;
+    public CoordinatesFolderWidget folderWidget;
     public CoordinateSet selectedCoordinates;
     private final TextRenderer textRenderer;
     private final int textColor = 16777215;
@@ -51,16 +53,22 @@ public class CoordinatesScreen extends Screen {
         try {
             coordinatesList = CoordinatesManager.loadCoordinates();
             coordinatesListWidget = new CoordinatesListWidget(this, client, coordinatesList);
+            coordinatesListWidget.setLeftPos((this.width / 3) + 10);
+            folderWidget = new CoordinatesFolderWidget(this, client, coordinatesList, coordinatesListWidget);
+            folderWidget.setLeftPos(10);
         } catch (IOException e) {
             SimpleCoordinates.logger.error(I18n.translate("return.simplecoordinates.coordinateloadfail"));
         }
         this.children.add(coordinatesListWidget);
+        this.children.add(folderWidget);
     }
 
     @Override
     public void render(int mouseX, int mouseY, float delta) {
         if (coordinatesListWidget != null) {
+            this.renderDirtBackground(0);
             this.coordinatesListWidget.render(mouseX, mouseY, delta);
+            this.folderWidget.render(mouseX, mouseY, delta);
             this.drawCenteredString(this.font, this.title.asFormattedString(), this.width / 2, 20, 16777215);
             super.render(mouseX, mouseY, delta);
             if (selectedCoordinates != null) {

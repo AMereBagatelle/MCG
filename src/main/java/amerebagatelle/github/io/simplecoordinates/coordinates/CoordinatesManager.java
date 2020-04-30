@@ -72,12 +72,14 @@ public class CoordinatesManager {
              coordinateKeys.forEach(key -> {
                  Map keyJSON = (Map)coordinateJson.get(key);
                 if(keyJSON.containsKey("x")) {
-                    coordinateList.add(getCoordinateFromJSON(coordinateJson, key));
+                    CoordinateSet coordinateSet = getCoordinateFromJSON(coordinateJson, key);
+                    coordinateSet.setFolder("default");
+                    coordinateList.add(coordinateSet);
                 } else {
                     Set<String> internalKeySet = keyJSON.keySet();
                     internalKeySet.forEach(internalKey -> {
                         CoordinateSet coordinateSet = getCoordinateFromJSON(keyJSON, internalKey);
-                        coordinateSet.setFolder(internalKey);
+                        coordinateSet.setFolder(key);
                         coordinateList.add(coordinateSet);
                     });
                 }
@@ -93,7 +95,7 @@ public class CoordinatesManager {
     }
 
     public static CoordinateSet getCoordinateFromJSON(Map JSON, String key) {
-        Map coordinate = (Map)JSON.get(key);
+        Map coordinate = (Map) JSON.get(key);
         Iterator<Map.Entry> coordinateItr = coordinate.entrySet().iterator();
         CoordinateSet xyzd = new CoordinateSet("Unregistered", 0, 0, 0, "Unregistered");
         xyzd.setName(key);
@@ -103,6 +105,8 @@ public class CoordinatesManager {
         xyzd.setY(Integer.parseInt(pair.getValue().toString()));
         pair = coordinateItr.next();
         xyzd.setZ(Integer.parseInt(pair.getValue().toString()));
+        pair = coordinateItr.next();
+        xyzd.setDetails(pair.getValue().toString());
         return xyzd;
     }
 
@@ -119,11 +123,11 @@ public class CoordinatesManager {
         String folder = coordinates.getFolder();
 
         if(folder.length() == 0) {
-            Map insertFolder = (Map)coordinatesJSON.get("default");
+            Map<String, Map> insertFolder = new LinkedHashMap<>(1);
             insertFolder.put(coordinateKey, m);
             coordinatesJSON.put("default", insertFolder);
         } else {
-            Map insertFolder = (Map)coordinatesJSON.get(folder);
+            Map<String, Map> insertFolder = new LinkedHashMap<>(1);
             insertFolder.put(coordinateKey, m);
             coordinatesJSON.put(folder, insertFolder);
         }
