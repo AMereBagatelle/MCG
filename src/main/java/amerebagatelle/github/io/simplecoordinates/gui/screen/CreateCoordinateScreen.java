@@ -78,6 +78,7 @@ public class CreateCoordinateScreen extends Screen {
             this.coordinateYField.setText(Integer.toString(selectedCoordinates.getY()));
             this.coordinateZField.setText(Integer.toString(selectedCoordinates.getZ()));
             this.coordinateDetailsField.setText(selectedCoordinates.getDetails());
+            this.coordinateFolderField.setText(selectedCoordinates.getFolder());
         }
         this.updateButtonActivationStates();
     }
