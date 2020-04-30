@@ -40,7 +40,7 @@ public class CoordinatesFolderWidget extends AlwaysSelectedEntryListWidget<Coord
 
     @Override
     public int getRowWidth() {
-        return super.getRowWidth() + 100;
+        return super.getRowWidth();
     }
 
     @Override
@@ -61,7 +61,7 @@ public class CoordinatesFolderWidget extends AlwaysSelectedEntryListWidget<Coord
 
         @Override
         public void render(int index, int y, int x, int width, int height, int mouseX, int mouseY, boolean hovering, float delta) {
-            CoordinatesFolderWidget.this.drawCenteredString(client.textRenderer, folder, width / 2, y + height / 2, 16777215);
+            CoordinatesFolderWidget.this.drawCenteredString(client.textRenderer, folder, x + width / 2, y + height / 2, 16777215);
         }
 
         @Override

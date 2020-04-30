@@ -17,6 +17,6 @@
   "writecoordinate.enterX": "X",
   "writecoordinate.enterY": "Y",
   "writecoordinate.enterZ": "Z",
-  "writecoordinate.enterFolder": "Folder",
+  "writecoordinate.enterFolder": "Folder (will create new if name doesn't exist)",
   "coordinatefile.creation": "New server/world, creating new coordinates file"
 }
