@@ -3,7 +3,7 @@ package amerebagatelle.github.io.simplecoordinates.gui.screen;
 import amerebagatelle.github.io.simplecoordinates.SimpleCoordinates;
 import amerebagatelle.github.io.simplecoordinates.coordinates.CoordinateSet;
 import amerebagatelle.github.io.simplecoordinates.coordinates.CoordinatesManager;
-import amerebagatelle.github.io.simplecoordinates.gui.widget.CoordinatesWidget;
+import amerebagatelle.github.io.simplecoordinates.gui.widget.CoordinatesListWidget;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.screen.Screen;
@@ -16,11 +16,10 @@ import java.util.ArrayList;
 
 public class CoordinatesScreen extends Screen {
     private final MinecraftClient client;
-    public CoordinatesWidget coordinatesWidget;
+    public CoordinatesListWidget coordinatesListWidget;
     public CoordinateSet selectedCoordinates;
     private final TextRenderer textRenderer;
     private final int textColor = 16777215;
-
     private ButtonWidget buttonWrite;
     private ButtonWidget buttonRefresh;
     private ButtonWidget buttonDelete;
@@ -51,22 +50,21 @@ public class CoordinatesScreen extends Screen {
         this.updateButtonStates();
         try {
             coordinatesList = CoordinatesManager.loadCoordinates();
-            coordinatesWidget = new CoordinatesWidget(this, client, coordinatesList);
+            coordinatesListWidget = new CoordinatesListWidget(this, client, coordinatesList);
         } catch (IOException e) {
             SimpleCoordinates.logger.error(I18n.translate("return.simplecoordinates.coordinateloadfail"));
         }
-        this.children.add(coordinatesWidget);
+        this.children.add(coordinatesListWidget);
     }
 
     @Override
     public void render(int mouseX, int mouseY, float delta) {
-        if(coordinatesWidget != null) {
-            this.renderDirtBackground(0);
-            this.coordinatesWidget.render(mouseX, mouseY, delta);
+        if (coordinatesListWidget != null) {
+            this.coordinatesListWidget.render(mouseX, mouseY, delta);
             this.drawCenteredString(this.font, this.title.asFormattedString(), this.width / 2, 20, 16777215);
             super.render(mouseX, mouseY, delta);
             if (selectedCoordinates != null) {
-                int coordinatesDrawY = this.height-36;
+                int coordinatesDrawY = this.height - 36;
                 int coordinatesDrawX = 10;
                 String x = Integer.toString(selectedCoordinates.getX());
                 String y = Integer.toString(selectedCoordinates.getY());
@@ -92,8 +90,8 @@ public class CoordinatesScreen extends Screen {
         return false;
     }
 
-    public void select(CoordinatesWidget.Entry entry, CoordinateSet selectedCoordinates) {
-        this.coordinatesWidget.setSelected(entry);
+    public void select(CoordinatesListWidget.Entry entry, CoordinateSet selectedCoordinates) {
+        this.coordinatesListWidget.setSelected(entry);
         this.selectedCoordinates = selectedCoordinates;
         this.updateButtonStates();
     }

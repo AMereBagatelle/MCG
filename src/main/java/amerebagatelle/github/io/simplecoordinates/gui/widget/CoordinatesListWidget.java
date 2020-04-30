@@ -8,23 +8,30 @@ import net.minecraft.client.gui.widget.AlwaysSelectedEntryListWidget;
 
 import java.util.ArrayList;
 
-public class CoordinatesWidget extends AlwaysSelectedEntryListWidget<CoordinatesWidget.Entry> {
-    private ArrayList<CoordinateSet> coordinatesList;
+public class CoordinatesListWidget extends AlwaysSelectedEntryListWidget<CoordinatesListWidget.Entry> {
+    private final ArrayList<CoordinateSet> coordinatesList;
     private final CoordinatesScreen gui;
+    private String currentFolder;
 
-    public CoordinatesWidget(CoordinatesScreen gui, MinecraftClient client, ArrayList<CoordinateSet> initialCoordinateList) {
+    public CoordinatesListWidget(CoordinatesScreen gui, MinecraftClient client, ArrayList<CoordinateSet> initialCoordinateList) {
         super(client, gui.width, gui.height, gui.height / 3, gui.height - 64, 20);
         this.gui = gui;
         this.coordinatesList = initialCoordinateList;
+        currentFolder = "default";
         coordinatesList.forEach(coordinate -> this.addEntry(new CoordinateListEntry(gui, coordinate)));
     }
 
-    public void setCoordinatesList(ArrayList<CoordinateSet> coordinatesList) {
-        this.coordinatesList = coordinatesList;
+    @Override
+    public void render(int mouseX, int mouseY, float delta) {
+        super.render(mouseX, mouseY, delta);
+    }
+
+    public void setCoordinatesFolder(String folder) {
+        this.currentFolder = folder;
         this.gui.refresh();
     }
 
-    public void setSelected(CoordinatesWidget.Entry entry) {
+    public void setSelected(CoordinatesListWidget.Entry entry) {
         super.setSelected(entry);
         this.ensureVisible(entry);
     }
@@ -44,7 +51,7 @@ public class CoordinatesWidget extends AlwaysSelectedEntryListWidget<Coordinates
         return this.gui.getFocused() == this;
     }
 
-    public class CoordinateListEntry extends CoordinatesWidget.Entry {
+    public class CoordinateListEntry extends CoordinatesListWidget.Entry {
         public String name;
         public int x, y, z;
         private final CoordinatesScreen gui;
@@ -61,14 +68,14 @@ public class CoordinatesWidget extends AlwaysSelectedEntryListWidget<Coordinates
 
         @Override
         public void render(int index, int y, int x, int width, int height, int mouseX, int mouseY, boolean hovering, float delta) {
-            TextRenderer textRenderer = CoordinatesWidget.this.minecraft.textRenderer;
+            TextRenderer textRenderer = CoordinatesListWidget.this.minecraft.textRenderer;
             int color = 16777215;
-            int drawY = y+CoordinatesWidget.this.itemHeight/2-textRenderer.fontHeight+3;
-            int rowWidth = CoordinatesWidget.this.getRowWidth();
+            int drawY = y + CoordinatesListWidget.this.itemHeight / 2 - textRenderer.fontHeight + 3;
+            int rowWidth = CoordinatesListWidget.this.getRowWidth();
             textRenderer.draw(name, x, drawY, color);
-            CoordinatesWidget.this.drawCenteredString(textRenderer, Integer.toString(this.x), x+rowWidth/5*2, drawY, color);
-            CoordinatesWidget.this.drawCenteredString(textRenderer, Integer.toString(this.y), x+rowWidth/5*3, drawY, color);
-            CoordinatesWidget.this.drawCenteredString(textRenderer, Integer.toString(this.z), x+rowWidth/5*4, drawY, color);
+            CoordinatesListWidget.this.drawCenteredString(textRenderer, Integer.toString(this.x), x + rowWidth / 5 * 2, drawY, color);
+            CoordinatesListWidget.this.drawCenteredString(textRenderer, Integer.toString(this.y), x + rowWidth / 5 * 3, drawY, color);
+            CoordinatesListWidget.this.drawCenteredString(textRenderer, Integer.toString(this.z), x + rowWidth / 5 * 4, drawY, color);
         }
 
         @Override
@@ -83,7 +90,7 @@ public class CoordinatesWidget extends AlwaysSelectedEntryListWidget<Coordinates
         }
     }
 
-    public abstract class Entry extends AlwaysSelectedEntryListWidget.Entry<CoordinatesWidget.Entry>{
+    public abstract class Entry extends AlwaysSelectedEntryListWidget.Entry<CoordinatesListWidget.Entry> {
         public Entry() {
         }
     }
