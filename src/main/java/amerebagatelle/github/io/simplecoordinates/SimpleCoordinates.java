@@ -14,7 +14,5 @@ public class SimpleCoordinates implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         logger.info("Gathering your coordinates...");
-
-        CoordinatesManager.initCoordinates();
     }
 }

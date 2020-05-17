@@ -18,20 +18,20 @@ public class CoordinatesManager {
     public static final String coordinatesFolder = "coordinates";
     private static final Logger logger = LogManager.getLogger();
 
-    public static void initCoordinates() {
+    public void initCoordinatesFolder() {
+        File coordinatesFolderFile = new File(coordinatesFolder);
+        if(!coordinatesFolderFile.exists() && !coordinatesFolderFile.isDirectory()) {
+            coordinatesFolderFile.mkdir();
+        }
     }
 
-    @Environment(EnvType.CLIENT)
-    public static void initCoordinatesForServer(String serverName) {
-    }
-
-    public static ArrayList<ArrayList<String>> loadCoordinates() throws IOException {
+    public ArrayList<ArrayList<String>> loadCoordinates() throws IOException {
         return null;
     }
 
-    public static void writeToCoordinates(String coordinateKey, int x, int y, int z, String details) throws IOException {
+    public void writeToCoordinates(String coordinateKey, int x, int y, int z, String details) throws IOException {
     }
 
-    public static void removeCoordinate(String coordinateKey) throws IOException {
+    public void removeCoordinate(String coordinateKey) throws IOException {
     }
 }
