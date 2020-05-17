@@ -16,7 +16,5 @@ public class SimpleCoordinates implements ClientModInitializer {
         logger.info("Gathering your coordinates...");
 
         CoordinatesManager.initCoordinates();
-        KeybindHandler.initKeybinds();
-        KeybindHandler.registerKeybindActions();
     }
 }

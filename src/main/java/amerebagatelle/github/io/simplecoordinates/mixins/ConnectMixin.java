@@ -19,12 +19,7 @@ public abstract class ConnectMixin {
     @Environment(EnvType.CLIENT)
     @Inject(method="onGameJoin", at=@At("TAIL"))
     private void onConnectedToServerEvent(GameJoinS2CPacket packet, CallbackInfo cbi) {
-        MinecraftClient mc = MinecraftClient.getInstance();
-        if(mc.getServer() != null) {
-            CoordinatesManager.initCoordinatesForServer(mc.getServer().getServerName() + "-Local");
-        } else {
-            CoordinatesManager.initCoordinatesForServer(mc.getCurrentServerEntry().name + "-Server");
-        }
+
     }
 
     @Environment(EnvType.CLIENT)
