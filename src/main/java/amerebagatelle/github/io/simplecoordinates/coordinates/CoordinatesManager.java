@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
@@ -15,6 +16,8 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.*;
 
 public class CoordinatesManager {
@@ -51,26 +54,29 @@ public class CoordinatesManager {
     }
 
     public void writeToCoordinates(String filepath, CoordinatesSet coordinates) throws IOException {
-        File coordinatesFile = new File(filepath);
-        BufferedReader reader = new BufferedReader(new FileReader(coordinatesFile));
-        JsonObject coordinatesJson = gson.fromJson(reader, JsonObject.class);
-        reader.close();
+        Path coordinatesFilepath = new File(filepath).toPath();
+        String jsonAsString = new String(Files.readAllBytes(coordinatesFilepath));
+        JsonObject coordinatesJson = gson.fromJson(jsonAsString, JsonObject.class);
 
-        coordinatesJson.add(coordinates.name, gson.toJsonTree(coordinates));
+        Map<String, String> map = new LinkedHashMap<String, String>();
+        map.put("x", Integer.toString(coordinates.x));
+        map.put("y", Integer.toString(coordinates.y));
+        map.put("z", Integer.toString(coordinates.z));
+        map.put("description", coordinates.description);
+        JsonElement mapToElement = gson.toJsonTree(map);
 
-        BufferedWriter writer = new BufferedWriter(new FileWriter(coordinatesFile));
-        writer.write(gson.toJson(coordinatesJson));
+        coordinatesJson.add(coordinates.name, mapToElement);
+
+        Files.write(coordinatesFilepath, gson.toJson(coordinatesJson).getBytes());
     }
 
     public void removeCoordinate(String filepath, CoordinatesSet coordinates) throws IOException {
-        File coordinatesFile = new File(filepath);
-        BufferedReader reader = new BufferedReader(new FileReader(coordinatesFile));
-        JsonObject coordinatesJson = gson.fromJson(reader, JsonObject.class);
-        reader.close();
+        Path coordinatesFilepath = new File(filepath).toPath();
+        String jsonAsString = new String(Files.readAllBytes(coordinatesFilepath));
+        JsonObject coordinatesJson = (JsonObject)gson.toJsonTree(jsonAsString);
 
         coordinatesJson.remove(coordinates.name);
 
-        BufferedWriter writer = new BufferedWriter(new FileWriter(coordinatesFile));
-        writer.write(gson.toJson(coordinatesJson));
+        Files.write(coordinatesFilepath, gson.toJson(coordinatesJson).getBytes());
     }
 }

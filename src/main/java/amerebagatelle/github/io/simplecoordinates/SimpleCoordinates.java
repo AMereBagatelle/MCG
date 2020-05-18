@@ -1,6 +1,7 @@
 package amerebagatelle.github.io.simplecoordinates;
 
 import amerebagatelle.github.io.simplecoordinates.coordinates.CoordinatesManager;
+import amerebagatelle.github.io.simplecoordinates.coordinates.CoordinatesSet;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.Environment;
 import net.fabricmc.api.EnvType;
@@ -19,10 +20,5 @@ public class SimpleCoordinates implements ClientModInitializer {
         logger.info("Gathering your coordinates...");
 
         coordinatesManager.initCoordinatesFolder();
-        try {
-            coordinatesManager.loadCoordinates("coordinates/coordinate1.json");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }
