@@ -36,6 +36,23 @@ public class CoordinatesManager {
         }
     }
 
+    public void initNewCoordinatesFile(String filepath) throws IOException {
+        File coordinatesFile = new File(filepath);
+        Path coordinatesFilePath = coordinatesFile.toPath();
+        if(coordinatesFile.exists()) return;
+
+        try {
+            if(coordinatesFile.createNewFile()) {
+                Files.write(coordinatesFilePath, "{}".getBytes());
+            } else {
+                throw new IOException();
+            }
+        } catch (IOException e) {
+            logger.info("Could not create coordinates file.");
+            throw new IOException("Couldn't create coordinates file.");
+        }
+    }
+
     public CoordinatesList loadCoordinates(String filepath) throws IOException {
         File coordinatesFile = new File(filepath);
         if(!coordinatesFile.exists()) return new CoordinatesList().createNull();
