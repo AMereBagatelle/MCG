@@ -1,6 +1,9 @@
 package amerebagatelle.github.io.simplecoordinates.coordinates;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
@@ -15,8 +18,13 @@ import java.io.*;
 import java.util.*;
 
 public class CoordinatesManager {
-    public static final String coordinatesFolder = "coordinates";
-    private static final Logger logger = LogManager.getLogger();
+    public final String coordinatesFolder = "coordinates";
+    private final Logger logger = LogManager.getLogger();
+    private final Gson gson;
+    
+    public CoordinatesManager() {
+        gson = new Gson();
+    }
 
     public void initCoordinatesFolder() {
         File coordinatesFolderFile = new File(coordinatesFolder);
@@ -25,13 +33,44 @@ public class CoordinatesManager {
         }
     }
 
-    public ArrayList<ArrayList<String>> loadCoordinates() throws IOException {
-        return null;
+    public CoordinatesList loadCoordinates(String filepath) throws IOException {
+        File coordinatesFile = new File(filepath);
+        if(!coordinatesFile.exists()) return new CoordinatesList().createNull();
+
+        CoordinatesList loadedList = new CoordinatesList();
+        BufferedReader reader = new BufferedReader(new FileReader(coordinatesFile));
+        JsonObject coordinatesJson = gson.fromJson(reader, JsonObject.class);
+        reader.close();
+
+        for (Map.Entry<String, JsonElement> entry : coordinatesJson.entrySet()) {
+            CoordinatesSet coordinatesParsed = gson.fromJson(entry.getValue(), CoordinatesSet.class);
+            loadedList.addEntry(coordinatesParsed);
+        }
+        
+        return loadedList;
     }
 
-    public void writeToCoordinates(String coordinateKey, int x, int y, int z, String details) throws IOException {
+    public void writeToCoordinates(String filepath, CoordinatesSet coordinates) throws IOException {
+        File coordinatesFile = new File(filepath);
+        BufferedReader reader = new BufferedReader(new FileReader(coordinatesFile));
+        JsonObject coordinatesJson = gson.fromJson(reader, JsonObject.class);
+        reader.close();
+
+        coordinatesJson.add(coordinates.name, gson.toJsonTree(coordinates));
+
+        BufferedWriter writer = new BufferedWriter(new FileWriter(coordinatesFile));
+        writer.write(gson.toJson(coordinatesJson));
     }
 
-    public void removeCoordinate(String coordinateKey) throws IOException {
+    public void removeCoordinate(String filepath, CoordinatesSet coordinates) throws IOException {
+        File coordinatesFile = new File(filepath);
+        BufferedReader reader = new BufferedReader(new FileReader(coordinatesFile));
+        JsonObject coordinatesJson = gson.fromJson(reader, JsonObject.class);
+        reader.close();
+
+        coordinatesJson.remove(coordinates.name);
+
+        BufferedWriter writer = new BufferedWriter(new FileWriter(coordinatesFile));
+        writer.write(gson.toJson(coordinatesJson));
     }
 }

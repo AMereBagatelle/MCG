@@ -21,17 +21,6 @@ public class CoordinateCommand implements ClientCommandPlugin {
 
     @Override
     public void registerCommands(CommandDispatcher<CottonClientCommandSource> commandDispatcher) {
-    }
 
-    private static int addCoordDetails(CommandContext<CottonClientCommandSource> ctx) {
-        return 0;
-    }
-
-    private static int addCoord(CommandContext<CottonClientCommandSource> ctx) {
-        return 0;
-    }
-
-    private static int removeCoord(CommandContext<CottonClientCommandSource> ctx) {
-        return 0;
     }
 }
