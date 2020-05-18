@@ -14,7 +14,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class CoordinatesScreen extends Screen {
-    private final MinecraftClient client;
     public CoordinatesWidget coordinatesWidget;
     public ArrayList<String> selectedCoordinates;
     private final int textColor = 16777215;
@@ -23,9 +22,8 @@ public class CoordinatesScreen extends Screen {
     private ButtonWidget buttonRefresh;
     private ButtonWidget buttonDelete;
 
-    public CoordinatesScreen(MinecraftClient client) {
+    public CoordinatesScreen() {
         super(new TranslatableText("screen.coordinates.title"));
-        this.client = client;
     }
 
     @Override
@@ -55,7 +53,7 @@ public class CoordinatesScreen extends Screen {
     }
 
     public void refresh() {
-        client.openScreen(this);
+        minecraft.openScreen(this);
     }
 
     public void updateButtonStates() {
