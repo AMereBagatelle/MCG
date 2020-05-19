@@ -11,16 +11,25 @@ import net.minecraft.client.render.Tessellator;
 import java.util.ArrayList;
 
 public class CoordinatesWidget extends AlwaysSelectedEntryListWidget<CoordinatesWidget.Entry> {
-    CoordinatesList currentCoordinatesList;
+    public CoordinatesList currentCoordinatesList;
+    public String coordinatesListName = "";
 
     public CoordinatesWidget(MinecraftClient minecraftClient, int width, int height, int top, int bottom, int itemHeight) {
         super(minecraftClient, width, height, top, bottom, itemHeight);
-        this.setCurrentList(new CoordinatesList().createNull());
+        this.setCurrentList(new CoordinatesList().createNull(), "");
     }
 
-    public void setCurrentList(CoordinatesList list) {
+    @Override
+    public void render(int mouseX, int mouseY, float delta) {
+        super.render(mouseX, mouseY, delta);
+        this.drawCenteredString(this.minecraft.textRenderer, "Coordinates", this.left+this.width/2, this.top-30, 16777215);
+        this.drawCenteredString(this.minecraft.textRenderer, coordinatesListName, this.left+this.width/2, this.top-15, 3553279);
+    }
+
+    public void setCurrentList(CoordinatesList list, String name) {
         this.clearEntries();
         currentCoordinatesList = list;
+        coordinatesListName = name;
         if(!list.isNull) {
             for (CoordinatesSet coordinatesSet : list.coordinatesSets) {
                 this.addEntry(new CoordinateListEntry(coordinatesSet));
@@ -54,14 +63,14 @@ public class CoordinatesWidget extends AlwaysSelectedEntryListWidget<Coordinates
         public void render(int index, int y, int x, int width, int height, int mouseX, int mouseY, boolean hovering, float delta) {
             TextRenderer renderer = CoordinatesWidget.this.minecraft.textRenderer;
             CoordinatesWidget.this.drawString(renderer, coordinates.name, x+5, y, 16777215);
-            CoordinatesWidget.this.drawString(renderer, Integer.toString(coordinates.x), x+30, y, 16777215);
-            CoordinatesWidget.this.drawString(renderer, Integer.toString(coordinates.y), x+60, y, 16777215);
-            CoordinatesWidget.this.drawString(renderer, Integer.toString(coordinates.z), x+90, y, 16777215);
-            CoordinatesWidget.this.drawString(renderer, coordinates.description, x+120, y, 16777215);
+            CoordinatesWidget.this.drawString(renderer, Integer.toString(coordinates.x), x+60, y, 16777215);
+            CoordinatesWidget.this.drawString(renderer, Integer.toString(coordinates.y), x+90, y, 16777215);
+            CoordinatesWidget.this.drawString(renderer, Integer.toString(coordinates.z), x+120, y, 16777215);
         }
 
         @Override
         public boolean mouseClicked(double mouseX, double mouseY, int button) {
+            CoordinatesWidget.this.setSelected(this);
             return false;
         }
 

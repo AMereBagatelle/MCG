@@ -35,10 +35,9 @@ public class CoordinatesScreen extends Screen {
 
     @Override
     public void render(int mouseX, int mouseY, float delta) {
-        this.renderDirtBackground(0);
+        this.renderBackground();
         coordinateFileListWidget.render(mouseX, mouseY, delta);
         coordinatesWidget.render(mouseX, mouseY, delta);
-        this.drawCenteredString(this.font, "Your coordinates", this.width/2, 10, 16777215);
     }
 
     @Override

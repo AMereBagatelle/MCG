@@ -46,11 +46,23 @@ public class CoordinateFileListWidget extends AlwaysSelectedEntryListWidget<Coor
         this.ensureVisible(entry);
         if(entry instanceof CoordinateFileEntry) {
             try {
-                this.coordinatesWidget.setCurrentList(SimpleCoordinates.coordinatesManager.loadCoordinates(workingDirectory + "/" + ((CoordinateFileEntry) entry).name));
+                this.coordinatesWidget.setCurrentList(SimpleCoordinates.coordinatesManager.loadCoordinates(workingDirectory + "/" + ((CoordinateFileEntry) entry).name), ((CoordinateFileEntry) entry).name);
             } catch (IOException e) {
                 SimpleCoordinates.logger.info("Could not load coordinates file.");
             }
+        } else {
+            this.coordinatesWidget.coordinatesListName = "";
         }
+    }
+
+    @Override
+    public void render(int mouseX, int mouseY, float delta) {
+        super.render(mouseX, mouseY, delta);
+        this.drawCenteredString(this.minecraft.textRenderer, "Files", this.left+this.width/2, this.top-30, 16777215);
+    }
+
+    @Override
+    protected void renderBackground() {
     }
 
     public class CoordinateFileEntry extends CoordinateFileListWidget.Entry {

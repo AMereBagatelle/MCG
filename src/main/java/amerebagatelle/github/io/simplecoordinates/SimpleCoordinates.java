@@ -42,11 +42,5 @@ public class SimpleCoordinates implements ClientModInitializer {
         ClientTickCallback.EVENT.register(e -> {
             if(debug.wasPressed()) MinecraftClient.getInstance().openScreen(new CoordinatesScreen());
         });
-
-        try {
-            coordinatesManager.writeToCoordinates("coordinates/coordinate1.json", new CoordinatesSet("test", 1, 3, 54, "test"));
-        } catch(IOException ignored) {
-
-        }
     }
 }
