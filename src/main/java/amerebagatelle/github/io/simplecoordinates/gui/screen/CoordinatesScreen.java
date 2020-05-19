@@ -17,12 +17,6 @@ import java.util.ArrayList;
 public class CoordinatesScreen extends Screen {
     public CoordinateFileListWidget coordinateFileListWidget;
     public CoordinatesWidget coordinatesWidget;
-    public ArrayList<String> selectedCoordinates;
-    private final int textColor = 16777215;
-
-    private ButtonWidget buttonWrite;
-    private ButtonWidget buttonRefresh;
-    private ButtonWidget buttonDelete;
 
     public CoordinatesScreen() {
         super(new TranslatableText("screen.coordinates.title"));
@@ -31,14 +25,20 @@ public class CoordinatesScreen extends Screen {
     @Override
     public void init() {
         super.init();
-        coordinateFileListWidget = new CoordinateFileListWidget(this.minecraft, this.width, this.height, 40, this.height-10, 20);
+        coordinatesWidget = new CoordinatesWidget(this.minecraft, this.width/2-20, this.height, 40, this.height - 10, 20);
+        this.children.add(coordinatesWidget);
+        this.coordinatesWidget.setLeftPos(this.width/2+10);
+        coordinateFileListWidget = new CoordinateFileListWidget(this.minecraft, this.width/2-10, this.height, 40, this.height-10, 20);
         this.children.add(coordinateFileListWidget);
+        this.coordinateFileListWidget.setLeftPos(10);
     }
 
     @Override
     public void render(int mouseX, int mouseY, float delta) {
         this.renderDirtBackground(0);
         coordinateFileListWidget.render(mouseX, mouseY, delta);
+        coordinatesWidget.render(mouseX, mouseY, delta);
+        this.drawCenteredString(this.font, "Your cooordinates", this.width/2, 30, 16777215);
     }
 
     @Override
@@ -49,19 +49,5 @@ public class CoordinatesScreen extends Screen {
     @Override
     public boolean isPauseScreen() {
         return false;
-    }
-
-    public void select(CoordinatesWidget.Entry entry, ArrayList<String> selectedCoordinates) {
-        this.coordinatesWidget.setSelected(entry);
-        this.selectedCoordinates = selectedCoordinates;
-        this.updateButtonStates();
-    }
-
-    public void refresh() {
-        minecraft.openScreen(this);
-    }
-
-    public void updateButtonStates() {
-        this.buttonDelete.active = selectedCoordinates != null;
     }
 }

@@ -15,6 +15,7 @@ public class CoordinateFileListWidget extends AlwaysSelectedEntryListWidget<Coor
     public CoordinateFileListWidget(MinecraftClient minecraftClient, int width, int height, int top, int bottom, int itemHeight) {
         super(minecraftClient, width, height, top, bottom, itemHeight);
         this.generateFileList();
+        this.centerListVertically = false;
     }
 
     public void changeWorkingDirectory(String directory) {
@@ -44,7 +45,7 @@ public class CoordinateFileListWidget extends AlwaysSelectedEntryListWidget<Coor
 
         @Override
         public void render(int index, int y, int x, int width, int height, int mouseX, int mouseY, boolean hovering, float delta) {
-            CoordinateFileListWidget.this.drawCenteredString(CoordinateFileListWidget.this.minecraft.textRenderer, this.name, x+width/2, y, 16777215);
+            CoordinateFileListWidget.this.drawCenteredString(CoordinateFileListWidget.this.minecraft.textRenderer, this.name, x, y, 16777215);
         }
     }
 

@@ -1,5 +1,7 @@
 package amerebagatelle.github.io.simplecoordinates.gui.widget;
 
+import amerebagatelle.github.io.simplecoordinates.coordinates.CoordinatesList;
+import amerebagatelle.github.io.simplecoordinates.coordinates.CoordinatesSet;
 import amerebagatelle.github.io.simplecoordinates.gui.screen.CoordinatesScreen;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
@@ -9,11 +11,21 @@ import net.minecraft.client.render.Tessellator;
 import java.util.ArrayList;
 
 public class CoordinatesWidget extends AlwaysSelectedEntryListWidget<CoordinatesWidget.Entry> {
-    private final CoordinatesScreen gui;
+    CoordinatesList currentCoordinatesList;
 
-    public CoordinatesWidget(CoordinatesScreen gui, MinecraftClient client, ArrayList<ArrayList<String>> coordinateList) {
-        super(client, gui.width, gui.height, 40, gui.height-64, 20);
-        this.gui = gui;
+    public CoordinatesWidget(MinecraftClient minecraftClient, int width, int height, int top, int bottom, int itemHeight) {
+        super(minecraftClient, width, height, top, bottom, itemHeight);
+        this.setCurrentList(new CoordinatesList().createNull());
+    }
+
+    public void setCurrentList(CoordinatesList list) {
+        this.clearEntries();
+        currentCoordinatesList = list;
+        if(!list.isNull) {
+            for (CoordinatesSet coordinatesSet : list.coordinatesSets) {
+                this.addEntry(new CoordinateListEntry(coordinatesSet));
+            }
+        }
     }
 
     public void setSelected(CoordinatesWidget.Entry entry) {
@@ -28,21 +40,14 @@ public class CoordinatesWidget extends AlwaysSelectedEntryListWidget<Coordinates
 
     @Override
     public int getRowWidth() {
-        return super.getRowWidth() + 100;
-    }
-
-    @Override
-    protected boolean isFocused() {
-        return this.gui.getFocused() == this;
+        return this.width;
     }
 
     public class CoordinateListEntry extends CoordinatesWidget.Entry {
-        public String name;
-        public String x, y, z;
-        private final CoordinatesScreen gui;
+        private final CoordinatesSet coordinates;
 
-        public CoordinateListEntry(CoordinatesScreen gui) {
-            this.gui = gui;
+        public CoordinateListEntry(CoordinatesSet coordinates) {
+            this.coordinates = coordinates;
         }
 
         @Override
@@ -51,7 +56,6 @@ public class CoordinatesWidget extends AlwaysSelectedEntryListWidget<Coordinates
 
         @Override
         public boolean mouseClicked(double mouseX, double mouseY, int button) {
-            //this.gui.select(this, this.coordinateList);
             return false;
         }
 
