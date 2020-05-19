@@ -52,6 +52,12 @@ public class CoordinatesWidget extends AlwaysSelectedEntryListWidget<Coordinates
 
         @Override
         public void render(int index, int y, int x, int width, int height, int mouseX, int mouseY, boolean hovering, float delta) {
+            TextRenderer renderer = CoordinatesWidget.this.minecraft.textRenderer;
+            CoordinatesWidget.this.drawString(renderer, coordinates.name, x+5, y, 16777215);
+            CoordinatesWidget.this.drawString(renderer, Integer.toString(coordinates.x), x+30, y, 16777215);
+            CoordinatesWidget.this.drawString(renderer, Integer.toString(coordinates.y), x+60, y, 16777215);
+            CoordinatesWidget.this.drawString(renderer, Integer.toString(coordinates.z), x+90, y, 16777215);
+            CoordinatesWidget.this.drawString(renderer, coordinates.description, x+120, y, 16777215);
         }
 
         @Override

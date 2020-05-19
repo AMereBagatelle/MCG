@@ -6,16 +6,19 @@ import net.minecraft.client.gui.widget.AlwaysSelectedEntryListWidget;
 import net.minecraft.util.Identifier;
 
 import java.io.File;
+import java.io.IOException;
 
 public class CoordinateFileListWidget extends AlwaysSelectedEntryListWidget<CoordinateFileListWidget.Entry> {
     public final Identifier TEXTURE = new Identifier("simplecoordinates", "textures/file_icons.png");
 
     public String workingDirectory = SimpleCoordinates.coordinatesManager.coordinatesFolder;
+    private CoordinatesWidget coordinatesWidget;
 
-    public CoordinateFileListWidget(MinecraftClient minecraftClient, int width, int height, int top, int bottom, int itemHeight) {
+    public CoordinateFileListWidget(MinecraftClient minecraftClient, int width, int height, int top, int bottom, int itemHeight, CoordinatesWidget coordinatesWidget) {
         super(minecraftClient, width, height, top, bottom, itemHeight);
         this.generateFileList();
         this.centerListVertically = false;
+        this.coordinatesWidget = coordinatesWidget;
     }
 
     public void changeWorkingDirectory(String directory) {
@@ -27,18 +30,27 @@ public class CoordinateFileListWidget extends AlwaysSelectedEntryListWidget<Coor
     public void generateFileList() {
         File cwdFile = new File(workingDirectory);
         File[] filesInside = cwdFile.listFiles();
-        for (File file : filesInside) {
-            if(file.isDirectory()) {
-                this.addEntry(new CoordinateFolderEntry(file.getName()));
-            } else {
-                this.addEntry(new CoordinateFileEntry(file.getName()));
+        if (filesInside != null) {
+            for (File file : filesInside) {
+                if(file.isDirectory()) {
+                    this.addEntry(new CoordinateFolderEntry(file.getName()));
+                } else {
+                    this.addEntry(new CoordinateFileEntry(file.getName()));
+                }
             }
         }
     }
 
-    public void selectEntry(Entry entry) {
+    public void selectEntry(CoordinateFileListWidget.Entry entry) {
         this.setSelected(entry);
         this.ensureVisible(entry);
+        if(entry instanceof CoordinateFileEntry) {
+            try {
+                this.coordinatesWidget.setCurrentList(SimpleCoordinates.coordinatesManager.loadCoordinates(workingDirectory + "/" + ((CoordinateFileEntry) entry).name));
+            } catch (IOException e) {
+                SimpleCoordinates.logger.info("Could not load coordinates file.");
+            }
+        }
     }
 
     public class CoordinateFileEntry extends CoordinateFileListWidget.Entry {
