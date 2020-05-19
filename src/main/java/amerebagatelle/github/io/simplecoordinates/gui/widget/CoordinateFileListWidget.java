@@ -8,7 +8,7 @@ import net.minecraft.util.Identifier;
 import java.io.File;
 
 public class CoordinateFileListWidget extends AlwaysSelectedEntryListWidget<CoordinateFileListWidget.Entry> {
-    public final Identifier TEXTURE = new Identifier("afkpeace/textures/file_icons.png");
+    public final Identifier TEXTURE = new Identifier("simplecoordinates", "textures/file_icons.png");
 
     public String workingDirectory = SimpleCoordinates.coordinatesManager.coordinatesFolder;
 
@@ -36,6 +36,11 @@ public class CoordinateFileListWidget extends AlwaysSelectedEntryListWidget<Coor
         }
     }
 
+    public void selectEntry(Entry entry) {
+        this.setSelected(entry);
+        this.ensureVisible(entry);
+    }
+
     public class CoordinateFileEntry extends CoordinateFileListWidget.Entry {
         public String name;
 
@@ -45,7 +50,18 @@ public class CoordinateFileListWidget extends AlwaysSelectedEntryListWidget<Coor
 
         @Override
         public void render(int index, int y, int x, int width, int height, int mouseX, int mouseY, boolean hovering, float delta) {
-            CoordinateFileListWidget.this.drawCenteredString(CoordinateFileListWidget.this.minecraft.textRenderer, this.name, x, y, 16777215);
+            CoordinateFileListWidget.this.drawString(CoordinateFileListWidget.this.minecraft.textRenderer, this.name, x+5, y, 16777215);
+        }
+
+        @Override
+        public boolean mouseClicked(double mouseX, double mouseY, int button) {
+            CoordinateFileListWidget.this.selectEntry(this);
+            return false;
+        }
+
+        @Override
+        public boolean mouseReleased(double mouseX, double mouseY, int button) {
+            return false;
         }
     }
 
@@ -58,8 +74,20 @@ public class CoordinateFileListWidget extends AlwaysSelectedEntryListWidget<Coor
 
         @Override
         public void render(int index, int y, int x, int width, int height, int mouseX, int mouseY, boolean hovering, float delta) {
-            CoordinateFileListWidget.this.drawCenteredString(CoordinateFileListWidget.this.minecraft.textRenderer, this.name, x+width/2, y, 16777215);
+            //CoordinateFileListWidget.this.minecraft.getTextureManager().bindTexture(TEXTURE);
+            //aCoordinateFileListWidget.this.blit(x, y, 256, 256, 256, 256);
+            CoordinateFileListWidget.this.drawString(CoordinateFileListWidget.this.minecraft.textRenderer, this.name, x+5, y, 16777215);
+        }
 
+        @Override
+        public boolean mouseClicked(double mouseX, double mouseY, int button) {
+            CoordinateFileListWidget.this.selectEntry(this);
+            return false;
+        }
+
+        @Override
+        public boolean mouseReleased(double mouseX, double mouseY, int button) {
+            return false;
         }
     }
 

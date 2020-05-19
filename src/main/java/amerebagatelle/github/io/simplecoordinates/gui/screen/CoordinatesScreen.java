@@ -38,7 +38,7 @@ public class CoordinatesScreen extends Screen {
         this.renderDirtBackground(0);
         coordinateFileListWidget.render(mouseX, mouseY, delta);
         coordinatesWidget.render(mouseX, mouseY, delta);
-        this.drawCenteredString(this.font, "Your cooordinates", this.width/2, 30, 16777215);
+        this.drawCenteredString(this.font, "Your coordinates", this.width/2, 10, 16777215);
     }
 
     @Override
