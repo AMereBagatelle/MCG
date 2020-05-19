@@ -64,6 +64,7 @@ public class CoordinatesManager {
 
         for (Map.Entry<String, JsonElement> entry : coordinatesJson.entrySet()) {
             CoordinatesSet coordinatesParsed = gson.fromJson(entry.getValue(), CoordinatesSet.class);
+            coordinatesParsed.name = entry.getKey();
             loadedList.addEntry(coordinatesParsed);
         }
         
