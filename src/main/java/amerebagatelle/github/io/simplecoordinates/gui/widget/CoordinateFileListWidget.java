@@ -1,8 +1,13 @@
 package amerebagatelle.github.io.simplecoordinates.gui.widget;
 
 import amerebagatelle.github.io.simplecoordinates.SimpleCoordinates;
+import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.widget.AlwaysSelectedEntryListWidget;
+import net.minecraft.client.render.BufferBuilder;
+import net.minecraft.client.render.Tessellator;
+import net.minecraft.client.render.VertexFormats;
 import net.minecraft.util.Identifier;
 
 import java.io.File;
@@ -50,19 +55,14 @@ public class CoordinateFileListWidget extends AlwaysSelectedEntryListWidget<Coor
             } catch (IOException e) {
                 SimpleCoordinates.logger.info("Could not load coordinates file.");
             }
-        } else {
-            this.coordinatesWidget.coordinatesListName = "";
         }
     }
 
     @Override
     public void render(int mouseX, int mouseY, float delta) {
-        super.render(mouseX, mouseY, delta);
+        this.renderList(this.getRowLeft(), this.top + 4 - (int)this.getScrollAmount(), mouseX, mouseY, delta);
+        this.renderDecorations(mouseX, mouseY);
         this.drawCenteredString(this.minecraft.textRenderer, "Files", this.left+this.width/2, this.top-30, 16777215);
-    }
-
-    @Override
-    protected void renderBackground() {
     }
 
     public class CoordinateFileEntry extends CoordinateFileListWidget.Entry {

@@ -21,7 +21,8 @@ public class CoordinatesWidget extends AlwaysSelectedEntryListWidget<Coordinates
 
     @Override
     public void render(int mouseX, int mouseY, float delta) {
-        super.render(mouseX, mouseY, delta);
+        this.renderList(this.getRowLeft(), this.top + 4 - (int)this.getScrollAmount(), mouseX, mouseY, delta);
+        this.renderDecorations(mouseX, mouseY);
         this.drawCenteredString(this.minecraft.textRenderer, "Coordinates", this.left+this.width/2, this.top-30, 16777215);
         this.drawCenteredString(this.minecraft.textRenderer, coordinatesListName, this.left+this.width/2, this.top-15, 3553279);
     }
