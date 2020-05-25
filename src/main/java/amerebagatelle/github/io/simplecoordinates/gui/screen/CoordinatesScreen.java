@@ -33,7 +33,7 @@ public class CoordinatesScreen extends Screen {
             this.coordinateFileListWidget.moveDirectoryBack();
         }));
         this.addButton(new ButtonWidget(35, this.height-45, 100, 20, "New File", onPress -> {
-
+            this.minecraft.openScreen(new CreateFileScreen(this));
         }));
         this.addButton(new ButtonWidget(140, this.height-45, 100, 20, "New Folder", onPress -> {
 
