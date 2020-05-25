@@ -35,6 +35,9 @@ public class CoordinatesScreen extends Screen {
         this.coordinatesWidget.setLeftPos(this.width/2+10);
         this.children.add(coordinateFileListWidget);
         this.coordinateFileListWidget.setLeftPos(10);
+        this.addButton(new ButtonWidget(100, 100, 100, 20, "test", onPress -> {
+            this.coordinateFileListWidget.moveDirectoryBack();
+        }));
     }
 
     @Override

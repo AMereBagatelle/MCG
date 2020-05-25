@@ -2,22 +2,19 @@ package amerebagatelle.github.io.simplecoordinates.gui.widget;
 
 import amerebagatelle.github.io.simplecoordinates.SimpleCoordinates;
 import amerebagatelle.github.io.simplecoordinates.gui.screen.CoordinatesScreen;
-import com.mojang.blaze3d.platform.GlStateManager;
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.widget.AlwaysSelectedEntryListWidget;
-import net.minecraft.client.render.BufferBuilder;
-import net.minecraft.client.render.Tessellator;
-import net.minecraft.client.render.VertexFormats;
 import net.minecraft.util.Identifier;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
 
 public class CoordinateFileListWidget extends AlwaysSelectedEntryListWidget<CoordinateFileListWidget.Entry> {
     public final Identifier TEXTURE = new Identifier("simplecoordinates", "textures/file_icons.png");
 
-    public String workingDirectory = SimpleCoordinates.coordinatesManager.coordinatesFolder;
+    public Path workingDirectory = FileSystems.getDefault().getPath("coordinates");
     private CoordinatesWidget coordinatesWidget;
     private CoordinatesScreen parent;
 
@@ -31,12 +28,18 @@ public class CoordinateFileListWidget extends AlwaysSelectedEntryListWidget<Coor
 
     public void changeWorkingDirectory(String directory) {
         this.clearEntries();
-        workingDirectory = directory;
+        workingDirectory = workingDirectory.resolve(directory);
+        this.generateFileList();
+    }
+
+    public void moveDirectoryBack() {
+        this.clearEntries();
+        workingDirectory = workingDirectory.getParent();
         this.generateFileList();
     }
 
     public void generateFileList() {
-        File cwdFile = new File(workingDirectory);
+        File cwdFile = new File(workingDirectory.toString());
         File[] filesInside = cwdFile.listFiles();
         if (filesInside != null) {
             for (File file : filesInside) {
@@ -67,7 +70,8 @@ public class CoordinateFileListWidget extends AlwaysSelectedEntryListWidget<Coor
         this.renderList(this.getRowLeft(), this.top + 4 - (int)this.getScrollAmount(), mouseX, mouseY, delta);
         this.renderDecorations(mouseX, mouseY);
         this.drawCenteredString(this.minecraft.textRenderer, "Files", this.left+this.width/2, this.top-30, 16777215);
-        this.drawString(this.minecraft.textRenderer, workingDirectory.substring(11), this.left, this.bottom+5, 3553279);
+        String visibleDirectory = workingDirectory.toString().length() > 12 ? workingDirectory.toString().substring(12) : "";
+        this.drawString(this.minecraft.textRenderer, visibleDirectory, this.left, this.bottom+5, 3553279);
     }
 
     @Override
@@ -121,7 +125,7 @@ public class CoordinateFileListWidget extends AlwaysSelectedEntryListWidget<Coor
         @Override
         public boolean mouseClicked(double mouseX, double mouseY, int button) {
             CoordinateFileListWidget.this.selectEntry(this);
-            CoordinateFileListWidget.this.changeWorkingDirectory(workingDirectory + "/" + this.name);
+            CoordinateFileListWidget.this.changeWorkingDirectory(this.name);
             return false;
         }
 
