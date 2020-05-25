@@ -13,18 +13,21 @@ import java.util.ArrayList;
 public class CoordinatesWidget extends AlwaysSelectedEntryListWidget<CoordinatesWidget.Entry> {
     public CoordinatesList currentCoordinatesList;
     public String coordinatesListName = "";
+    private CoordinatesScreen parent;
 
-    public CoordinatesWidget(MinecraftClient minecraftClient, int width, int height, int top, int bottom, int itemHeight) {
+    public CoordinatesWidget(MinecraftClient minecraftClient, int width, int height, int top, int bottom, int itemHeight, CoordinatesScreen parent) {
         super(minecraftClient, width, height, top, bottom, itemHeight);
         this.setCurrentList(new CoordinatesList().createNull(), "");
+        this.parent = parent;
     }
 
     @Override
     public void render(int mouseX, int mouseY, float delta) {
+        this.parent.drawWidgetBackground(this.left, this.top, width, height-top-(height-bottom));
         this.renderList(this.getRowLeft(), this.top + 4 - (int)this.getScrollAmount(), mouseX, mouseY, delta);
         this.renderDecorations(mouseX, mouseY);
         this.drawCenteredString(this.minecraft.textRenderer, "Coordinates", this.left+this.width/2, this.top-30, 16777215);
-        this.drawCenteredString(this.minecraft.textRenderer, coordinatesListName, this.left+this.width/2, this.top-15, 3553279);
+        this.drawString(this.minecraft.textRenderer, coordinatesListName, this.left, this.bottom+5, 3553279);
     }
 
     public void setCurrentList(CoordinatesList list, String name) {
@@ -45,12 +48,12 @@ public class CoordinatesWidget extends AlwaysSelectedEntryListWidget<Coordinates
 
     @Override
     protected int getScrollbarPosition() {
-        return super.getScrollbarPosition() + 100;
+        return this.left+this.width-10;
     }
 
     @Override
     public int getRowWidth() {
-        return this.width;
+        return this.width-30;
     }
 
     public class CoordinateListEntry extends CoordinatesWidget.Entry {

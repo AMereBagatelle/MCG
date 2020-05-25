@@ -4,10 +4,14 @@ import amerebagatelle.github.io.simplecoordinates.SimpleCoordinates;
 import amerebagatelle.github.io.simplecoordinates.coordinates.CoordinatesManager;
 import amerebagatelle.github.io.simplecoordinates.gui.widget.CoordinateFileListWidget;
 import amerebagatelle.github.io.simplecoordinates.gui.widget.CoordinatesWidget;
+import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
+import net.minecraft.client.render.BufferBuilder;
+import net.minecraft.client.render.Tessellator;
+import net.minecraft.client.render.VertexFormats;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.text.TranslatableText;
 
@@ -25,10 +29,10 @@ public class CoordinatesScreen extends Screen {
     @Override
     public void init() {
         super.init();
-        coordinatesWidget = new CoordinatesWidget(this.minecraft, this.width/2-20, this.height, 40, this.height - 10, 15);
+        coordinatesWidget = new CoordinatesWidget(this.minecraft, this.width/2-50, this.height, 40, this.height - 50, 15, this);
         this.children.add(coordinatesWidget);
+        coordinateFileListWidget = new CoordinateFileListWidget(this.minecraft, this.width/2-40, this.height, 40, this.height-50, 15, coordinatesWidget, this);
         this.coordinatesWidget.setLeftPos(this.width/2+10);
-        coordinateFileListWidget = new CoordinateFileListWidget(this.minecraft, this.width/2-10, this.height, 40, this.height-10, 15, coordinatesWidget);
         this.children.add(coordinateFileListWidget);
         this.coordinateFileListWidget.setLeftPos(10);
     }
@@ -38,6 +42,27 @@ public class CoordinatesScreen extends Screen {
         this.renderBackground();
         coordinateFileListWidget.render(mouseX, mouseY, delta);
         coordinatesWidget.render(mouseX, mouseY, delta);
+    }
+
+    public void drawWidgetBackground(float x, float y, float width, float height) {
+        Tessellator tessellator = Tessellator.getInstance();
+        BufferBuilder builder = tessellator.getBuffer();
+
+        GlStateManager.enableBlend();
+        GlStateManager.disableTexture();
+        GlStateManager.blendFuncSeparate(GlStateManager.SrcFactor.SRC_COLOR.value, GlStateManager.DstFactor.ONE_MINUS_SRC_ALPHA.value, GlStateManager.SrcFactor.ONE.value, GlStateManager.DstFactor.ZERO.value);
+        GlStateManager.color4f(0.1f, 0.1f, 0.1f, 0.30f);
+
+        builder.begin(7, VertexFormats.POSITION);
+        builder.vertex(x, y, 0.0).next();
+        builder.vertex(x, y + height, 0.0).next();
+        builder.vertex(x + width, y + height, 0.0).next();
+        builder.vertex(x + width, y, 0.0).next();
+
+        tessellator.draw();
+
+        GlStateManager.enableTexture();
+        GlStateManager.disableBlend();
     }
 
     @Override
