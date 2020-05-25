@@ -6,16 +6,15 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.text.LiteralText;
-import net.minecraft.text.Text;
 
 import java.io.IOException;
 
-public class CreateFileScreen extends Screen {
+public class CreateFolderScreen extends Screen {
     private TextFieldWidget nameWidget;
     private CoordinatesScreen parent;
 
-    public CreateFileScreen(CoordinatesScreen parent) {
-        super(new LiteralText("CoordinateFileScreen"));
+    public CreateFolderScreen(CoordinatesScreen parent) {
+        super(new LiteralText("CoordinateFolderScreen"));
         this.parent = parent;
     }
 
@@ -27,7 +26,7 @@ public class CreateFileScreen extends Screen {
         this.children.add(nameWidget);
         this.addButton(new ButtonWidget(this.width/2-100, this.height/2, 200, 20, "Create", onPress -> {
             try {
-                SimpleCoordinates.coordinatesManager.initNewCoordinatesFile(parent.coordinateFileListWidget.workingDirectory.toString() + "/" + this.nameWidget.getText() + ".coordinates");
+                SimpleCoordinates.coordinatesManager.createFolder(parent.coordinateFileListWidget.workingDirectory.toString() + "/" + this.nameWidget.getText());
             } catch (IOException ignored) {
             } finally {
                 this.minecraft.openScreen(parent);
@@ -42,7 +41,7 @@ public class CreateFileScreen extends Screen {
     public void render(int mouseX, int mouseY, float delta) {
         this.renderBackground();
         super.render(mouseX, mouseY, delta);
-        this.drawCenteredString(this.font, "File Creation", this.width/2, this.height/2-130, 16777215);
+        this.drawCenteredString(this.font, "Folder Creation", this.width/2, this.height/2-130, 16777215);
         nameWidget.render(mouseX, mouseY, delta);
     }
 }

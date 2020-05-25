@@ -53,6 +53,12 @@ public class CoordinatesManager {
         }
     }
 
+    public void createFolder(String filepath) throws IOException {
+        File folderFile = new File(filepath);
+        if(folderFile.exists()) return;
+        folderFile.mkdir();
+    }
+
     public CoordinatesList loadCoordinates(String filepath) throws IOException {
         File coordinatesFile = new File(filepath);
         if(!coordinatesFile.exists()) return new CoordinatesList().createNull();
