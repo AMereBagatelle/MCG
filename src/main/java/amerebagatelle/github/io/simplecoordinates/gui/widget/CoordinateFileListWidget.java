@@ -119,7 +119,7 @@ public class CoordinateFileListWidget extends AlwaysSelectedEntryListWidget<Coor
         public void render(int index, int y, int x, int width, int height, int mouseX, int mouseY, boolean hovering, float delta) {
             //CoordinateFileListWidget.this.minecraft.getTextureManager().bindTexture(TEXTURE);
             //aCoordinateFileListWidget.this.blit(x, y, 256, 256, 256, 256);
-            CoordinateFileListWidget.this.drawString(CoordinateFileListWidget.this.minecraft.textRenderer, this.name, x+5, y, 16777215);
+            CoordinateFileListWidget.this.drawString(CoordinateFileListWidget.this.minecraft.textRenderer, this.name + "/", x+5, y, 16777215);
         }
 
         @Override
