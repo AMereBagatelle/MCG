@@ -34,7 +34,7 @@ public class CoordinateFileListWidget extends AlwaysSelectedEntryListWidget<Coor
 
     public void moveDirectoryBack() {
         this.clearEntries();
-        workingDirectory = workingDirectory.getParent();
+        if(workingDirectory.getParent() != null) workingDirectory = workingDirectory.getParent();
         this.generateFileList();
     }
 
@@ -70,8 +70,8 @@ public class CoordinateFileListWidget extends AlwaysSelectedEntryListWidget<Coor
         this.renderList(this.getRowLeft(), this.top + 4 - (int)this.getScrollAmount(), mouseX, mouseY, delta);
         this.renderDecorations(mouseX, mouseY);
         this.drawCenteredString(this.minecraft.textRenderer, "Files", this.left+this.width/2, this.top-30, 16777215);
-        String visibleDirectory = workingDirectory.toString().length() > 12 ? workingDirectory.toString().substring(12) : "";
-        this.drawString(this.minecraft.textRenderer, visibleDirectory, this.left, this.bottom+5, 3553279);
+        //String visibleDirectory = workingDirectory.toString().length() > 12 ? workingDirectory.toString().substring(12) : "";
+        //this.drawString(this.minecraft.textRenderer, visibleDirectory, this.left, this.bottom+5, 3553279);
     }
 
     @Override

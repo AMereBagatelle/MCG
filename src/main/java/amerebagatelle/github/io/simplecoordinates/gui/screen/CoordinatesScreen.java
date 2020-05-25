@@ -29,15 +29,21 @@ public class CoordinatesScreen extends Screen {
     @Override
     public void init() {
         super.init();
-        coordinatesWidget = new CoordinatesWidget(this.minecraft, this.width/2-50, this.height, 40, this.height - 50, 15, this);
-        this.children.add(coordinatesWidget);
-        coordinateFileListWidget = new CoordinateFileListWidget(this.minecraft, this.width/2-40, this.height, 40, this.height-50, 15, coordinatesWidget, this);
-        this.coordinatesWidget.setLeftPos(this.width/2+10);
-        this.children.add(coordinateFileListWidget);
-        this.coordinateFileListWidget.setLeftPos(10);
-        this.addButton(new ButtonWidget(100, 100, 100, 20, "test", onPress -> {
+        this.addButton(new ButtonWidget(10, this.height-45, 20, 20, "/", onPress -> {
             this.coordinateFileListWidget.moveDirectoryBack();
         }));
+        this.addButton(new ButtonWidget(35, this.height-45, 100, 20, "New File", onPress -> {
+
+        }));
+        this.addButton(new ButtonWidget(140, this.height-45, 100, 20, "New Folder", onPress -> {
+
+        }));
+        coordinatesWidget = new CoordinatesWidget(this.minecraft, this.width/2-50, this.height, 40, this.height - 50, 15, this);
+        this.children.add(coordinatesWidget);
+        this.coordinatesWidget.setLeftPos(this.width/2+10);
+        coordinateFileListWidget = new CoordinateFileListWidget(this.minecraft, this.width/2-40, this.height, 40, this.height-50, 15, coordinatesWidget, this);
+        this.children.add(coordinateFileListWidget);
+        this.coordinateFileListWidget.setLeftPos(10);
     }
 
     @Override
@@ -45,6 +51,7 @@ public class CoordinatesScreen extends Screen {
         this.renderBackground();
         coordinateFileListWidget.render(mouseX, mouseY, delta);
         coordinatesWidget.render(mouseX, mouseY, delta);
+        super.render(mouseX, mouseY, delta);
     }
 
     public void drawWidgetBackground(float x, float y, float width, float height) {
