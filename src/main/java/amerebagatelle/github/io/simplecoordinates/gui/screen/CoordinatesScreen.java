@@ -15,12 +15,18 @@ import net.minecraft.client.render.VertexFormats;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.text.TranslatableText;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 
 public class CoordinatesScreen extends Screen {
     public CoordinateFileListWidget coordinateFileListWidget;
     public CoordinatesWidget coordinatesWidget;
+
+    private ButtonWidget newCoordinateButton;
+    private ButtonWidget deleteCoordinateButton;
+    private ButtonWidget deleteFileButton;
 
     public CoordinatesScreen() {
         super(new TranslatableText("screen.coordinates.title"));
@@ -38,8 +44,21 @@ public class CoordinatesScreen extends Screen {
         this.addButton(new ButtonWidget(110, this.height-45, 70, 20, "New Folder", onPress -> {
             this.minecraft.openScreen(new CreateFolderScreen(this));
         }));
-        this.addButton(new ButtonWidget(this.width/2+10, this.height-45, 90, 20, "New Coordinate", onPress -> {
+        deleteFileButton = this.addButton(new ButtonWidget(185, this.height-45, 100, 20, "Delete File", onPress -> {
+            if(coordinateFileListWidget.getSelected() != null) {
+                new File(coordinateFileListWidget.workingDirectory.toString() + "/" + coordinatesWidget.coordinatesListName).delete();
+            }
+            this.refresh();
+        }));
+        newCoordinateButton = this.addButton(new ButtonWidget(this.width/2+10, this.height-45, 90, 20, "New Coordinate", onPress -> {
             this.minecraft.openScreen(new CreateCoordinateScreen(minecraft, this));
+        }));
+        deleteCoordinateButton = this.addButton(new ButtonWidget(this.width/2+105, this.height-45, 100, 20, "Delete Coordinate", onPress -> {
+            try {
+                SimpleCoordinates.coordinatesManager.removeCoordinate(coordinateFileListWidget.workingDirectory.toString() + "/" + coordinatesWidget.coordinatesListName, coordinatesWidget.getSelected().getCoordinates());
+            } catch (IOException ignored) {
+            }
+            this.refresh();
         }));
         coordinatesWidget = new CoordinatesWidget(this.minecraft, this.width/2-50, this.height, 40, this.height - 50, 15, this);
         this.children.add(coordinatesWidget);
@@ -47,6 +66,7 @@ public class CoordinatesScreen extends Screen {
         coordinateFileListWidget = new CoordinateFileListWidget(this.minecraft, this.width/2-40, this.height, 40, this.height-50, 15, coordinatesWidget, this);
         this.children.add(coordinateFileListWidget);
         this.coordinateFileListWidget.setLeftPos(10);
+        updateButtonStates();
     }
 
     @Override
@@ -55,6 +75,7 @@ public class CoordinatesScreen extends Screen {
         coordinateFileListWidget.render(mouseX, mouseY, delta);
         coordinatesWidget.render(mouseX, mouseY, delta);
         super.render(mouseX, mouseY, delta);
+        updateButtonStates();
     }
 
     public void drawWidgetBackground(float x, float y, float width, float height) {
@@ -76,6 +97,28 @@ public class CoordinatesScreen extends Screen {
 
         GlStateManager.enableTexture();
         GlStateManager.disableBlend();
+    }
+
+    public void refresh() {
+        this.minecraft.openScreen(new CoordinatesScreen());
+    }
+
+    public void updateButtonStates() {
+        if(coordinateFileListWidget.getSelected() != null) {
+            deleteFileButton.active = true;
+        } else {
+            deleteFileButton.active = false;
+        }
+        if(coordinateFileListWidget.getSelected() != null && coordinateFileListWidget.getSelected() instanceof CoordinateFileListWidget.CoordinateFileEntry) {
+            newCoordinateButton.active = true;
+        } else {
+            newCoordinateButton.active = false;
+        }
+        if(coordinatesWidget.getSelected() != null) {
+            deleteCoordinateButton.active = true;
+        } else {
+            deleteCoordinateButton.active = false;
+        }
     }
 
     @Override

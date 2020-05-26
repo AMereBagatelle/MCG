@@ -27,7 +27,7 @@ public class CoordinatesWidget extends AlwaysSelectedEntryListWidget<Coordinates
         this.renderList(this.getRowLeft(), this.top + 4 - (int)this.getScrollAmount(), mouseX, mouseY, delta);
         this.renderDecorations(mouseX, mouseY);
         this.drawCenteredString(this.minecraft.textRenderer, "Coordinates", this.left+this.width/2, this.top-30, 16777215);
-        //this.drawString(this.minecraft.textRenderer, coordinatesListName, this.left, this.bottom+5, 3553279);
+        this.drawString(this.minecraft.textRenderer, coordinatesListName, this.left, this.top-10, 3553279);
     }
 
     public void setCurrentList(CoordinatesList list, String name) {
@@ -41,18 +41,14 @@ public class CoordinatesWidget extends AlwaysSelectedEntryListWidget<Coordinates
         }
     }
 
-    public void refreshList() {
-        this.clearEntries();
-        if(!currentCoordinatesList.isNull) {
-            for (CoordinatesSet coordinatesSet : currentCoordinatesList.coordinatesSets) {
-                this.addEntry(new CoordinateListEntry(coordinatesSet));
-            }
-        }
-    }
-
-    public void setSelected(CoordinatesWidget.Entry entry) {
+    public void setSelected(CoordinateListEntry entry) {
         super.setSelected(entry);
         this.ensureVisible(entry);
+    }
+
+    @Override
+    public CoordinateListEntry getSelected() {
+        return (CoordinateListEntry) super.getSelected();
     }
 
     @Override
@@ -90,6 +86,10 @@ public class CoordinatesWidget extends AlwaysSelectedEntryListWidget<Coordinates
         @Override
         public boolean mouseReleased(double mouseX, double mouseY, int button) {
             return false;
+        }
+
+        public CoordinatesSet getCoordinates() {
+            return coordinates;
         }
     }
 

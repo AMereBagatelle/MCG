@@ -97,7 +97,7 @@ public class CoordinatesManager {
     public void removeCoordinate(String filepath, CoordinatesSet coordinates) throws IOException {
         Path coordinatesFilepath = new File(filepath).toPath();
         String jsonAsString = new String(Files.readAllBytes(coordinatesFilepath));
-        JsonObject coordinatesJson = (JsonObject)gson.toJsonTree(jsonAsString);
+        JsonObject coordinatesJson = gson.fromJson(jsonAsString, JsonObject.class);
 
         coordinatesJson.remove(coordinates.name);
 
