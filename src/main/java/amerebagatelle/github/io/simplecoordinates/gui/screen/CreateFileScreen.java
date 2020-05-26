@@ -42,7 +42,12 @@ public class CreateFileScreen extends Screen {
     public void render(int mouseX, int mouseY, float delta) {
         this.renderBackground();
         super.render(mouseX, mouseY, delta);
-        this.drawCenteredString(this.font, "File Creation", this.width/2, this.height/2-130, 16777215);
+        this.drawCenteredString(this.font, "File Creation", this.width/2, 20, 16777215);
         nameWidget.render(mouseX, mouseY, delta);
+    }
+
+    @Override
+    public void onClose() {
+        minecraft.openScreen(this.parent);
     }
 }

@@ -38,6 +38,9 @@ public class CoordinatesScreen extends Screen {
         this.addButton(new ButtonWidget(110, this.height-45, 70, 20, "New Folder", onPress -> {
             this.minecraft.openScreen(new CreateFolderScreen(this));
         }));
+        this.addButton(new ButtonWidget(this.width/2+10, this.height-45, 90, 20, "New Coordinate", onPress -> {
+            this.minecraft.openScreen(new CreateCoordinateScreen(minecraft, this));
+        }));
         coordinatesWidget = new CoordinatesWidget(this.minecraft, this.width/2-50, this.height, 40, this.height - 50, 15, this);
         this.children.add(coordinatesWidget);
         this.coordinatesWidget.setLeftPos(this.width/2+10);

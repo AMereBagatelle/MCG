@@ -41,6 +41,15 @@ public class CoordinatesWidget extends AlwaysSelectedEntryListWidget<Coordinates
         }
     }
 
+    public void refreshList() {
+        this.clearEntries();
+        if(!currentCoordinatesList.isNull) {
+            for (CoordinatesSet coordinatesSet : currentCoordinatesList.coordinatesSets) {
+                this.addEntry(new CoordinateListEntry(coordinatesSet));
+            }
+        }
+    }
+
     public void setSelected(CoordinatesWidget.Entry entry) {
         super.setSelected(entry);
         this.ensureVisible(entry);
@@ -67,9 +76,9 @@ public class CoordinatesWidget extends AlwaysSelectedEntryListWidget<Coordinates
         public void render(int index, int y, int x, int width, int height, int mouseX, int mouseY, boolean hovering, float delta) {
             TextRenderer renderer = CoordinatesWidget.this.minecraft.textRenderer;
             CoordinatesWidget.this.drawString(renderer, coordinates.name, x+5, y, 16777215);
-            CoordinatesWidget.this.drawString(renderer, Integer.toString(coordinates.x), x+60, y, 16777215);
-            CoordinatesWidget.this.drawString(renderer, Integer.toString(coordinates.y), x+90, y, 16777215);
-            CoordinatesWidget.this.drawString(renderer, Integer.toString(coordinates.z), x+120, y, 16777215);
+            CoordinatesWidget.this.drawString(renderer, Integer.toString(coordinates.x), x+width/5, y, 16777215);
+            CoordinatesWidget.this.drawString(renderer, Integer.toString(coordinates.y), x+width/5*2, y, 16777215);
+            CoordinatesWidget.this.drawString(renderer, Integer.toString(coordinates.z), x+width/5*3, y, 16777215);
         }
 
         @Override
