@@ -10,6 +10,7 @@ import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
+import net.minecraft.util.math.BlockPos;
 
 import java.io.IOException;
 import java.util.function.Predicate;
@@ -19,8 +20,9 @@ public class CreateCoordinateScreen extends Screen {
     private final CoordinatesScreen parent;
     private final int textColor = 16777215;
     private final Predicate<String> coordinateFilter = (string) -> {
-        if(string.length() == 0) {
-            return false;
+        System.out.println(string);
+        if(string.length() == 0 || string.equals("-")) {
+            return true;
         } else {
             try {
                 Integer.parseInt(string);
@@ -58,9 +60,6 @@ public class CreateCoordinateScreen extends Screen {
         this.coordinateYField = new TextFieldWidget(this.font, this.width/2-100, 146, 200, 20, I18n.translate("writecoordinate.enterY"));
         this.coordinateYField.setTextPredicate(coordinateFilter);
         this.children.add(coordinateYField);
-        if(client.player.getBlockPos() != null) {
-            this.coordinateYField.setText(Integer.toString(client.player.getBlockPos().getY()));
-        }
         this.coordinateZField = new TextFieldWidget(this.font, this.width/2-100, 186, 200, 20, I18n.translate("writecoordinate.enterZ"));
         this.coordinateZField.setTextPredicate(coordinateFilter);
         this.children.add(coordinateZField);
@@ -69,6 +68,12 @@ public class CreateCoordinateScreen extends Screen {
         this.addButton = this.addButton(new ButtonWidget(this.width/2-100, this.height-120, 200, 20, I18n.translate("writecoordinate.addCoordinate"), ctx -> this.andAndClose()));
         this.addButton(new ButtonWidget(this.width/2-100, this.height-80, 200, 20, I18n.translate("writecoordinate.cancelAdd"), ctx -> this.onClose()));
         this.updateButtonActivationStates();
+        BlockPos playerPos = client.player.getBlockPos();
+        if(playerPos != null) {
+            coordinateXField.setText(Integer.toString(playerPos.getX()));
+            coordinateYField.setText(Integer.toString(playerPos.getY()));
+            coordinateZField.setText(Integer.toString(playerPos.getZ()));
+        }
     }
 
     @Override
