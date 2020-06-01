@@ -32,6 +32,9 @@ dependencies {
     include "io.github.cottonmc:cotton-client-commands:${project.cotton_client_command_version}"
 
     // Non-mod imports
+
+    compileOnly "com.google.code.findbugs:jsr305:3.0.2"
+
     compile 'com.googlecode.json-simple:json-simple:1.1.1'
     include 'com.googlecode.json-simple:json-simple:1.1.1'
 

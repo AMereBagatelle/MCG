@@ -50,10 +50,10 @@ public class CoordinatesScreen extends Screen {
             }
             this.refresh();
         }));
-        newCoordinateButton = this.addButton(new ButtonWidget(this.width/2+10, this.height-45, 90, 20, "New Coordinate", onPress -> {
-            this.minecraft.openScreen(new CreateCoordinateScreen(minecraft, this));
+        newCoordinateButton = this.addButton(new ButtonWidget(this.width/2+10, this.height-45, 110, 20, "New/Edit Coordinate", onPress -> {
+            this.minecraft.openScreen(new CreateCoordinateScreen(minecraft, this, this.coordinatesWidget.getSelected()));
         }));
-        deleteCoordinateButton = this.addButton(new ButtonWidget(this.width/2+105, this.height-45, 100, 20, "Delete Coordinate", onPress -> {
+        deleteCoordinateButton = this.addButton(new ButtonWidget(this.width/2+125, this.height-45, 100, 20, "Delete Coordinate", onPress -> {
             try {
                 SimpleCoordinates.coordinatesManager.removeCoordinate(coordinateFileListWidget.workingDirectory.toString() + "/" + coordinatesWidget.coordinatesListName, coordinatesWidget.getSelected().getCoordinates());
             } catch (IOException ignored) {

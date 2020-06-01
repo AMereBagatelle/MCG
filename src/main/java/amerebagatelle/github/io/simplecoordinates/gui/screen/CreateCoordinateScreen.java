@@ -3,6 +3,7 @@ package amerebagatelle.github.io.simplecoordinates.gui.screen;
 import amerebagatelle.github.io.simplecoordinates.SimpleCoordinates;
 import amerebagatelle.github.io.simplecoordinates.coordinates.CoordinatesManager;
 import amerebagatelle.github.io.simplecoordinates.coordinates.CoordinatesSet;
+import amerebagatelle.github.io.simplecoordinates.gui.widget.CoordinatesWidget;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
@@ -12,6 +13,7 @@ import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.math.BlockPos;
 
+import javax.annotation.Nullable;
 import java.io.IOException;
 import java.util.function.Predicate;
 
@@ -41,10 +43,15 @@ public class CreateCoordinateScreen extends Screen {
 
     public ButtonWidget addButton;
 
-    public CreateCoordinateScreen(MinecraftClient client, CoordinatesScreen parent) {
+    private CoordinatesSet editCoordinates;
+
+    public CreateCoordinateScreen(MinecraftClient client, CoordinatesScreen parent, @Nullable CoordinatesWidget.CoordinateListEntry editCoordinates) {
         super(new TranslatableText("screen.writecoordinate.title"));
         this.client = client;
         this.parent = parent;
+        if(editCoordinates != null) {
+            this.editCoordinates = editCoordinates.getCoordinates();
+        }
     }
 
     @Override
@@ -73,6 +80,13 @@ public class CreateCoordinateScreen extends Screen {
             coordinateXField.setText(Integer.toString(playerPos.getX()));
             coordinateYField.setText(Integer.toString(playerPos.getY()));
             coordinateZField.setText(Integer.toString(playerPos.getZ()));
+        }
+        if(editCoordinates != null) {
+            coordinateNameField.setText(editCoordinates.name);
+            coordinateXField.setText(Integer.toString(editCoordinates.x));
+            coordinateYField.setText(Integer.toString(editCoordinates.y));
+            coordinateZField.setText(Integer.toString(editCoordinates.z));
+            coordinateDetailsField.setText(editCoordinates.description);
         }
     }
 
