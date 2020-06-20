@@ -1,24 +1,14 @@
 package amerebagatelle.github.io.simplecoordinates.gui.screen;
 
 import amerebagatelle.github.io.simplecoordinates.SimpleCoordinates;
-import amerebagatelle.github.io.simplecoordinates.coordinates.CoordinatesManager;
 import amerebagatelle.github.io.simplecoordinates.gui.widget.CoordinateFileListWidget;
 import amerebagatelle.github.io.simplecoordinates.gui.widget.CoordinatesWidget;
-import com.mojang.blaze3d.platform.GlStateManager;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
-import net.minecraft.client.render.BufferBuilder;
-import net.minecraft.client.render.Tessellator;
-import net.minecraft.client.render.VertexFormats;
-import net.minecraft.client.resource.language.I18n;
 import net.minecraft.text.TranslatableText;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.util.ArrayList;
 
 public class CoordinatesScreen extends Screen {
     public CoordinateFileListWidget coordinateFileListWidget;
@@ -46,7 +36,7 @@ public class CoordinatesScreen extends Screen {
         }));
         deleteFileButton = this.addButton(new ButtonWidget(185, this.height-45, 100, 20, "Delete File", onPress -> {
             if(coordinateFileListWidget.getSelected() != null) {
-                new File(coordinateFileListWidget.workingDirectory.toString() + "/" + coordinatesWidget.coordinatesListName).delete();
+                new File(CoordinateFileListWidget.workingDirectory.toString() + "/" + CoordinatesWidget.coordinatesListName).delete();
             }
             this.refresh();
         }));
@@ -55,8 +45,8 @@ public class CoordinatesScreen extends Screen {
         }));
         deleteCoordinateButton = this.addButton(new ButtonWidget(this.width/2+125, this.height-45, 100, 20, "Delete Coordinate", onPress -> {
             try {
-                SimpleCoordinates.coordinatesManager.removeCoordinate(coordinateFileListWidget.workingDirectory.toString() + "/" + coordinatesWidget.coordinatesListName, coordinatesWidget.getSelected().getCoordinates());
-            } catch (IOException ignored) {
+                SimpleCoordinates.coordinatesManager.removeCoordinate(CoordinateFileListWidget.workingDirectory.toString() + "/" + CoordinatesWidget.coordinatesListName, coordinatesWidget.getSelected().getCoordinates());
+            } catch (IOException | NullPointerException ignored) {
             }
             this.refresh();
         }));
@@ -84,21 +74,9 @@ public class CoordinatesScreen extends Screen {
     }
 
     public void updateButtonStates() {
-        if(coordinateFileListWidget.getSelected() != null) {
-            deleteFileButton.active = true;
-        } else {
-            deleteFileButton.active = false;
-        }
-        if(coordinateFileListWidget.getSelected() != null && coordinateFileListWidget.getSelected() instanceof CoordinateFileListWidget.CoordinateFileEntry) {
-            newCoordinateButton.active = true;
-        } else {
-            newCoordinateButton.active = false;
-        }
-        if(coordinatesWidget.getSelected() != null) {
-            deleteCoordinateButton.active = true;
-        } else {
-            deleteCoordinateButton.active = false;
-        }
+        deleteFileButton.active = coordinateFileListWidget.getSelected() != null;
+        newCoordinateButton.active = coordinateFileListWidget.getSelected() != null && coordinateFileListWidget.getSelected() instanceof CoordinateFileListWidget.CoordinateFileEntry;
+        deleteCoordinateButton.active = coordinatesWidget.getSelected() != null;
     }
 
     @Override
