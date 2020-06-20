@@ -5,7 +5,6 @@ import amerebagatelle.github.io.simplecoordinates.gui.screen.CoordinatesScreen;
 import amerebagatelle.github.io.simplecoordinates.utils.RenderUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.widget.AlwaysSelectedEntryListWidget;
-import net.minecraft.util.Identifier;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,18 +12,14 @@ import java.nio.file.FileSystems;
 import java.nio.file.Path;
 
 public class CoordinateFileListWidget extends AlwaysSelectedEntryListWidget<CoordinateFileListWidget.Entry> {
-    public final Identifier TEXTURE = new Identifier("simplecoordinates", "textures/file_icons.png");
-
     public static Path workingDirectory = FileSystems.getDefault().getPath("coordinates");
-    private CoordinatesWidget coordinatesWidget;
-    private CoordinatesScreen parent;
+    private final CoordinatesWidget coordinatesWidget;
 
     public CoordinateFileListWidget(MinecraftClient minecraftClient, int width, int height, int top, int bottom, int itemHeight, CoordinatesWidget coordinatesWidget, CoordinatesScreen parent) {
         super(minecraftClient, width, height, top, bottom, itemHeight);
         this.generateFileList();
         this.centerListVertically = false;
         this.coordinatesWidget = coordinatesWidget;
-        this.parent = parent;
     }
 
     public void changeWorkingDirectory(String directory) {
@@ -120,8 +115,6 @@ public class CoordinateFileListWidget extends AlwaysSelectedEntryListWidget<Coor
 
         @Override
         public void render(int index, int y, int x, int width, int height, int mouseX, int mouseY, boolean hovering, float delta) {
-            //CoordinateFileListWidget.this.minecraft.getTextureManager().bindTexture(TEXTURE);
-            //aCoordinateFileListWidget.this.blit(x, y, 256, 256, 256, 256);
             if(y >= CoordinateFileListWidget.this.top && y + height <= CoordinateFileListWidget.this.bottom) {
                 CoordinateFileListWidget.this.drawString(CoordinateFileListWidget.this.minecraft.textRenderer, this.name + "/", x + 5, y, 16777215);
             }
