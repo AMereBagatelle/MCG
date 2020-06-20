@@ -3,6 +3,7 @@ package amerebagatelle.github.io.simplecoordinates.gui.widget;
 import amerebagatelle.github.io.simplecoordinates.coordinates.CoordinatesList;
 import amerebagatelle.github.io.simplecoordinates.coordinates.CoordinatesSet;
 import amerebagatelle.github.io.simplecoordinates.gui.screen.CoordinatesScreen;
+import amerebagatelle.github.io.simplecoordinates.utils.RenderUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.widget.AlwaysSelectedEntryListWidget;
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 
 public class CoordinatesWidget extends AlwaysSelectedEntryListWidget<CoordinatesWidget.Entry> {
     public CoordinatesList currentCoordinatesList;
-    public String coordinatesListName = "";
+    public static String coordinatesListName = "";
     private CoordinatesScreen parent;
 
     public CoordinatesWidget(MinecraftClient minecraftClient, int width, int height, int top, int bottom, int itemHeight, CoordinatesScreen parent) {
@@ -23,7 +24,7 @@ public class CoordinatesWidget extends AlwaysSelectedEntryListWidget<Coordinates
 
     @Override
     public void render(int mouseX, int mouseY, float delta) {
-        this.parent.drawWidgetBackground(this.left, this.top, width, height-top-(height-bottom));
+        RenderUtils.drawWidgetBackground(this.left, this.top, width, height-top-(height-bottom));
         this.renderList(this.getRowLeft(), this.top + 4 - (int)this.getScrollAmount(), mouseX, mouseY, delta);
         this.renderDecorations(mouseX, mouseY);
         this.drawCenteredString(this.minecraft.textRenderer, "Coordinates", this.left+this.width/2, this.top-30, 16777215);

@@ -2,6 +2,7 @@ package amerebagatelle.github.io.simplecoordinates.gui.widget;
 
 import amerebagatelle.github.io.simplecoordinates.SimpleCoordinates;
 import amerebagatelle.github.io.simplecoordinates.gui.screen.CoordinatesScreen;
+import amerebagatelle.github.io.simplecoordinates.utils.RenderUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.widget.AlwaysSelectedEntryListWidget;
 import net.minecraft.util.Identifier;
@@ -14,7 +15,7 @@ import java.nio.file.Path;
 public class CoordinateFileListWidget extends AlwaysSelectedEntryListWidget<CoordinateFileListWidget.Entry> {
     public final Identifier TEXTURE = new Identifier("simplecoordinates", "textures/file_icons.png");
 
-    public Path workingDirectory = FileSystems.getDefault().getPath("coordinates");
+    public static Path workingDirectory = FileSystems.getDefault().getPath("coordinates");
     private CoordinatesWidget coordinatesWidget;
     private CoordinatesScreen parent;
 
@@ -66,7 +67,7 @@ public class CoordinateFileListWidget extends AlwaysSelectedEntryListWidget<Coor
 
     @Override
     public void render(int mouseX, int mouseY, float delta) {
-        this.parent.drawWidgetBackground(this.left, this.top, width, height-top-(height-bottom));
+        RenderUtils.drawWidgetBackground(this.left, this.top, width, height-top-(height-bottom));
         this.renderList(this.getRowLeft(), this.top + 4 - (int)this.getScrollAmount(), mouseX, mouseY, delta);
         this.renderDecorations(mouseX, mouseY);
         this.drawCenteredString(this.minecraft.textRenderer, "Files", this.left+this.width/2, this.top-30, 16777215);

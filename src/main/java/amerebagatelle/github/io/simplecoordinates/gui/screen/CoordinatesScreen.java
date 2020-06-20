@@ -60,6 +60,7 @@ public class CoordinatesScreen extends Screen {
             }
             this.refresh();
         }));
+        // TODO Add button for TP to coordinate if in creative
         coordinatesWidget = new CoordinatesWidget(this.minecraft, this.width/2-50, this.height, 40, this.height - 50, 15, this);
         this.children.add(coordinatesWidget);
         this.coordinatesWidget.setLeftPos(this.width/2+10);
@@ -76,27 +77,6 @@ public class CoordinatesScreen extends Screen {
         coordinatesWidget.render(mouseX, mouseY, delta);
         super.render(mouseX, mouseY, delta);
         updateButtonStates();
-    }
-
-    public void drawWidgetBackground(float x, float y, float width, float height) {
-        Tessellator tessellator = Tessellator.getInstance();
-        BufferBuilder builder = tessellator.getBuffer();
-
-        GlStateManager.enableBlend();
-        GlStateManager.disableTexture();
-        GlStateManager.blendFuncSeparate(GlStateManager.SrcFactor.SRC_COLOR.value, GlStateManager.DstFactor.ONE_MINUS_SRC_ALPHA.value, GlStateManager.SrcFactor.ONE.value, GlStateManager.DstFactor.ZERO.value);
-        GlStateManager.color4f(0.1f, 0.1f, 0.1f, 0.30f);
-
-        builder.begin(7, VertexFormats.POSITION);
-        builder.vertex(x, y, 0.0).next();
-        builder.vertex(x, y + height, 0.0).next();
-        builder.vertex(x + width, y + height, 0.0).next();
-        builder.vertex(x + width, y, 0.0).next();
-
-        tessellator.draw();
-
-        GlStateManager.enableTexture();
-        GlStateManager.disableBlend();
     }
 
     public void refresh() {
