@@ -1,24 +1,19 @@
 package amerebagatelle.github.io.simplecoordinates.coordinates;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.resource.language.I18n;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class CoordinatesManager {
     public final String coordinatesFolder = "coordinates";
@@ -78,8 +73,8 @@ public class CoordinatesManager {
     }
 
     public void writeToCoordinates(String filepath, CoordinatesSet coordinates) throws IOException {
-        Path coordinatesFilepath = new File(filepath).toPath();
-        String jsonAsString = new String(Files.readAllBytes(coordinatesFilepath));
+        Path coordinatesFilePath = new File(filepath).toPath();
+        String jsonAsString = new String(Files.readAllBytes(coordinatesFilePath));
         JsonObject coordinatesJson = gson.fromJson(jsonAsString, JsonObject.class);
 
         Map<String, String> map = new LinkedHashMap<String, String>();
@@ -91,7 +86,7 @@ public class CoordinatesManager {
 
         coordinatesJson.add(coordinates.name, mapToElement);
 
-        Files.write(coordinatesFilepath, gson.toJson(coordinatesJson).getBytes());
+        Files.write(coordinatesFilePath, gson.toJson(coordinatesJson).getBytes());
     }
 
     public void removeCoordinate(String filepath, CoordinatesSet coordinates) throws IOException {
