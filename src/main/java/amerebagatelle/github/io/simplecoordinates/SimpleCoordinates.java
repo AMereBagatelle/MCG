@@ -26,17 +26,17 @@ public class SimpleCoordinates implements ClientModInitializer {
 
         coordinatesManager.initCoordinatesFolder();
 
-        FabricKeyBinding debug = FabricKeyBinding.Builder.create(
-                new Identifier("test"),
+        FabricKeyBinding openScreen = FabricKeyBinding.Builder.create(
+                new Identifier("openscreen"),
                 InputUtil.Type.KEYSYM,
                 GLFW.GLFW_KEY_Y,
                 "Miscellaneous"
         ).build();
 
-        KeyBindingRegistry.INSTANCE.register(debug);
+        KeyBindingRegistry.INSTANCE.register(openScreen);
 
         ClientTickCallback.EVENT.register(e -> {
-            if(debug.wasPressed()) MinecraftClient.getInstance().openScreen(new CoordinatesScreen());
+            if (openScreen.wasPressed()) MinecraftClient.getInstance().openScreen(new CoordinatesScreen());
         });
     }
 }
