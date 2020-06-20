@@ -1,15 +1,14 @@
 package amerebagatelle.github.io.simplecoordinates.gui.screen;
 
 import amerebagatelle.github.io.simplecoordinates.SimpleCoordinates;
-import amerebagatelle.github.io.simplecoordinates.coordinates.CoordinatesManager;
 import amerebagatelle.github.io.simplecoordinates.coordinates.CoordinatesSet;
+import amerebagatelle.github.io.simplecoordinates.gui.widget.CoordinateFileListWidget;
 import amerebagatelle.github.io.simplecoordinates.gui.widget.CoordinatesWidget;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.resource.language.I18n;
-import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.math.BlockPos;
 
@@ -20,7 +19,6 @@ import java.util.function.Predicate;
 public class CreateCoordinateScreen extends Screen {
     private final MinecraftClient client;
     private final CoordinatesScreen parent;
-    private final int textColor = 16777215;
     private final Predicate<String> coordinateFilter = (string) -> {
         System.out.println(string);
         if(string.length() == 0 || string.equals("-")) {
@@ -75,6 +73,7 @@ public class CreateCoordinateScreen extends Screen {
         this.addButton = this.addButton(new ButtonWidget(this.width/2-100, this.height-120, 200, 20, I18n.translate("writecoordinate.addCoordinate"), ctx -> this.andAndClose()));
         this.addButton(new ButtonWidget(this.width/2-100, this.height-80, 200, 20, I18n.translate("writecoordinate.cancelAdd"), ctx -> this.onClose()));
         this.updateButtonActivationStates();
+        // checks for what we can just toss into the boxes for players
         BlockPos playerPos = client.player.getBlockPos();
         if(playerPos != null) {
             coordinateXField.setText(Integer.toString(playerPos.getX()));
@@ -93,6 +92,7 @@ public class CreateCoordinateScreen extends Screen {
     @Override
     public void render(int mouseX, int mouseY, float delta) {
         this.renderBackground();
+        int textColor = 16777215;
         this.drawCenteredString(this.font, I18n.translate("writecoordinate.title"), this.width/2, 20, textColor);
         this.drawCenteredString(this.font, I18n.translate("writecoordinate.enterName"), this.width/2, coordinateNameField.y-15, textColor);
         this.coordinateNameField.render(mouseX, mouseY, delta);
@@ -110,7 +110,7 @@ public class CreateCoordinateScreen extends Screen {
 
     public void andAndClose() {
         try {
-            SimpleCoordinates.coordinatesManager.writeToCoordinates(parent.coordinateFileListWidget.workingDirectory.toString() + "/" + parent.coordinatesWidget.coordinatesListName, new CoordinatesSet(coordinateNameField.getText(), Integer.parseInt(coordinateXField.getText()), Integer.parseInt(coordinateYField.getText()), Integer.parseInt(coordinateZField.getText()), coordinateDetailsField.getText()));
+            SimpleCoordinates.coordinatesManager.writeToCoordinates(CoordinateFileListWidget.workingDirectory.toString() + "/" + CoordinatesWidget.coordinatesListName, new CoordinatesSet(coordinateNameField.getText(), Integer.parseInt(coordinateXField.getText()), Integer.parseInt(coordinateYField.getText()), Integer.parseInt(coordinateZField.getText()), coordinateDetailsField.getText()));
         } catch (IOException e) {
             SimpleCoordinates.logger.error("Could not write coordinate.");
         }
