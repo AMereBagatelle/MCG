@@ -7,19 +7,14 @@ import amerebagatelle.github.io.simplecoordinates.utils.RenderUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.widget.AlwaysSelectedEntryListWidget;
-import net.minecraft.client.render.Tessellator;
-
-import java.util.ArrayList;
 
 public class CoordinatesWidget extends AlwaysSelectedEntryListWidget<CoordinatesWidget.Entry> {
     public CoordinatesList currentCoordinatesList;
     public static String coordinatesListName = "";
-    private CoordinatesScreen parent;
 
     public CoordinatesWidget(MinecraftClient minecraftClient, int width, int height, int top, int bottom, int itemHeight, CoordinatesScreen parent) {
         super(minecraftClient, width, height, top, bottom, itemHeight);
         this.setCurrentList(new CoordinatesList().createNull(), "");
-        this.parent = parent;
     }
 
     @Override
