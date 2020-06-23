@@ -1,6 +1,7 @@
 package amerebagatelle.github.io.simplecoordinates.gui.screen;
 
 import amerebagatelle.github.io.simplecoordinates.SimpleCoordinates;
+import amerebagatelle.github.io.simplecoordinates.gui.widget.CoordinateFileListWidget;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
@@ -11,7 +12,7 @@ import java.io.IOException;
 
 public class CreateFolderScreen extends Screen {
     private TextFieldWidget nameWidget;
-    private CoordinatesScreen parent;
+    private final CoordinatesScreen parent;
 
     public CreateFolderScreen(CoordinatesScreen parent) {
         super(new LiteralText("CoordinateFolderScreen"));
@@ -26,7 +27,7 @@ public class CreateFolderScreen extends Screen {
         this.children.add(nameWidget);
         this.addButton(new ButtonWidget(this.width/2-100, this.height/2, 200, 20, "Create", onPress -> {
             try {
-                SimpleCoordinates.coordinatesManager.createFolder(parent.coordinateFileListWidget.workingDirectory.toString() + "/" + this.nameWidget.getText());
+                SimpleCoordinates.coordinatesManager.createFolder(CoordinateFileListWidget.workingDirectory.toString() + "/" + this.nameWidget.getText());
             } catch (IOException ignored) {
             } finally {
                 this.minecraft.openScreen(parent);
