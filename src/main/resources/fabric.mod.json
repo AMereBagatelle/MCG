@@ -25,7 +25,6 @@
   "depends": {
     "fabricloader": ">=0.8.2+build.194",
     "fabric": "*",
-    "minecraft": "1.16.x",
-    "cotton-client-commands": "^1.0.0"
+    "minecraft": "1.16.x"
   }
 }
