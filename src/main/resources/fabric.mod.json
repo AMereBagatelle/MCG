@@ -17,9 +17,6 @@
   "entrypoints": {
     "client": [
       "amerebagatelle.github.io.simplecoordinates.SimpleCoordinates"
-    ],
-    "cotton-client-commands": [
-      "amerebagatelle.github.io.simplecoordinates.commands.CoordinateCommand"
     ]
   },
   "mixins": [
