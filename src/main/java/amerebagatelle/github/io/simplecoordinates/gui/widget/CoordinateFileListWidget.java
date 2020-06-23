@@ -5,6 +5,7 @@ import amerebagatelle.github.io.simplecoordinates.gui.screen.CoordinatesScreen;
 import amerebagatelle.github.io.simplecoordinates.utils.RenderUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.widget.AlwaysSelectedEntryListWidget;
+import net.minecraft.client.util.math.MatrixStack;
 
 import java.io.File;
 import java.io.IOException;
@@ -61,18 +62,18 @@ public class CoordinateFileListWidget extends AlwaysSelectedEntryListWidget<Coor
     }
 
     @Override
-    public void render(int mouseX, int mouseY, float delta) {
-        RenderUtils.drawWidgetBackground(this.left, this.top, width, height-top-(height-bottom));
-        this.renderList(this.getRowLeft(), this.top + 4 - (int)this.getScrollAmount(), mouseX, mouseY, delta);
-        this.renderDecorations(mouseX, mouseY);
-        this.drawCenteredString(this.minecraft.textRenderer, "Files", this.left+this.width/2, this.top-30, 16777215);
+    public void render(MatrixStack matrixStack, int mouseX, int mouseY, float delta) {
+        RenderUtils.drawWidgetBackground(this.left, this.top, width, height - top - (height - bottom));
+        this.renderList(matrixStack, this.getRowLeft(), this.top + 4 - (int) this.getScrollAmount(), mouseX, mouseY, delta);
+        this.renderDecorations(matrixStack, mouseX, mouseY);
+        this.drawCenteredString(matrixStack, this.client.textRenderer, "Files", this.left + this.width / 2, this.top - 30, 16777215);
         String visibleDirectory = workingDirectory.toString().length() > 12 ? workingDirectory.toString().substring(11) + "/" : "/";
-        this.drawString(this.minecraft.textRenderer, visibleDirectory, this.left, this.top-10, 3553279);
+        this.drawStringWithShadow(matrixStack, this.client.textRenderer, visibleDirectory, this.left, this.top - 10, 3553279);
     }
 
     @Override
-    protected int getScrollbarPosition() {
-        return this.left+this.width-10;
+    protected int getScrollbarPositionX() {
+        return this.left + this.width - 10;
     }
 
     @Override
@@ -88,9 +89,9 @@ public class CoordinateFileListWidget extends AlwaysSelectedEntryListWidget<Coor
         }
 
         @Override
-        public void render(int index, int y, int x, int width, int height, int mouseX, int mouseY, boolean hovering, float delta) {
-            if(y >= CoordinateFileListWidget.this.top && y + height <= CoordinateFileListWidget.this.bottom) {
-                CoordinateFileListWidget.this.drawString(CoordinateFileListWidget.this.minecraft.textRenderer, this.name, x + 5, y, 16777215);
+        public void render(MatrixStack matrixStack, int index, int y, int x, int width, int height, int mouseX, int mouseY, boolean hovering, float delta) {
+            if (y >= CoordinateFileListWidget.this.top && y + height <= CoordinateFileListWidget.this.bottom) {
+                CoordinateFileListWidget.this.drawStringWithShadow(matrixStack, CoordinateFileListWidget.this.client.textRenderer, this.name, x + 5, y, 16777215);
             }
         }
 
@@ -114,9 +115,9 @@ public class CoordinateFileListWidget extends AlwaysSelectedEntryListWidget<Coor
         }
 
         @Override
-        public void render(int index, int y, int x, int width, int height, int mouseX, int mouseY, boolean hovering, float delta) {
-            if(y >= CoordinateFileListWidget.this.top && y + height <= CoordinateFileListWidget.this.bottom) {
-                CoordinateFileListWidget.this.drawString(CoordinateFileListWidget.this.minecraft.textRenderer, this.name + "/", x + 5, y, 16777215);
+        public void render(MatrixStack matrixStack, int index, int y, int x, int width, int height, int mouseX, int mouseY, boolean hovering, float delta) {
+            if (y >= CoordinateFileListWidget.this.top && y + height <= CoordinateFileListWidget.this.bottom) {
+                CoordinateFileListWidget.this.drawStringWithShadow(matrixStack, CoordinateFileListWidget.this.client.textRenderer, this.name + "/", x + 5, y, 16777215);
             }
         }
 

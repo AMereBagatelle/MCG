@@ -7,6 +7,7 @@ import amerebagatelle.github.io.simplecoordinates.utils.RenderUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.widget.AlwaysSelectedEntryListWidget;
+import net.minecraft.client.util.math.MatrixStack;
 
 public class CoordinatesWidget extends AlwaysSelectedEntryListWidget<CoordinatesWidget.Entry> {
     public CoordinatesList currentCoordinatesList;
@@ -18,12 +19,12 @@ public class CoordinatesWidget extends AlwaysSelectedEntryListWidget<Coordinates
     }
 
     @Override
-    public void render(int mouseX, int mouseY, float delta) {
-        RenderUtils.drawWidgetBackground(this.left, this.top, width, height-top-(height-bottom));
-        this.renderList(this.getRowLeft(), this.top + 4 - (int)this.getScrollAmount(), mouseX, mouseY, delta);
-        this.renderDecorations(mouseX, mouseY);
-        this.drawCenteredString(this.minecraft.textRenderer, "Coordinates", this.left+this.width/2, this.top-30, 16777215);
-        this.drawString(this.minecraft.textRenderer, coordinatesListName, this.left, this.top-10, 3553279);
+    public void render(MatrixStack matrixStack, int mouseX, int mouseY, float delta) {
+        RenderUtils.drawWidgetBackground(this.left, this.top, width, height - top - (height - bottom));
+        this.renderList(matrixStack, this.getRowLeft(), this.top + 4 - (int) this.getScrollAmount(), mouseX, mouseY, delta);
+        this.renderDecorations(matrixStack, mouseX, mouseY);
+        this.drawCenteredString(matrixStack, this.client.textRenderer, "Coordinates", this.left + this.width / 2, this.top - 30, 16777215);
+        this.drawStringWithShadow(matrixStack, this.client.textRenderer, coordinatesListName, this.left, this.top - 10, 3553279);
     }
 
     public void setCurrentList(CoordinatesList list, String name) {
@@ -48,8 +49,8 @@ public class CoordinatesWidget extends AlwaysSelectedEntryListWidget<Coordinates
     }
 
     @Override
-    protected int getScrollbarPosition() {
-        return this.left+this.width-10;
+    protected int getScrollbarPositionX() {
+        return this.left + this.width - 10;
     }
 
     @Override
@@ -65,13 +66,13 @@ public class CoordinatesWidget extends AlwaysSelectedEntryListWidget<Coordinates
         }
 
         @Override
-        public void render(int index, int y, int x, int width, int height, int mouseX, int mouseY, boolean hovering, float delta) {
-            if(y >= CoordinatesWidget.this.top && y + height <= CoordinatesWidget.this.bottom) {
-                TextRenderer renderer = CoordinatesWidget.this.minecraft.textRenderer;
-                CoordinatesWidget.this.drawString(renderer, coordinates.name, x + 5, y, 16777215);
-                CoordinatesWidget.this.drawString(renderer, Integer.toString(coordinates.x), x + width / 2, y, 16777215);
-                CoordinatesWidget.this.drawString(renderer, Integer.toString(coordinates.y), x + width / 6 * 4, y, 16777215);
-                CoordinatesWidget.this.drawString(renderer, Integer.toString(coordinates.z), x + width / 6 * 5, y, 16777215);
+        public void render(MatrixStack matrixStack, int index, int y, int x, int width, int height, int mouseX, int mouseY, boolean hovering, float delta) {
+            if (y >= CoordinatesWidget.this.top && y + height <= CoordinatesWidget.this.bottom) {
+                TextRenderer renderer = CoordinatesWidget.this.client.textRenderer;
+                CoordinatesWidget.this.drawStringWithShadow(matrixStack, renderer, coordinates.name, x + 5, y, 16777215);
+                CoordinatesWidget.this.drawStringWithShadow(matrixStack, renderer, Integer.toString(coordinates.x), x + width / 2, y, 16777215);
+                CoordinatesWidget.this.drawStringWithShadow(matrixStack, renderer, Integer.toString(coordinates.y), x + width / 6 * 4, y, 16777215);
+                CoordinatesWidget.this.drawStringWithShadow(matrixStack, renderer, Integer.toString(coordinates.z), x + width / 6 * 5, y, 16777215);
             }
         }
 
