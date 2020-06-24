@@ -13,7 +13,7 @@
   },
   "license": "CC0-1.0",
   "icon": "assets/simplecoordinates/icon.png",
-  "environment": "*",
+  "environment": "client",
   "entrypoints": {
     "client": [
       "amerebagatelle.github.io.simplecoordinates.SimpleCoordinates"
@@ -24,7 +24,6 @@
   ],
   "depends": {
     "fabricloader": ">=0.8.2+build.194",
-    "fabric": "*",
     "minecraft": "1.16.x"
   }
 }
