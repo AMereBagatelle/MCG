@@ -1,8 +1,10 @@
 package amerebagatelle.github.io.simplecoordinates.gui.screen;
 
 import amerebagatelle.github.io.simplecoordinates.SimpleCoordinates;
+import amerebagatelle.github.io.simplecoordinates.coordinates.CoordinatesSet;
 import amerebagatelle.github.io.simplecoordinates.gui.widget.CoordinateFileListWidget;
 import amerebagatelle.github.io.simplecoordinates.gui.widget.CoordinatesWidget;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.util.math.MatrixStack;
@@ -19,6 +21,7 @@ public class CoordinatesScreen extends Screen {
     private ButtonWidget newCoordinateButton;
     private ButtonWidget deleteCoordinateButton;
     private ButtonWidget deleteFileButton;
+    private ButtonWidget tpToCoordsButton;
 
     public CoordinatesScreen() {
         super(new TranslatableText("screen.coordinates.title"));
@@ -45,14 +48,22 @@ public class CoordinatesScreen extends Screen {
         newCoordinateButton = this.addButton(new ButtonWidget(this.width / 2 + 10, this.height - 45, 110, 20, new LiteralText("New/Edit Coordinate"), onPress -> {
             this.client.openScreen(new CreateCoordinateScreen(client, this, this.coordinatesWidget.getSelected()));
         }));
-        deleteCoordinateButton = this.addButton(new ButtonWidget(this.width / 2 + 125, this.height - 45, 100, 20, new LiteralText("Delete Coordinate"), onPress -> {
+        deleteCoordinateButton = this.addButton(new ButtonWidget(this.width / 2 + 120, this.height - 45, 100, 20, new LiteralText("Delete Coordinate"), onPress -> {
             try {
                 SimpleCoordinates.coordinatesManager.removeCoordinate(CoordinateFileListWidget.workingDirectory.toString() + "/" + CoordinatesWidget.coordinatesListName, coordinatesWidget.getSelected().getCoordinates());
             } catch (IOException | NullPointerException ignored) {
             }
             this.refresh();
         }));
-        // TODO Add button for TP to coordinate if in creative
+        if (MinecraftClient.getInstance().player.isCreative() || MinecraftClient.getInstance().player.isSpectator()) {
+            tpToCoordsButton = this.addButton(new ButtonWidget(this.width / 2 + 220, this.height - 45, 85, 20, new LiteralText("TP To Selected"), onPress -> {
+                MinecraftClient mc = MinecraftClient.getInstance();
+                if (mc.player.isCreative() || mc.player.isSpectator()) {
+                    CoordinatesSet coordinateSet = coordinatesWidget.getSelected().getCoordinates();
+                    mc.player.sendChatMessage(String.format("/tp %s %s %s", coordinateSet.x, coordinateSet.y, coordinateSet.z));
+                }
+            }));
+        }
         coordinatesWidget = new CoordinatesWidget(this.client, this.width / 2 - 50, this.height, 40, this.height - 50, 15, this);
         this.children.add(coordinatesWidget);
         this.coordinatesWidget.setLeftPos(this.width / 2 + 10);
@@ -79,6 +90,7 @@ public class CoordinatesScreen extends Screen {
         deleteFileButton.active = coordinateFileListWidget.getSelected() != null;
         newCoordinateButton.active = coordinateFileListWidget.getSelected() != null && coordinateFileListWidget.getSelected() instanceof CoordinateFileListWidget.CoordinateFileEntry;
         deleteCoordinateButton.active = coordinatesWidget.getSelected() != null;
+        if (tpToCoordsButton != null) tpToCoordsButton.active = coordinatesWidget.getSelected() != null;
     }
 
     @Override
