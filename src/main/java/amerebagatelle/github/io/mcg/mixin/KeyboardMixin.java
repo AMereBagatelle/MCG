@@ -1,6 +1,6 @@
-package amerebagatelle.github.io.simplecoordinates.mixin;
+package amerebagatelle.github.io.mcg.mixin;
 
-import amerebagatelle.github.io.simplecoordinates.gui.screen.CoordinatesScreen;
+import amerebagatelle.github.io.mcg.gui.screen.CoordinatesScreen;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.Keyboard;

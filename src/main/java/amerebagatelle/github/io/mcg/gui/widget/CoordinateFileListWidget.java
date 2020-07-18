@@ -1,8 +1,8 @@
-package amerebagatelle.github.io.simplecoordinates.gui.widget;
+package amerebagatelle.github.io.mcg.gui.widget;
 
-import amerebagatelle.github.io.simplecoordinates.SimpleCoordinates;
-import amerebagatelle.github.io.simplecoordinates.gui.screen.CoordinatesScreen;
-import amerebagatelle.github.io.simplecoordinates.utils.RenderUtils;
+import amerebagatelle.github.io.mcg.MCG;
+import amerebagatelle.github.io.mcg.gui.screen.CoordinatesScreen;
+import amerebagatelle.github.io.mcg.utils.RenderUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.widget.AlwaysSelectedEntryListWidget;
 import net.minecraft.client.util.math.MatrixStack;
@@ -54,9 +54,9 @@ public class CoordinateFileListWidget extends AlwaysSelectedEntryListWidget<Coor
         this.ensureVisible(entry);
         if(entry instanceof CoordinateFileEntry) {
             try {
-                this.coordinatesWidget.setCurrentList(SimpleCoordinates.coordinatesManager.loadCoordinates(workingDirectory + "/" + ((CoordinateFileEntry) entry).name), ((CoordinateFileEntry) entry).name);
+                this.coordinatesWidget.setCurrentList(MCG.coordinatesManager.loadCoordinates(workingDirectory + "/" + ((CoordinateFileEntry) entry).name), ((CoordinateFileEntry) entry).name);
             } catch (IOException e) {
-                SimpleCoordinates.logger.info("Could not load coordinates file.");
+                MCG.logger.info("Could not load coordinates file.");
             }
         }
     }

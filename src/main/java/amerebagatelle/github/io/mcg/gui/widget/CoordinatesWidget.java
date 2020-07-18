@@ -1,9 +1,9 @@
-package amerebagatelle.github.io.simplecoordinates.gui.widget;
+package amerebagatelle.github.io.mcg.gui.widget;
 
-import amerebagatelle.github.io.simplecoordinates.coordinates.CoordinatesList;
-import amerebagatelle.github.io.simplecoordinates.coordinates.CoordinatesSet;
-import amerebagatelle.github.io.simplecoordinates.gui.screen.CoordinatesScreen;
-import amerebagatelle.github.io.simplecoordinates.utils.RenderUtils;
+import amerebagatelle.github.io.mcg.coordinates.CoordinatesList;
+import amerebagatelle.github.io.mcg.coordinates.CoordinatesSet;
+import amerebagatelle.github.io.mcg.gui.screen.CoordinatesScreen;
+import amerebagatelle.github.io.mcg.utils.RenderUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.widget.AlwaysSelectedEntryListWidget;

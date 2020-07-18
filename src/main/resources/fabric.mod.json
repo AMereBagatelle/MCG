@@ -1,26 +1,26 @@
 {
   "schemaVersion": 1,
-  "id": "simplecoordinates",
+  "id": "mcg",
   "version": "${version}",
-  "name": "SimpleCoordinates",
+  "name": "MCG",
   "description": "A mod to list all your coordinates, and that has simple saving of coordinates, so that you don't have to remember them!",
   "authors": [
     "AMereBagatelle"
   ],
   "contact": {
     "homepage": "amerebagatelle.github.io",
-    "sources": "https://github.com/AMereBagatelle/SimpleCoordinates.git"
+    "sources": "https://github.com/AMereBagatelle/MCG"
   },
   "license": "CC0-1.0",
-  "icon": "assets/simplecoordinates/icon.png",
+  "icon": "assets/mcg/icon.png",
   "environment": "client",
   "entrypoints": {
     "client": [
-      "amerebagatelle.github.io.simplecoordinates.SimpleCoordinates"
+      "amerebagatelle.github.io.mcg.SimpleCoordinates"
     ]
   },
   "mixins": [
-    "simplecoordinates.mixins.json"
+    "mcg.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=0.8.2+build.194",

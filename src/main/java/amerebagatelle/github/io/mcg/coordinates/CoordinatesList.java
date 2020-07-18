@@ -1,4 +1,4 @@
-package amerebagatelle.github.io.simplecoordinates.coordinates;
+package amerebagatelle.github.io.mcg.coordinates;
 
 import java.util.ArrayList;
 

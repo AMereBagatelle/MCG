@@ -1,6 +1,6 @@
 {
   "required": true,
-  "package": "amerebagatelle.github.io.simplecoordinates.mixin",
+  "package": "amerebagatelle.github.io.mcg.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
   ],

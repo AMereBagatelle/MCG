@@ -1,4 +1,4 @@
-package amerebagatelle.github.io.simplecoordinates.utils;
+package amerebagatelle.github.io.mcg.utils;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;

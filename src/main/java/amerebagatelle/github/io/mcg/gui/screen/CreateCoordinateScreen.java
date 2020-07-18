@@ -1,9 +1,9 @@
-package amerebagatelle.github.io.simplecoordinates.gui.screen;
+package amerebagatelle.github.io.mcg.gui.screen;
 
-import amerebagatelle.github.io.simplecoordinates.SimpleCoordinates;
-import amerebagatelle.github.io.simplecoordinates.coordinates.CoordinatesSet;
-import amerebagatelle.github.io.simplecoordinates.gui.widget.CoordinateFileListWidget;
-import amerebagatelle.github.io.simplecoordinates.gui.widget.CoordinatesWidget;
+import amerebagatelle.github.io.mcg.MCG;
+import amerebagatelle.github.io.mcg.coordinates.CoordinatesSet;
+import amerebagatelle.github.io.mcg.gui.widget.CoordinateFileListWidget;
+import amerebagatelle.github.io.mcg.gui.widget.CoordinatesWidget;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
@@ -111,9 +111,9 @@ public class CreateCoordinateScreen extends Screen {
 
     public void andAndClose() {
         try {
-            SimpleCoordinates.coordinatesManager.writeToCoordinates(CoordinateFileListWidget.workingDirectory.toString() + "/" + CoordinatesWidget.coordinatesListName, new CoordinatesSet(coordinateNameField.getText(), Integer.parseInt(coordinateXField.getText()), Integer.parseInt(coordinateYField.getText()), Integer.parseInt(coordinateZField.getText()), coordinateDetailsField.getText()));
+            MCG.coordinatesManager.writeToCoordinates(CoordinateFileListWidget.workingDirectory.toString() + "/" + CoordinatesWidget.coordinatesListName, new CoordinatesSet(coordinateNameField.getText(), Integer.parseInt(coordinateXField.getText()), Integer.parseInt(coordinateYField.getText()), Integer.parseInt(coordinateZField.getText()), coordinateDetailsField.getText()));
         } catch (IOException e) {
-            SimpleCoordinates.logger.error("Could not write coordinate.");
+            MCG.logger.error("Could not write coordinate.");
         }
         this.onClose();
     }

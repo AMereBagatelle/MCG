@@ -1,4 +1,4 @@
-package amerebagatelle.github.io.simplecoordinates.coordinates;
+package amerebagatelle.github.io.mcg.coordinates;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
