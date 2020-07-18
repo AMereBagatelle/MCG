@@ -24,7 +24,7 @@ public class CoordinatesScreen extends Screen {
     private ButtonWidget tpToCoordsButton;
 
     public CoordinatesScreen() {
-        super(new TranslatableText("screen.coordinates.title"));
+        super(new TranslatableText("mcg.coordinates_screen.title"));
     }
 
     @Override
