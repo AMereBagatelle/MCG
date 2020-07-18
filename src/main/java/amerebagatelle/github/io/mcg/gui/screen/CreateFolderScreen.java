@@ -23,10 +23,10 @@ public class CreateFolderScreen extends Screen {
     @Override
     public void init(MinecraftClient client, int width, int height) {
         super.init(client, width, height);
-        this.nameWidget = new TextFieldWidget(this.textRenderer, this.width / 2 - 100, this.height / 2 - 100, 200, 20, new LiteralText(""));
+        this.nameWidget = new TextFieldWidget(this.textRenderer, this.width / 2 - 100, this.height / 2 - 50, 200, 20, new LiteralText(""));
         this.nameWidget.setText("Untitled");
         this.children.add(nameWidget);
-        this.addButton(new ButtonWidget(this.width / 2 - 100, this.height / 2, 200, 20, new LiteralText("Create"), onPress -> {
+        this.addButton(new ButtonWidget(this.width / 2 - 100, this.height / 2 + 50, 200, 20, new LiteralText("Create"), onPress -> {
             try {
                 MCG.coordinatesManager.createFolder(CoordinateFileListWidget.workingDirectory.toString() + "/" + this.nameWidget.getText());
             } catch (IOException ignored) {
@@ -34,7 +34,7 @@ public class CreateFolderScreen extends Screen {
                 this.client.openScreen(parent);
             }
         }));
-        this.addButton(new ButtonWidget(this.width / 2 - 100, this.height / 2 + 30, 200, 20, new LiteralText("Cancel"), onPress -> {
+        this.addButton(new ButtonWidget(this.width / 2 - 100, this.height / 2 + 80, 200, 20, new LiteralText("Cancel"), onPress -> {
             this.client.openScreen(parent);
         }));
     }

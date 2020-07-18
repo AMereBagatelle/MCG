@@ -16,7 +16,7 @@
   "environment": "client",
   "entrypoints": {
     "client": [
-      "amerebagatelle.github.io.mcg.SimpleCoordinates"
+      "amerebagatelle.github.io.mcg.MCG"
     ]
   },
   "mixins": [

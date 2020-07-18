@@ -39,7 +39,7 @@ public class CoordinatesScreen extends Screen {
         this.addButton(new ButtonWidget(110, this.height - 45, 70, 20, new LiteralText("New Folder"), onPress -> {
             this.client.openScreen(new CreateFolderScreen(this));
         }));
-        deleteFileButton = this.addButton(new ButtonWidget(185, this.height - 45, 100, 20, new LiteralText("Delete File"), onPress -> {
+        deleteFileButton = this.addButton(new ButtonWidget(10, this.height - 22, 100, 20, new LiteralText("Delete File"), onPress -> {
             if (coordinateFileListWidget.getSelected() != null) {
                 new File(CoordinateFileListWidget.workingDirectory.toString() + "/" + CoordinatesWidget.coordinatesListName).delete();
             }
@@ -56,7 +56,7 @@ public class CoordinatesScreen extends Screen {
             this.refresh();
         }));
         if (MinecraftClient.getInstance().player.isCreative() || MinecraftClient.getInstance().player.isSpectator()) {
-            tpToCoordsButton = this.addButton(new ButtonWidget(this.width / 2 + 220, this.height - 45, 85, 20, new LiteralText("TP To Selected"), onPress -> {
+            tpToCoordsButton = this.addButton(new ButtonWidget(this.width / 2 + 10, this.height - 22, 85, 20, new LiteralText("TP To Selected"), onPress -> {
                 MinecraftClient mc = MinecraftClient.getInstance();
                 if (mc.player.isCreative() || mc.player.isSpectator()) {
                     CoordinatesSet coordinateSet = coordinatesWidget.getSelected().getCoordinates();
