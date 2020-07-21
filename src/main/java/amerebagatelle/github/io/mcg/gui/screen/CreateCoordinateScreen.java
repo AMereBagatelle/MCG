@@ -57,7 +57,7 @@ public class CreateCoordinateScreen extends Screen {
     protected void init() {
         client.keyboard.enableRepeatEvents(true);
         super.init();
-        this.coordinateNameField = new TextFieldWidget(this.textRenderer, this.width / 2 - 100, 66, 200, 20, new TranslatableText("mcg.write_coordinates_screen.enterName"));
+        this.coordinateNameField = new TextFieldWidget(this.textRenderer, this.width + 20, 66, 200, 20, new TranslatableText("mcg.write_coordinates_screen.enterName"));
         this.coordinateNameField.setSelected(true);
         this.children.add(coordinateNameField);
         this.coordinateXField = new TextFieldWidget(this.textRenderer, this.width / 2 - 100, 106, 200, 20, new TranslatableText("mcg.write_coordinates_screen.enterX"));
