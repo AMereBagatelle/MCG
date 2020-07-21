@@ -28,6 +28,9 @@ dependencies {
     // fabric api resource loader
     modCompile "net.fabricmc.fabric-api:fabric-resource-loader-v0:${project.fabric_resource_loader_version}"
     include "net.fabricmc.fabric-api:fabric-resource-loader-v0:${project.fabric_resource_loader_version}"
+    // fabric api keybindings
+    modCompile "net.fabricmc.fabric-api:fabric-keybindings:${project.fabric_keybindings_version}"
+    include "net.fabricmc.fabric-api:fabric-keybindings:${project.fabric_keybindings_version}"
 }
 
 processResources {
