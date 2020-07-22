@@ -30,8 +30,4 @@ public class RenderUtils {
         GlStateManager.enableTexture();
         GlStateManager.disableBlend();
     }
-
-    public static void drawWidgetBackground(float x, float y, float width, float height) {
-        drawBox(x, y, width, height, 0.1f, 0.1f, 0.1f, 0.30f);
-    }
 }
