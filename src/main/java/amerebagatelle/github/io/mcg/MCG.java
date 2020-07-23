@@ -12,6 +12,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.glfw.GLFW;
 
+import java.io.IOException;
+
 @Environment(EnvType.CLIENT)
 public class MCG implements ClientModInitializer {
     public static final Logger logger = LogManager.getLogger();
@@ -23,7 +25,11 @@ public class MCG implements ClientModInitializer {
     public void onInitializeClient() {
         logger.info("Gathering your coordinates...");
 
-        coordinatesManager.initCoordinatesFolder();
+        try {
+            coordinatesManager.initCoordinatesFolder();
+        } catch (IOException e) {
+            throw new RuntimeException("Can't write coordinates file/folder.  Do we have write access?");
+        }
 
         binding = FabricKeyBinding.Builder.create(
                 new Identifier("mcg", "coordinates_screen"),

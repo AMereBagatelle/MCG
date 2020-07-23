@@ -24,15 +24,18 @@ public class CoordinatesManager {
         gson = new Gson();
     }
 
-    public void initCoordinatesFolder() {
+    public void initCoordinatesFolder() throws IOException {
         File coordinatesFolderFile = new File(coordinatesFolder);
         if(!coordinatesFolderFile.exists() && !coordinatesFolderFile.isDirectory()) {
             coordinatesFolderFile.mkdir();
         }
+        if(coordinatesFolderFile.isDirectory() && coordinatesFolderFile.listFiles().length == 0) {
+            initNewCoordinatesFile("newCoordinates.coordinates");
+        }
     }
 
     public void initNewCoordinatesFile(String filepath) throws IOException {
-        File coordinatesFile = new File(filepath);
+        File coordinatesFile = new File(coordinatesFolder, filepath.endsWith(".coordinates") ? filepath : filepath + ".coordinates");
         Path coordinatesFilePath = coordinatesFile.toPath();
         if(coordinatesFile.exists()) return;
 
