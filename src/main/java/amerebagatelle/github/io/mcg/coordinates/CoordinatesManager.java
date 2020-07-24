@@ -3,6 +3,7 @@ package amerebagatelle.github.io.mcg.coordinates;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import net.fabricmc.loader.api.FabricLoader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -12,11 +13,12 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class CoordinatesManager {
-    public final String coordinatesFolder = "coordinates";
+    public final Path coordinatesFolder = getCoordinateDirectory();
     private final Logger logger = LogManager.getLogger();
     private final Gson gson;
     
@@ -25,7 +27,7 @@ public class CoordinatesManager {
     }
 
     public void initCoordinatesFolder() throws IOException {
-        File coordinatesFolderFile = new File(coordinatesFolder);
+        File coordinatesFolderFile = new File(coordinatesFolder.toUri());
         if(!coordinatesFolderFile.exists() && !coordinatesFolderFile.isDirectory()) {
             coordinatesFolderFile.mkdir();
         }
@@ -35,7 +37,7 @@ public class CoordinatesManager {
     }
 
     public void initNewCoordinatesFile(String filepath) throws IOException {
-        File coordinatesFile = new File(coordinatesFolder, filepath.endsWith(".coordinates") ? filepath : filepath + ".coordinates");
+        File coordinatesFile = new File(coordinatesFolder.toString(), filepath.endsWith(".coordinates") ? filepath : filepath + ".coordinates");
         Path coordinatesFilePath = coordinatesFile.toPath();
         if(coordinatesFile.exists()) return;
 
@@ -52,13 +54,13 @@ public class CoordinatesManager {
     }
 
     public void createFolder(String filepath) throws IOException {
-        File folderFile = new File(filepath);
+        File folderFile = new File(coordinatesFolder.toString(), filepath);
         if(folderFile.exists()) return;
         folderFile.mkdir();
     }
 
     public CoordinatesList loadCoordinates(String filepath) throws IOException {
-        File coordinatesFile = new File(filepath);
+        File coordinatesFile = new File(coordinatesFolder.toString(), filepath);
         if(!coordinatesFile.exists()) return new CoordinatesList().createNull();
 
         CoordinatesList loadedList = new CoordinatesList();
@@ -76,7 +78,7 @@ public class CoordinatesManager {
     }
 
     public void writeToCoordinates(String filepath, CoordinatesSet coordinates) throws IOException {
-        Path coordinatesFilePath = new File(filepath).toPath();
+        Path coordinatesFilePath = new File(coordinatesFolder.toString(), filepath).toPath();
         String jsonAsString = new String(Files.readAllBytes(coordinatesFilePath));
         JsonObject coordinatesJson = gson.fromJson(jsonAsString, JsonObject.class);
 
@@ -92,13 +94,17 @@ public class CoordinatesManager {
         Files.write(coordinatesFilePath, gson.toJson(coordinatesJson).getBytes());
     }
 
-    public void removeCoordinate(String filepath, CoordinatesSet coordinates) throws IOException {
-        Path coordinatesFilepath = new File(filepath).toPath();
+    public void removeCoordinate(String filepath, CoordinatesSet coordinate) throws IOException {
+        Path coordinatesFilepath = new File(coordinatesFolder.toString(), filepath).toPath();
         String jsonAsString = new String(Files.readAllBytes(coordinatesFilepath));
         JsonObject coordinatesJson = gson.fromJson(jsonAsString, JsonObject.class);
 
-        coordinatesJson.remove(coordinates.name);
+        coordinatesJson.remove(coordinate.name);
 
         Files.write(coordinatesFilepath, gson.toJson(coordinatesJson).getBytes());
+    }
+
+    public static Path getCoordinateDirectory() {
+        return Paths.get(FabricLoader.getInstance().getGameDir().toString(), "coordinates");
     }
 }

@@ -1,5 +1,6 @@
 package amerebagatelle.github.io.mcg.gui.screen;
 
+import amerebagatelle.github.io.mcg.coordinates.CoordinatesManager;
 import amerebagatelle.github.io.mcg.gui.MCGListWidget;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -12,9 +13,11 @@ import java.io.File;
 import java.nio.file.Path;
 
 public class CoordinateFileManagerWidget extends MCGListWidget<CoordinateFileManagerWidget.Entry> {
+    private static Path currentDirectory = CoordinatesManager.getCoordinateDirectory();
 
     public CoordinateFileManagerWidget(MinecraftClient minecraftClient, int width, int height, int top, int bottom, int itemHeight, int left) {
         super(minecraftClient, width, height, top, bottom, itemHeight, left);
+        this.updateEntries(currentDirectory);
     }
 
     public void updateEntries(Path path) {
@@ -28,6 +31,26 @@ public class CoordinateFileManagerWidget extends MCGListWidget<CoordinateFileMan
                 }
             }
         }
+    }
+
+    public void newFile() {
+        client.openScreen(new CoordinateFileCreationScreen("File"));
+    }
+
+    public void newFolder() {
+        client.openScreen(new CoordinateFileCreationScreen("Folder"));
+    }
+
+    public boolean hasFileSelected() {
+        return this.getSelected() instanceof FileEntry;
+    }
+
+    public boolean hasSelected() {
+        return this.getSelected() != null;
+    }
+
+    public Path getCurrentDirectory() {
+        return currentDirectory;
     }
 
     @Override

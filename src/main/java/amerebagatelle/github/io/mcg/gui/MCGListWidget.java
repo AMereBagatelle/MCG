@@ -22,6 +22,10 @@ public class MCGListWidget<E extends AlwaysSelectedEntryListWidget.Entry<E>> ext
         return left;
     }
 
+    public int getRight() {
+        return left + width;
+    }
+
     public int getTop() {
         return top;
     }

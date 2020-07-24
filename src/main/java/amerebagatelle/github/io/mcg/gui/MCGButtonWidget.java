@@ -17,4 +17,8 @@ public class MCGButtonWidget extends ButtonWidget {
         RenderUtils.drawBox(this.x, this.y, this.width, this.height, darkness, darkness, darkness, 0.3f);
         this.drawCenteredString(matrices, MinecraftClient.getInstance().textRenderer, this.getMessage().asString(), this.x+(this.width/2), this.y+(this.height/2)-5, 16777215);
     }
+
+    public int getBottom() {
+        return y + height;
+    }
 }
