@@ -28,21 +28,21 @@ public class CoordinatesManager {
 
     public void initCoordinatesFolder() throws IOException {
         File coordinatesFolderFile = new File(coordinatesFolder.toUri());
-        if(!coordinatesFolderFile.exists() && !coordinatesFolderFile.isDirectory()) {
+        if (!coordinatesFolderFile.exists() && !coordinatesFolderFile.isDirectory()) {
             coordinatesFolderFile.mkdir();
         }
-        if(coordinatesFolderFile.isDirectory() && coordinatesFolderFile.listFiles().length == 0) {
-            initNewCoordinatesFile("newCoordinates.coordinates");
+        if (coordinatesFolderFile.isDirectory() && coordinatesFolderFile.listFiles().length == 0) {
+            initNewCoordinatesFile(Paths.get(coordinatesFolder.toString(), "newCoordinates.coordinates"));
         }
     }
 
-    public void initNewCoordinatesFile(String filepath) throws IOException {
-        File coordinatesFile = new File(coordinatesFolder.toString(), filepath.endsWith(".coordinates") ? filepath : filepath + ".coordinates");
+    public void initNewCoordinatesFile(Path filepath) throws IOException {
+        File coordinatesFile = new File(filepath.toUri());
         Path coordinatesFilePath = coordinatesFile.toPath();
-        if(coordinatesFile.exists()) return;
+        if (coordinatesFile.exists()) return;
 
         try {
-            if(coordinatesFile.createNewFile()) {
+            if (coordinatesFile.createNewFile()) {
                 Files.write(coordinatesFilePath, "{}".getBytes());
             } else {
                 throw new IOException();
@@ -53,15 +53,15 @@ public class CoordinatesManager {
         }
     }
 
-    public void createFolder(String filepath) throws IOException {
-        File folderFile = new File(coordinatesFolder.toString(), filepath);
-        if(folderFile.exists()) return;
+    public void createFolder(Path filepath) throws IOException {
+        File folderFile = new File(filepath.toUri());
+        if (folderFile.exists()) return;
         folderFile.mkdir();
     }
 
-    public CoordinatesList loadCoordinates(String filepath) throws IOException {
-        File coordinatesFile = new File(coordinatesFolder.toString(), filepath);
-        if(!coordinatesFile.exists()) return new CoordinatesList().createNull();
+    public CoordinatesList loadCoordinates(Path filepath) throws IOException {
+        File coordinatesFile = new File(filepath.toUri());
+        if (!coordinatesFile.exists()) return new CoordinatesList().createNull();
 
         CoordinatesList loadedList = new CoordinatesList();
         BufferedReader reader = new BufferedReader(new FileReader(coordinatesFile));
@@ -73,13 +73,12 @@ public class CoordinatesManager {
             coordinatesParsed.name = entry.getKey();
             loadedList.addEntry(coordinatesParsed);
         }
-        
+
         return loadedList;
     }
 
-    public void writeToCoordinates(String filepath, CoordinatesSet coordinates) throws IOException {
-        Path coordinatesFilePath = new File(coordinatesFolder.toString(), filepath).toPath();
-        String jsonAsString = new String(Files.readAllBytes(coordinatesFilePath));
+    public void writeToCoordinates(Path filepath, CoordinatesSet coordinates) throws IOException {
+        String jsonAsString = new String(Files.readAllBytes(filepath));
         JsonObject coordinatesJson = gson.fromJson(jsonAsString, JsonObject.class);
 
         Map<String, String> map = new LinkedHashMap<String, String>();
@@ -91,17 +90,16 @@ public class CoordinatesManager {
 
         coordinatesJson.add(coordinates.name, mapToElement);
 
-        Files.write(coordinatesFilePath, gson.toJson(coordinatesJson).getBytes());
+        Files.write(filepath, gson.toJson(coordinatesJson).getBytes());
     }
 
-    public void removeCoordinate(String filepath, CoordinatesSet coordinate) throws IOException {
-        Path coordinatesFilepath = new File(coordinatesFolder.toString(), filepath).toPath();
-        String jsonAsString = new String(Files.readAllBytes(coordinatesFilepath));
+    public void removeCoordinate(Path filepath, CoordinatesSet coordinate) throws IOException {
+        String jsonAsString = new String(Files.readAllBytes(filepath));
         JsonObject coordinatesJson = gson.fromJson(jsonAsString, JsonObject.class);
 
         coordinatesJson.remove(coordinate.name);
 
-        Files.write(coordinatesFilepath, gson.toJson(coordinatesJson).getBytes());
+        Files.write(filepath, gson.toJson(coordinatesJson).getBytes());
     }
 
     public static Path getCoordinateDirectory() {

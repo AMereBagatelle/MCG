@@ -1,14 +1,11 @@
 package amerebagatelle.github.io.mcg.gui.screen;
 
-import amerebagatelle.github.io.mcg.coordinates.CoordinatesManager;
 import amerebagatelle.github.io.mcg.gui.MCGButtonWidget;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.LiteralText;
 import net.minecraft.util.Formatting;
-
-import java.nio.file.Path;
 
 public class CoordinateFileManager extends Screen {
     // TODO: Splitscreen option for file managing (like before) very future improvement
@@ -31,7 +28,7 @@ public class CoordinateFileManager extends Screen {
         this.addChild(coordinateFileManagerWidget);
 
         openFile = new MCGButtonWidget(coordinateFileManagerWidget.getRight()+5, coordinateFileManagerWidget.getTop(), coordinateFileManagerWidget.getButtonWidth(), 30, new LiteralText("Open File"), press -> {
-
+            coordinateFileManagerWidget.openFile();
         });
         this.addButton(openFile);
         newFile = new MCGButtonWidget(coordinateFileManagerWidget.getRight()+5, openFile.getBottom()+5, coordinateFileManagerWidget.getButtonWidth(), 30, new LiteralText("New File"), press -> {
@@ -43,7 +40,7 @@ public class CoordinateFileManager extends Screen {
         });
         this.addButton(newFolder);
         removeFile = new MCGButtonWidget(coordinateFileManagerWidget.getRight()+5, newFolder.getBottom()+5, coordinateFileManagerWidget.getButtonWidth(), 30, new LiteralText("Remove File/Folder"), press -> {
-
+            coordinateFileManagerWidget.removeFile();
         });
         this.addButton(removeFile);
     }

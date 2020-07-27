@@ -5,7 +5,6 @@ import amerebagatelle.github.io.mcg.gui.MCGListWidget;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.screen.multiplayer.MultiplayerServerListWidget;
 import net.minecraft.client.gui.widget.AlwaysSelectedEntryListWidget;
 import net.minecraft.client.util.math.MatrixStack;
 
@@ -13,7 +12,7 @@ import java.io.File;
 import java.nio.file.Path;
 
 public class CoordinateFileManagerWidget extends MCGListWidget<CoordinateFileManagerWidget.Entry> {
-    private static Path currentDirectory = CoordinatesManager.getCoordinateDirectory();
+    private static final Path currentDirectory = CoordinatesManager.getCoordinateDirectory();
 
     public CoordinateFileManagerWidget(MinecraftClient minecraftClient, int width, int height, int top, int bottom, int itemHeight, int left) {
         super(minecraftClient, width, height, top, bottom, itemHeight, left);
@@ -21,16 +20,27 @@ public class CoordinateFileManagerWidget extends MCGListWidget<CoordinateFileMan
     }
 
     public void updateEntries(Path path) {
+        this.clearEntries();
         File[] files = new File(path.toString()).listFiles();
         if(files != null) {
-            for(File file : files) {
-                if(file.isDirectory()) {
+            for (File file : files) {
+                if (file.isDirectory()) {
                     this.addEntry(new FolderEntry(file.getName()));
                 } else {
-                    if(file.getName().endsWith(".coordinates")) this.addEntry(new FileEntry(file.getName()));
+                    if (file.getName().endsWith(".coordinates")) this.addEntry(new FileEntry(file.getName()));
                 }
             }
         }
+    }
+
+    public void select(Entry entry) {
+        this.setSelected(entry);
+        this.ensureVisible(entry);
+    }
+
+    public void openFile() {
+        CoordinatesManagerScreen screen = new CoordinatesManagerScreen(new File(currentDirectory.toString(), (this.getSelected().getName())).toPath());
+        client.openScreen(screen);
     }
 
     public void newFile() {
@@ -39,6 +49,11 @@ public class CoordinateFileManagerWidget extends MCGListWidget<CoordinateFileMan
 
     public void newFolder() {
         client.openScreen(new CoordinateFileCreationScreen("Folder"));
+    }
+
+    public void removeFile() {
+        new File(currentDirectory.toString(), this.getSelected().getName()).delete();
+        updateEntries(currentDirectory);
     }
 
     public boolean hasFileSelected() {
@@ -59,32 +74,69 @@ public class CoordinateFileManagerWidget extends MCGListWidget<CoordinateFileMan
     }
 
     public class FileEntry extends CoordinateFileManagerWidget.Entry {
-        private final String name;
 
         public FileEntry(String name) {
-            this.name = name;
+            super(name);
         }
 
         @Override
         public void render(MatrixStack matrices, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
-            CoordinateFileManagerWidget.this.drawStringWithShadow(matrices, client.textRenderer, name.replace(".coordinates", ""), x + 5, y + entryHeight/2, 16777215);
+            CoordinateFileManagerWidget.this.drawStringWithShadow(matrices, client.textRenderer, name.replace(".coordinates", ""), x + 5, y + entryHeight / 2 - 4, 16777215);
+        }
+
+        @Override
+        public boolean mouseClicked(double mouseX, double mouseY, int button) {
+            CoordinateFileManagerWidget.this.select(this);
+            return false;
+        }
+
+        @Override
+        public boolean mouseReleased(double mouseX, double mouseY, int button) {
+            return false;
+        }
+
+        public String getName() {
+            return name;
         }
     }
 
     public class FolderEntry extends CoordinateFileManagerWidget.Entry {
-        private final String name;
 
         public FolderEntry(String name) {
-            this.name = name;
+            super(name);
         }
 
         @Override
         public void render(MatrixStack matrices, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
-            CoordinateFileManagerWidget.this.drawStringWithShadow(matrices, client.textRenderer, name + "/", x + 5, y + entryHeight/2, 16777215);
+            CoordinateFileManagerWidget.this.drawStringWithShadow(matrices, client.textRenderer, name + "/", x + 5, y + entryHeight / 2 - 4, 16777215);
+        }
+
+        @Override
+        public boolean mouseClicked(double mouseX, double mouseY, int button) {
+            CoordinateFileManagerWidget.this.select(this);
+            return false;
+        }
+
+        @Override
+        public boolean mouseReleased(double mouseX, double mouseY, int button) {
+            return false;
+        }
+
+        public String getName() {
+            return name;
         }
     }
 
     @Environment(EnvType.CLIENT)
     public abstract static class Entry extends AlwaysSelectedEntryListWidget.Entry<CoordinateFileManagerWidget.Entry> {
+        public final String name;
+
+        public Entry(String name) {
+            this.name = name;
+        }
+
+        public String getName() {
+            return name;
+        }
     }
 }

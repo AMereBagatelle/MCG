@@ -3,11 +3,11 @@ package amerebagatelle.github.io.mcg.coordinates;
 import java.util.ArrayList;
 
 public class CoordinatesList {
-    public ArrayList<CoordinatesSet> coordinatesSets = new ArrayList<>();
+    public ArrayList<CoordinatesSet> coordinatesSet = new ArrayList<>();
     public boolean isNull = false;
 
     public void addEntry(CoordinatesSet coordinates) {
-        this.coordinatesSets.add(coordinates);
+        this.coordinatesSet.add(coordinates);
     }
 
     public CoordinatesList createNull() {
