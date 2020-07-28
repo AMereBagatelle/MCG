@@ -9,6 +9,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.LiteralText;
 
 import java.io.IOException;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class CoordinateFileCreationScreen extends Screen {
@@ -17,10 +18,12 @@ public class CoordinateFileCreationScreen extends Screen {
     private MCGButtonWidget cancelButton;
 
     private final String fileType;
+    private final Path folderPath;
 
-    public CoordinateFileCreationScreen(String fileType) {
+    public CoordinateFileCreationScreen(String fileType, Path folderPath) {
         super(new LiteralText("CoordinateFileCreationScreen"));
         this.fileType = fileType;
+        this.folderPath = folderPath;
     }
 
     @Override
@@ -52,9 +55,9 @@ public class CoordinateFileCreationScreen extends Screen {
     private void confirm() {
         try {
             if(fileType.equals("Folder")) {
-                MCG.coordinatesManager.createFolder(Paths.get(MCG.coordinatesManager.coordinatesFolder.toString(), fileNameWidget.getText()));
+                MCG.coordinatesManager.createFolder(Paths.get(folderPath.toString(), fileNameWidget.getText()));
             } else {
-                MCG.coordinatesManager.initNewCoordinatesFile(Paths.get(MCG.coordinatesManager.coordinatesFolder.toString(), fileNameWidget.getText()));
+                MCG.coordinatesManager.initNewCoordinatesFile(Paths.get(folderPath.toString(), fileNameWidget.getText().endsWith(".coordinates") ? fileNameWidget.getText() : fileNameWidget.getText() + ".coordinates"));
             }
         } catch (IOException e) {
             MCG.logger.debug("Can't make new coordinates file.");
