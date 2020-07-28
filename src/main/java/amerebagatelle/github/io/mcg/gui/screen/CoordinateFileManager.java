@@ -13,6 +13,7 @@ public class CoordinateFileManager extends Screen {
     // Widgets/Buttons
     private CoordinateFileManagerWidget coordinateFileManagerWidget;
     private MCGButtonWidget openFile;
+    private MCGButtonWidget returnFolder;
     private MCGButtonWidget newFile;
     private MCGButtonWidget newFolder;
     private MCGButtonWidget removeFile;
@@ -24,22 +25,26 @@ public class CoordinateFileManager extends Screen {
     @Override
     public void init(MinecraftClient client, int width, int height) {
         super.init(client, width, height);
-        coordinateFileManagerWidget = new CoordinateFileManagerWidget(this.client, width/3*2, height-60, 40, this.height-20, 15, 10);
+        coordinateFileManagerWidget = new CoordinateFileManagerWidget(this.client, width / 3 * 2, height - 60, 40, this.height - 20, 15, 10);
         this.addChild(coordinateFileManagerWidget);
 
-        openFile = new MCGButtonWidget(coordinateFileManagerWidget.getRight()+5, coordinateFileManagerWidget.getTop(), coordinateFileManagerWidget.getButtonWidth(), 30, new LiteralText("Open File"), press -> {
+        openFile = new MCGButtonWidget(coordinateFileManagerWidget.getRight() + 5, coordinateFileManagerWidget.getTop(), coordinateFileManagerWidget.getButtonWidth(), 20, new LiteralText("Open File"), press -> {
             coordinateFileManagerWidget.openFile();
         });
         this.addButton(openFile);
-        newFile = new MCGButtonWidget(coordinateFileManagerWidget.getRight()+5, openFile.getBottom()+5, coordinateFileManagerWidget.getButtonWidth(), 30, new LiteralText("New File"), press -> {
+        returnFolder = new MCGButtonWidget(coordinateFileManagerWidget.getRight() + 5, openFile.getBottom() + 5, coordinateFileManagerWidget.getButtonWidth(), 20, new LiteralText("Return"), press -> {
+            coordinateFileManagerWidget.backUpFolder();
+        });
+        this.addButton(returnFolder);
+        newFile = new MCGButtonWidget(coordinateFileManagerWidget.getRight() + 5, returnFolder.getBottom() + 5, coordinateFileManagerWidget.getButtonWidth(), 20, new LiteralText("New File"), press -> {
             coordinateFileManagerWidget.newFile();
         });
         this.addButton(newFile);
-        newFolder = new MCGButtonWidget(coordinateFileManagerWidget.getRight()+5, newFile.getBottom()+5, coordinateFileManagerWidget.getButtonWidth(), 30, new LiteralText("New Folder"), press -> {
+        newFolder = new MCGButtonWidget(coordinateFileManagerWidget.getRight() + 5, newFile.getBottom() + 5, coordinateFileManagerWidget.getButtonWidth(), 20, new LiteralText("New Folder"), press -> {
             coordinateFileManagerWidget.newFolder();
         });
         this.addButton(newFolder);
-        removeFile = new MCGButtonWidget(coordinateFileManagerWidget.getRight()+5, newFolder.getBottom()+5, coordinateFileManagerWidget.getButtonWidth(), 30, new LiteralText("Remove File/Folder"), press -> {
+        removeFile = new MCGButtonWidget(coordinateFileManagerWidget.getRight() + 5, newFolder.getBottom() + 5, coordinateFileManagerWidget.getButtonWidth(), 20, new LiteralText("Remove File/Folder"), press -> {
             coordinateFileManagerWidget.removeFile();
         });
         this.addButton(removeFile);
@@ -58,6 +63,7 @@ public class CoordinateFileManager extends Screen {
     public void updateButtonStates() {
         openFile.active = coordinateFileManagerWidget.hasFileSelected();
         removeFile.active = coordinateFileManagerWidget.hasSelected();
+        returnFolder.active = !coordinateFileManagerWidget.getCurrentDirectory().endsWith("coordinates");
     }
 
     @Override

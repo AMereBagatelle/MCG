@@ -10,9 +10,10 @@ import net.minecraft.client.util.math.MatrixStack;
 
 import java.io.File;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class CoordinateFileManagerWidget extends MCGListWidget<CoordinateFileManagerWidget.Entry> {
-    private static final Path currentDirectory = CoordinatesManager.getCoordinateDirectory();
+    private static Path currentDirectory = CoordinatesManager.getCoordinateDirectory();
 
     public CoordinateFileManagerWidget(MinecraftClient minecraftClient, int width, int height, int top, int bottom, int itemHeight, int left) {
         super(minecraftClient, width, height, top, bottom, itemHeight, left);
@@ -68,6 +69,16 @@ public class CoordinateFileManagerWidget extends MCGListWidget<CoordinateFileMan
         return currentDirectory;
     }
 
+    public void addToDirectory(String toAdd) {
+        currentDirectory = Paths.get(currentDirectory.toString(), toAdd);
+        updateEntries(currentDirectory);
+    }
+
+    public void backUpFolder() {
+        currentDirectory = currentDirectory.getParent();
+        updateEntries(currentDirectory);
+    }
+
     @Override
     public int getRowWidth() {
         return this.width;
@@ -114,6 +125,7 @@ public class CoordinateFileManagerWidget extends MCGListWidget<CoordinateFileMan
         @Override
         public boolean mouseClicked(double mouseX, double mouseY, int button) {
             CoordinateFileManagerWidget.this.select(this);
+            CoordinateFileManagerWidget.this.addToDirectory(name);
             return false;
         }
 

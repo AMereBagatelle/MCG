@@ -17,6 +17,7 @@ public class CoordinatesManagerScreen extends Screen {
     private MCGButtonWidget newCoordinate;
     private MCGButtonWidget removeCoordinate;
     private MCGButtonWidget teleportToCoordinate;
+    private MCGButtonWidget back;
 
     public CoordinatesManagerScreen(Path filepath) {
         super(new LiteralText("CoordinateManagerScreen"));
@@ -29,18 +30,22 @@ public class CoordinatesManagerScreen extends Screen {
         coordinateManagerWidget = new CoordinateManagerWidget(client, width / 3 * 2, height - 60, 40, this.height - 20, 15, 10);
         coordinateManagerWidget.setFile(filepath);
         this.addChild(coordinateManagerWidget);
-        newCoordinate = new MCGButtonWidget(coordinateManagerWidget.getRight() + 5, coordinateManagerWidget.getTop(), coordinateManagerWidget.getButtonWidth(), 30, new LiteralText("New Coordinate"), press -> {
+        newCoordinate = new MCGButtonWidget(coordinateManagerWidget.getRight() + 5, coordinateManagerWidget.getTop(), coordinateManagerWidget.getButtonWidth(), 20, new LiteralText("New Coordinate"), press -> {
             coordinateManagerWidget.newCoordinate(this);
         });
         this.addButton(newCoordinate);
-        removeCoordinate = new MCGButtonWidget(coordinateManagerWidget.getRight() + 5, newCoordinate.getBottom() + 5, coordinateManagerWidget.getButtonWidth(), 30, new LiteralText("Remove Coordinate"), press -> {
+        removeCoordinate = new MCGButtonWidget(coordinateManagerWidget.getRight() + 5, newCoordinate.getBottom() + 5, coordinateManagerWidget.getButtonWidth(), 20, new LiteralText("Remove Coordinate"), press -> {
             coordinateManagerWidget.removeCoordinate();
         });
         this.addButton(removeCoordinate);
-        teleportToCoordinate = new MCGButtonWidget(coordinateManagerWidget.getRight() + 5, removeCoordinate.getBottom() + 5, coordinateManagerWidget.getButtonWidth(), 30, new LiteralText("TP to Selected"), press -> {
+        teleportToCoordinate = new MCGButtonWidget(coordinateManagerWidget.getRight() + 5, removeCoordinate.getBottom() + 5, coordinateManagerWidget.getButtonWidth(), 20, new LiteralText("TP to Selected"), press -> {
             coordinateManagerWidget.teleportToCoordinate();
         });
         this.addButton(teleportToCoordinate);
+        back = new MCGButtonWidget(coordinateManagerWidget.getRight() + 5, teleportToCoordinate.getBottom() + 5, coordinateManagerWidget.getButtonWidth(), 20, new LiteralText("Back"), press -> {
+            client.openScreen(new CoordinateFileManager());
+        });
+        this.addButton(back);
     }
 
     @Override
@@ -53,7 +58,7 @@ public class CoordinatesManagerScreen extends Screen {
         // selected coordinate view
         if (coordinateManagerWidget.getSelected() != null) {
             CoordinatesSet set = ((CoordinateManagerWidget.CoordinateEntry) coordinateManagerWidget.getSelected()).coordinate;
-            int drawY = teleportToCoordinate.getBottom() + 20;
+            int drawY = back.getBottom() + 20;
             this.drawStringWithShadow(matrices, textRenderer, set.name, coordinateManagerWidget.getRight() + 5, drawY, 16777215);
             this.drawStringWithShadow(matrices, textRenderer, Integer.toString(set.x), coordinateManagerWidget.getRight() + 5, drawY + 15, 16777215);
             this.drawStringWithShadow(matrices, textRenderer, Integer.toString(set.y), coordinateManagerWidget.getRight() + 5, drawY + 25, 16777215);
