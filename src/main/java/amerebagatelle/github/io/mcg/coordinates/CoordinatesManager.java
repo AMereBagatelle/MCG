@@ -7,6 +7,7 @@ import net.fabricmc.loader.api.FabricLoader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.annotation.Nullable;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -53,15 +54,16 @@ public class CoordinatesManager {
         }
     }
 
-    public void createFolder(Path filepath) throws IOException {
+    public void createFolder(Path filepath) {
         File folderFile = new File(filepath.toUri());
         if (folderFile.exists()) return;
         folderFile.mkdir();
     }
 
+    @Nullable
     public CoordinatesList loadCoordinates(Path filepath) throws IOException {
         File coordinatesFile = new File(filepath.toUri());
-        if (!coordinatesFile.exists()) return new CoordinatesList().createNull();
+        if (!coordinatesFile.exists()) return null;
 
         CoordinatesList loadedList = new CoordinatesList();
         BufferedReader reader = new BufferedReader(new FileReader(coordinatesFile));
@@ -71,7 +73,7 @@ public class CoordinatesManager {
         for (Map.Entry<String, JsonElement> entry : coordinatesJson.entrySet()) {
             CoordinatesSet coordinatesParsed = gson.fromJson(entry.getValue(), CoordinatesSet.class);
             coordinatesParsed.name = entry.getKey();
-            loadedList.addEntry(coordinatesParsed);
+            loadedList.add(coordinatesParsed);
         }
 
         return loadedList;

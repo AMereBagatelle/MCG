@@ -29,8 +29,10 @@ public class CoordinateManagerWidget extends MCGListWidget<CoordinateManagerWidg
         clearEntries();
         try {
             CoordinatesList list = MCG.coordinatesManager.loadCoordinates(filepath);
-            for (CoordinatesSet set : list.coordinatesSet) {
-                this.addEntry(new CoordinateEntry(set));
+            if (list != null) {
+                for (CoordinatesSet set : list) {
+                    this.addEntry(new CoordinateEntry(set));
+                }
             }
         } catch (IOException e) {
             MCG.logger.warn("Couldn't load coordinates from specified file.");
