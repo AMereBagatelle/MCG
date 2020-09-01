@@ -4,10 +4,8 @@ import amerebagatelle.github.io.mcg.coordinates.CoordinatesManager;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.client.keybinding.FabricKeyBinding;
-import net.fabricmc.fabric.api.client.keybinding.KeyBindingRegistry;
-import net.minecraft.client.util.InputUtil;
-import net.minecraft.util.Identifier;
+import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
+import net.minecraft.client.options.KeyBinding;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.glfw.GLFW;
@@ -19,7 +17,7 @@ public class MCG implements ClientModInitializer {
     public static final Logger logger = LogManager.getLogger();
     public static final CoordinatesManager coordinatesManager = new CoordinatesManager();
 
-    public static FabricKeyBinding binding;
+    public static KeyBinding binding;
 
     @Override
     public void onInitializeClient() {
@@ -31,13 +29,10 @@ public class MCG implements ClientModInitializer {
             throw new RuntimeException("Can't write coordinates file/folder.  Do we have write access?");
         }
 
-        binding = FabricKeyBinding.Builder.create(
-                new Identifier("mcg", "coordinates_screen"),
-                InputUtil.Type.KEYSYM,
+        binding = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+                "mcg.keybinding.main",
                 GLFW.GLFW_KEY_Y,
-                "key.categories.misc"
-        ).build();
-
-        KeyBindingRegistry.INSTANCE.register(binding);
+                "Miscellaneous"
+        ));
     }
 }

@@ -18,5 +18,6 @@
   "mcg.write_coordinates_screen.enterY": "Y",
   "mcg.write_coordinates_screen.enterZ": "Z",
   "coordinatefile.creation": "New server/world, creating new coordinates file",
-  "key.mcg.coordinatesscreen": "MCG Screen"
+  "key.mcg.coordinatesscreen": "MCG Screen",
+  "mcg.keybinding.main": "Open MCG Screen"
 }
