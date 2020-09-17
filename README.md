@@ -9,6 +9,11 @@ I decided that most minimap mods are too cheaty, add too many extra features, or
 This mod aims to solve the problems of bloat in storing coordinates.
 The mod adds only 2 GUIs at its current state.
 
+## Support
+Please use the issue tracker to report issues.
+
+Alternatively, join my discord: https://discord.gg/quvzkaV
+
 ## Use
 This mod sets itself up, just drop it in your mods folder!
 There are only 3 things to know.
@@ -27,4 +32,3 @@ How to get your coordinates back:
 4. Find the `coordinates` folder in the same directory.  There should be a file inside, named the same as the server you logged into.  
 Just open that file, and paste your coordinates.
 
-Thanks for using my mod!  If you find any issues, just let me know on discord at AMereBagatelle#6536.  Also, open a issue tagged with feature request if you want to suggest something.
