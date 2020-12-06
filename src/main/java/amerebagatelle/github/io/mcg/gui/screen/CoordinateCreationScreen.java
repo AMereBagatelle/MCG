@@ -80,16 +80,16 @@ public class CoordinateCreationScreen extends Screen {
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
         updateButtonStates();
         this.renderBackground(matrices);
-        this.drawCenteredString(matrices, textRenderer, "Create Coordinate", width / 2, 10, 16777215);
-        this.drawStringWithShadow(matrices, textRenderer, "Name", nameField.x, nameField.y - 10, 16777215);
+        drawCenteredString(matrices, textRenderer, "Create Coordinate", width / 2, 10, 16777215);
+        drawStringWithShadow(matrices, textRenderer, "Name", nameField.x, nameField.y - 10, 16777215);
         nameField.render(matrices, mouseX, mouseY, delta);
-        this.drawStringWithShadow(matrices, textRenderer, "X", xField.x, xField.y - 10, 16777215);
+        drawStringWithShadow(matrices, textRenderer, "X", xField.x, xField.y - 10, 16777215);
         xField.render(matrices, mouseX, mouseY, delta);
-        this.drawStringWithShadow(matrices, textRenderer, "Y", yField.x, yField.y - 10, 16777215);
+        drawStringWithShadow(matrices, textRenderer, "Y", yField.x, yField.y - 10, 16777215);
         yField.render(matrices, mouseX, mouseY, delta);
-        this.drawStringWithShadow(matrices, textRenderer, "Z", zField.x, zField.y - 10, 16777215);
+        drawStringWithShadow(matrices, textRenderer, "Z", zField.x, zField.y - 10, 16777215);
         zField.render(matrices, mouseX, mouseY, delta);
-        this.drawStringWithShadow(matrices, textRenderer, "Description", descriptionField.x, descriptionField.y - 10, 16777215);
+        drawStringWithShadow(matrices, textRenderer, "Description", descriptionField.x, descriptionField.y - 10, 16777215);
         descriptionField.render(matrices, mouseX, mouseY, delta);
         super.render(matrices, mouseX, mouseY, delta);
     }
@@ -105,7 +105,7 @@ public class CoordinateCreationScreen extends Screen {
 
     private void confirm() {
         try {
-            MCG.coordinatesManager.writeToCoordinates(parent.getFilepath(), new CoordinatesSet(nameField.getText(), Integer.parseInt(xField.getText()), Integer.parseInt(xField.getText()), Integer.parseInt(xField.getText()), descriptionField.getText()));
+            MCG.coordinatesManager.writeToCoordinates(parent.getFilepath(), new CoordinatesSet(nameField.getText(), Integer.parseInt(xField.getText()), Integer.parseInt(zField.getText()), Integer.parseInt(yField.getText()), descriptionField.getText()));
         } catch (IOException e) {
             MCG.logger.warn("Could not write coordinate.");
         }
