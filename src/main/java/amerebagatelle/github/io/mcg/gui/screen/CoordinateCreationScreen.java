@@ -105,7 +105,7 @@ public class CoordinateCreationScreen extends Screen {
 
     private void confirm() {
         try {
-            MCG.coordinatesManager.writeToCoordinates(parent.getFilepath(), new CoordinatesSet(nameField.getText(), Integer.parseInt(xField.getText()), Integer.parseInt(zField.getText()), Integer.parseInt(yField.getText()), descriptionField.getText()));
+            MCG.coordinatesManager.writeToCoordinates(parent.getFilepath(), new CoordinatesSet(nameField.getText(), Integer.parseInt(xField.getText()), Integer.parseInt(yField.getText()), Integer.parseInt(zField.getText()), descriptionField.getText()));
         } catch (IOException e) {
             MCG.logger.warn("Could not write coordinate.");
         }
