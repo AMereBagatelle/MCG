@@ -5,6 +5,8 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.widget.AlwaysSelectedEntryListWidget;
 import net.minecraft.client.util.math.MatrixStack;
 
+import java.util.Objects;
+
 public class MCGListWidget<E extends AlwaysSelectedEntryListWidget.Entry<E>> extends AlwaysSelectedEntryListWidget<E> {
     public MCGListWidget(MinecraftClient minecraftClient, int width, int height, int top, int bottom, int itemHeight, int left) {
         super(minecraftClient, width, height, top, bottom, itemHeight);
@@ -35,6 +37,6 @@ public class MCGListWidget<E extends AlwaysSelectedEntryListWidget.Entry<E>> ext
     }
 
     public int getButtonWidth() {
-        return client.currentScreen.width - left - width - 10;
+        return Objects.requireNonNull(client.currentScreen).width - left - width - 10;
     }
 }

@@ -14,18 +14,7 @@ import java.io.IOException;
 import java.util.function.Predicate;
 
 public class CoordinateCreationScreen extends Screen {
-    private final Predicate<String> coordinateFilter = (string) -> {
-        if (string.length() == 0 || string.equals("-")) {
-            return true;
-        } else {
-            try {
-                Integer.parseInt(string);
-                return true;
-            } catch (Exception e) {
-                return false;
-            }
-        }
-    };
+    private final Predicate<String> coordinateFilter = (string) -> string.matches("\\d+") || string.equals("-");
     private TextFieldWidget nameField;
     private TextFieldWidget xField;
     private TextFieldWidget yField;

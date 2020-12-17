@@ -12,6 +12,7 @@ import net.minecraft.client.util.math.MatrixStack;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.Objects;
 
 public class CoordinateManagerWidget extends MCGListWidget<CoordinateManagerWidget.Entry> {
     private Path filepath;
@@ -45,7 +46,7 @@ public class CoordinateManagerWidget extends MCGListWidget<CoordinateManagerWidg
 
     public void removeCoordinate() {
         try {
-            MCG.coordinatesManager.removeCoordinate(filepath, ((CoordinateEntry) this.getSelected()).coordinate);
+            MCG.coordinatesManager.removeCoordinate(filepath, ((CoordinateEntry) Objects.requireNonNull(this.getSelected())).coordinate);
         } catch (IOException e) {
             MCG.logger.warn("Couldn't remove coordinate.");
         }
@@ -54,8 +55,9 @@ public class CoordinateManagerWidget extends MCGListWidget<CoordinateManagerWidg
     }
 
     public void teleportToCoordinate() {
+        Objects.requireNonNull(client.player);
         if (client.player.isCreative() || client.player.isSpectator()) {
-            CoordinatesSet coordinateSet = ((CoordinateEntry) this.getSelected()).coordinate;
+            CoordinatesSet coordinateSet = ((CoordinateEntry) Objects.requireNonNull(this.getSelected())).coordinate;
             client.player.sendChatMessage(String.format("/tp %s %s %s", coordinateSet.x, coordinateSet.y, coordinateSet.z));
         }
     }
@@ -80,11 +82,11 @@ public class CoordinateManagerWidget extends MCGListWidget<CoordinateManagerWidg
         @Override
         public void render(MatrixStack matrices, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
             int drawY = y + entryHeight / 2 - 5;
-            CoordinateManagerWidget.this.drawStringWithShadow(matrices, client.textRenderer, coordinate.name, x + 5, drawY, 16777215);
+            drawStringWithShadow(matrices, client.textRenderer, coordinate.name, x + 5, drawY, 16777215);
             int drawX = x + entryWidth / 2;
-            CoordinateManagerWidget.this.drawStringWithShadow(matrices, client.textRenderer, Integer.toString(coordinate.x), drawX - 50, drawY, 16777215);
-            CoordinateManagerWidget.this.drawStringWithShadow(matrices, client.textRenderer, Integer.toString(coordinate.y), drawX + 30, drawY, 16777215);
-            CoordinateManagerWidget.this.drawStringWithShadow(matrices, client.textRenderer, Integer.toString(coordinate.z), drawX + 110, drawY, 16777215);
+            drawStringWithShadow(matrices, client.textRenderer, Integer.toString(coordinate.x), drawX - 50, drawY, 16777215);
+            drawStringWithShadow(matrices, client.textRenderer, Integer.toString(coordinate.y), drawX + 30, drawY, 16777215);
+            drawStringWithShadow(matrices, client.textRenderer, Integer.toString(coordinate.z), drawX + 110, drawY, 16777215);
         }
 
         @Override

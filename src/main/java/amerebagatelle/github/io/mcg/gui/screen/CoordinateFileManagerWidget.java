@@ -11,6 +11,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Objects;
 
 public class CoordinateFileManagerWidget extends MCGListWidget<CoordinateFileManagerWidget.Entry> {
     private static Path currentDirectory = CoordinatesManager.getCoordinateDirectory();
@@ -50,7 +51,7 @@ public class CoordinateFileManagerWidget extends MCGListWidget<CoordinateFileMan
     }
 
     public void openFile() {
-        CoordinatesManagerScreen screen = new CoordinatesManagerScreen(new File(currentDirectory.toString(), (this.getSelected().getName())).toPath());
+        CoordinatesManagerScreen screen = new CoordinatesManagerScreen(new File(currentDirectory.toString(), (Objects.requireNonNull(this.getSelected()).getName())).toPath());
         client.openScreen(screen);
     }
 
@@ -63,7 +64,7 @@ public class CoordinateFileManagerWidget extends MCGListWidget<CoordinateFileMan
     }
 
     public void removeFile() {
-        new File(currentDirectory.toString(), this.getSelected().getName()).delete();
+        new File(currentDirectory.toString(), Objects.requireNonNull(this.getSelected()).getName()).delete();
         updateEntries(currentDirectory);
     }
 
@@ -102,7 +103,7 @@ public class CoordinateFileManagerWidget extends MCGListWidget<CoordinateFileMan
 
         @Override
         public void render(MatrixStack matrices, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
-            CoordinateFileManagerWidget.this.drawStringWithShadow(matrices, client.textRenderer, name.replace(".coordinates", ""), x + 5, y + entryHeight / 2 - 4, 16777215);
+            drawStringWithShadow(matrices, client.textRenderer, name.replace(".coordinates", ""), x + 5, y + entryHeight / 2 - 4, 16777215);
         }
 
         @Override
@@ -129,7 +130,7 @@ public class CoordinateFileManagerWidget extends MCGListWidget<CoordinateFileMan
 
         @Override
         public void render(MatrixStack matrices, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
-            CoordinateFileManagerWidget.this.drawStringWithShadow(matrices, client.textRenderer, name + "/", x + 5, y + entryHeight / 2 - 4, 16777215);
+            drawStringWithShadow(matrices, client.textRenderer, name + "/", x + 5, y + entryHeight / 2 - 4, 16777215);
         }
 
         @Override

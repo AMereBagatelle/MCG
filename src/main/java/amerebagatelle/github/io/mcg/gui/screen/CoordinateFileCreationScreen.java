@@ -11,6 +11,7 @@ import net.minecraft.text.LiteralText;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Objects;
 
 public class CoordinateFileCreationScreen extends Screen {
     private TextFieldWidget fileNameWidget;
@@ -42,7 +43,7 @@ public class CoordinateFileCreationScreen extends Screen {
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
         updateButtonStates();
         this.renderBackground(matrices);
-        this.drawCenteredString(matrices, textRenderer, "New " + fileType, this.width/2, 50, 16777215);
+        drawCenteredString(matrices, textRenderer, "New " + fileType, this.width / 2, 50, 16777215);
         fileNameWidget.render(matrices, mouseX, mouseY, delta);
         super.render(matrices, mouseX, mouseY, delta);
     }
@@ -62,12 +63,12 @@ public class CoordinateFileCreationScreen extends Screen {
         } catch (IOException e) {
             MCG.logger.debug("Can't make new coordinates file.");
         } finally {
-            client.openScreen(new CoordinateFileManager());
+            Objects.requireNonNull(client).openScreen(new CoordinateFileManager());
         }
     }
 
     private void cancel() {
-        client.openScreen(new CoordinateFileManager());
+        Objects.requireNonNull(client).openScreen(new CoordinateFileManager());
     }
 
     private void updateButtonStates() {

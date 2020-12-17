@@ -52,18 +52,18 @@ public class CoordinatesManagerScreen extends Screen {
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
         updateButtonStates();
         this.renderBackground(matrices);
-        this.drawCenteredString(matrices, textRenderer, "Coordinates of " + filepath.getFileName().toString().replace(".coordinates", ""), width / 2, 10, 16777215);
+        drawCenteredString(matrices, textRenderer, "Coordinates of " + filepath.getFileName().toString().replace(".coordinates", ""), width / 2, 10, 16777215);
         coordinateManagerWidget.render(matrices, mouseX, mouseY, delta);
 
         // selected coordinate view
         if (coordinateManagerWidget.getSelected() != null) {
             CoordinatesSet set = ((CoordinateManagerWidget.CoordinateEntry) coordinateManagerWidget.getSelected()).coordinate;
             int drawY = back.getBottom() + 20;
-            this.drawStringWithShadow(matrices, textRenderer, set.name, coordinateManagerWidget.getRight() + 5, drawY, 16777215);
-            this.drawStringWithShadow(matrices, textRenderer, Integer.toString(set.x), coordinateManagerWidget.getRight() + 5, drawY + 15, 16777215);
-            this.drawStringWithShadow(matrices, textRenderer, Integer.toString(set.y), coordinateManagerWidget.getRight() + 5, drawY + 25, 16777215);
-            this.drawStringWithShadow(matrices, textRenderer, Integer.toString(set.z), coordinateManagerWidget.getRight() + 5, drawY + 35, 16777215);
-            this.drawStringWithShadow(matrices, textRenderer, set.description, coordinateManagerWidget.getRight() + 5, drawY + 50, 16777215);
+            drawStringWithShadow(matrices, textRenderer, set.name, coordinateManagerWidget.getRight() + 5, drawY, 16777215);
+            drawStringWithShadow(matrices, textRenderer, Integer.toString(set.x), coordinateManagerWidget.getRight() + 5, drawY + 15, 16777215);
+            drawStringWithShadow(matrices, textRenderer, Integer.toString(set.y), coordinateManagerWidget.getRight() + 5, drawY + 25, 16777215);
+            drawStringWithShadow(matrices, textRenderer, Integer.toString(set.z), coordinateManagerWidget.getRight() + 5, drawY + 35, 16777215);
+            drawStringWithShadow(matrices, textRenderer, set.description, coordinateManagerWidget.getRight() + 5, drawY + 50, 16777215);
         }
         super.render(matrices, mouseX, mouseY, delta);
     }

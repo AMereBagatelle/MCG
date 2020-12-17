@@ -54,8 +54,8 @@ public class CoordinateFileManager extends Screen {
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
         updateButtonStates();
         this.renderBackground(matrices);
-        this.drawCenteredString(matrices, textRenderer, "Coordinate File Manager", width/2, 10, 16777215);
-        this.drawStringWithShadow(matrices, textRenderer, String.format("%s" + coordinateFileManagerWidget.getCurrentDirectory().toString().substring(coordinateFileManagerWidget.getCurrentDirectory().toString().indexOf("coordinates")), Formatting.BLUE), coordinateFileManagerWidget.getLeft(), coordinateFileManagerWidget.getTop()-10, 16777215);
+        drawCenteredString(matrices, textRenderer, "Coordinate File Manager", width / 2, 10, 16777215);
+        drawStringWithShadow(matrices, textRenderer, String.format("%s" + coordinateFileManagerWidget.getCurrentDirectory().toString().substring(coordinateFileManagerWidget.getCurrentDirectory().toString().indexOf("coordinates")), Formatting.BLUE), coordinateFileManagerWidget.getLeft(), coordinateFileManagerWidget.getTop() - 10, 16777215);
         coordinateFileManagerWidget.render(matrices, mouseX, mouseY, delta);
         super.render(matrices, mouseX, mouseY, delta);
     }
