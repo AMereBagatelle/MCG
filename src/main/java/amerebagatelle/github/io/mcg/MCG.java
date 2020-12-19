@@ -26,7 +26,7 @@ public class MCG implements ClientModInitializer {
         try {
             coordinatesManager.initCoordinatesFolder();
         } catch (IOException e) {
-            throw new RuntimeException("Can't write coordinates file/folder.", e);
+            throw new RuntimeException("Can't write coordinates folder.", e);
         }
 
         binding = KeyBindingHelper.registerKeyBinding(new KeyBinding(

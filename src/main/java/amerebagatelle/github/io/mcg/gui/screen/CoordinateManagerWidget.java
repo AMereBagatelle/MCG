@@ -7,6 +7,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.widget.AlwaysSelectedEntryListWidget;
+import net.minecraft.client.resource.language.I18n;
 import net.minecraft.client.util.math.MatrixStack;
 
 import java.io.IOException;
@@ -38,7 +39,7 @@ public class CoordinateManagerWidget extends MCGListWidget<CoordinateManagerWidg
                 }
             }
         } catch (IOException e) {
-            parent.reportError("Couldn't load coordinates from file.");
+            parent.reportError(I18n.translate("mcg.coordinate.readfail"));
         }
     }
 
@@ -50,7 +51,7 @@ public class CoordinateManagerWidget extends MCGListWidget<CoordinateManagerWidg
         try {
             MCG.coordinatesManager.removeCoordinate(filepath, ((CoordinateEntry) Objects.requireNonNull(this.getSelected())).coordinate);
         } catch (IOException e) {
-            parent.reportError("Couldn't remove coordinate from file.");
+            parent.reportError(I18n.translate("mcg.coordinate.removefail"));
         }
         refreshEntries();
         this.setSelected(null);
@@ -62,7 +63,7 @@ public class CoordinateManagerWidget extends MCGListWidget<CoordinateManagerWidg
             CoordinatesSet coordinateSet = ((CoordinateEntry) Objects.requireNonNull(this.getSelected())).coordinate;
             client.player.sendChatMessage(String.format("/tp %s %s %s", coordinateSet.x, coordinateSet.y, coordinateSet.z));
         } else {
-            parent.reportError("You are not a level 2 operator!");
+            parent.reportError(I18n.translate("commands.help.failed"));
         }
     }
 

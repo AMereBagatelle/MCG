@@ -7,8 +7,10 @@ import amerebagatelle.github.io.mcg.gui.overlay.ErrorDisplayOverlay;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.TextFieldWidget;
+import net.minecraft.client.resource.language.I18n;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.LiteralText;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.math.BlockPos;
 
 import javax.annotation.Nullable;
@@ -39,7 +41,7 @@ public class CoordinateCreationScreen extends Screen {
     @Override
     public void init(MinecraftClient client, int width, int height) {
         super.init(client, width, height);
-        nameField = new TextFieldWidget(textRenderer, 20, 40, 200, 20, new LiteralText("Name"));
+        nameField = new TextFieldWidget(textRenderer, 20, 40, 200, 20, new TranslatableText("mcg.button.name"));
         this.addChild(nameField);
         xField = new TextFieldWidget(textRenderer, 20, 80, 50, 20, new LiteralText("X"));
         xField.setTextPredicate(coordinateFilter);
@@ -51,7 +53,7 @@ public class CoordinateCreationScreen extends Screen {
         zField.setTextPredicate(coordinateFilter);
         this.addChild(zField);
 
-        setAtPos = new MCGButtonWidget(200, 78, 100, 25, new LiteralText("Set to Current"), onPress -> {
+        setAtPos = new MCGButtonWidget(200, 78, 100, 25, new TranslatableText("mcg.button.setcurrent"), onPress -> {
             BlockPos pos = Objects.requireNonNull(client.player).getBlockPos();
             xField.setText(Integer.toString(pos.getX()));
             yField.setText(Integer.toString(pos.getY()));
@@ -59,7 +61,7 @@ public class CoordinateCreationScreen extends Screen {
         });
         this.addButton(setAtPos);
 
-        descriptionField = new TextFieldWidget(textRenderer, 20, 120, 200, 20, new LiteralText("Description"));
+        descriptionField = new TextFieldWidget(textRenderer, 20, 120, 200, 20, new TranslatableText("mcg.button.description"));
         this.addChild(descriptionField);
 
         if (coordinate != null) {
@@ -72,9 +74,9 @@ public class CoordinateCreationScreen extends Screen {
             yField.setText(Integer.toString(Objects.requireNonNull(client.player).getBlockPos().getY()));
         }
 
-        confirmButton = new MCGButtonWidget(width - 105, height - 25, 100, 20, new LiteralText("Confirm"), press -> confirm());
+        confirmButton = new MCGButtonWidget(width - 105, height - 25, 100, 20, new TranslatableText("mcg.button.confirm"), press -> confirm());
         this.addButton(confirmButton);
-        cancelButton = new MCGButtonWidget(width - 210, height - 25, 100, 20, new LiteralText("Cancel"), press -> cancel());
+        cancelButton = new MCGButtonWidget(width - 210, height - 25, 100, 20, new TranslatableText("mcg.button.cancel"), press -> cancel());
         this.addButton(cancelButton);
     }
 
@@ -82,8 +84,8 @@ public class CoordinateCreationScreen extends Screen {
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
         updateButtonStates();
         this.renderBackground(matrices);
-        drawCenteredString(matrices, textRenderer, "Create Coordinate", width / 2, 10, 16777215);
-        drawStringWithShadow(matrices, textRenderer, "Name", nameField.x, nameField.y - 10, 16777215);
+        drawCenteredString(matrices, textRenderer, I18n.translate("mcg.coordinate.creationtitle"), width / 2, 10, 16777215);
+        drawStringWithShadow(matrices, textRenderer, I18n.translate("mcg.button.name"), nameField.x, nameField.y - 10, 16777215);
         nameField.render(matrices, mouseX, mouseY, delta);
         drawStringWithShadow(matrices, textRenderer, "X", xField.x, xField.y - 10, 16777215);
         xField.render(matrices, mouseX, mouseY, delta);
@@ -91,7 +93,7 @@ public class CoordinateCreationScreen extends Screen {
         yField.render(matrices, mouseX, mouseY, delta);
         drawStringWithShadow(matrices, textRenderer, "Z", zField.x, zField.y - 10, 16777215);
         zField.render(matrices, mouseX, mouseY, delta);
-        drawStringWithShadow(matrices, textRenderer, "Description", descriptionField.x, descriptionField.y - 10, 16777215);
+        drawStringWithShadow(matrices, textRenderer, I18n.translate("mcg.button.description"), descriptionField.x, descriptionField.y - 10, 16777215);
         descriptionField.render(matrices, mouseX, mouseY, delta);
         super.render(matrices, mouseX, mouseY, delta);
         ErrorDisplayOverlay.INSTANCE.render(matrices, height);
@@ -112,7 +114,7 @@ public class CoordinateCreationScreen extends Screen {
             MCG.coordinatesManager.writeToCoordinates(parent.getFilepath(), set);
         } catch (IOException | NumberFormatException e) {
             e.printStackTrace();
-            parent.reportError("Could not write coordinate.");
+            parent.reportError(I18n.translate("mcg.coordinate.creationfail"));
         }
         parent.refresh();
         Objects.requireNonNull(client).openScreen(parent);

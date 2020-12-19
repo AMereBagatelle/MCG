@@ -56,11 +56,11 @@ public class CoordinateFileManagerWidget extends MCGListWidget<CoordinateFileMan
     }
 
     public void newFile() {
-        client.openScreen(new CoordinateFileCreationScreen("File", currentDirectory));
+        client.openScreen(new CoordinateFileCreationScreen("file", currentDirectory));
     }
 
     public void newFolder() {
-        client.openScreen(new CoordinateFileCreationScreen("Folder", currentDirectory));
+        client.openScreen(new CoordinateFileCreationScreen("folder", currentDirectory));
     }
 
     public void removeFile() {

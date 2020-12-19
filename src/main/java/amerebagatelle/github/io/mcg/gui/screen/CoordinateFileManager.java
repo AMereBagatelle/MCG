@@ -3,8 +3,10 @@ package amerebagatelle.github.io.mcg.gui.screen;
 import amerebagatelle.github.io.mcg.gui.MCGButtonWidget;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.resource.language.I18n;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.LiteralText;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
 
 public class CoordinateFileManager extends Screen {
@@ -27,23 +29,23 @@ public class CoordinateFileManager extends Screen {
         coordinateFileManagerWidget = new CoordinateFileManagerWidget(this.client, width / 3 * 2, height - 60, 40, this.height - 20, 15, 10);
         this.addChild(coordinateFileManagerWidget);
 
-        openFile = new MCGButtonWidget(coordinateFileManagerWidget.getRight() + 5, coordinateFileManagerWidget.getTop(), coordinateFileManagerWidget.getButtonWidth(), 20, new LiteralText("Open File"), press -> {
+        openFile = new MCGButtonWidget(coordinateFileManagerWidget.getRight() + 5, coordinateFileManagerWidget.getTop(), coordinateFileManagerWidget.getButtonWidth(), 20, new TranslatableText("mcg.button.openfile"), press -> {
             coordinateFileManagerWidget.openFile();
         });
         this.addButton(openFile);
-        returnFolder = new MCGButtonWidget(coordinateFileManagerWidget.getRight() + 5, openFile.getBottom() + 5, coordinateFileManagerWidget.getButtonWidth(), 20, new LiteralText("Return"), press -> {
+        returnFolder = new MCGButtonWidget(coordinateFileManagerWidget.getRight() + 5, openFile.getBottom() + 5, coordinateFileManagerWidget.getButtonWidth(), 20, new TranslatableText("mcg.button.return"), press -> {
             coordinateFileManagerWidget.backUpFolder();
         });
         this.addButton(returnFolder);
-        newFile = new MCGButtonWidget(coordinateFileManagerWidget.getRight() + 5, returnFolder.getBottom() + 5, coordinateFileManagerWidget.getButtonWidth(), 20, new LiteralText("New File"), press -> {
+        newFile = new MCGButtonWidget(coordinateFileManagerWidget.getRight() + 5, returnFolder.getBottom() + 5, coordinateFileManagerWidget.getButtonWidth(), 20, new TranslatableText("mcg.file.newfile"), press -> {
             coordinateFileManagerWidget.newFile();
         });
         this.addButton(newFile);
-        newFolder = new MCGButtonWidget(coordinateFileManagerWidget.getRight() + 5, newFile.getBottom() + 5, coordinateFileManagerWidget.getButtonWidth(), 20, new LiteralText("New Folder"), press -> {
+        newFolder = new MCGButtonWidget(coordinateFileManagerWidget.getRight() + 5, newFile.getBottom() + 5, coordinateFileManagerWidget.getButtonWidth(), 20, new TranslatableText("mcg.file.newfolder"), press -> {
             coordinateFileManagerWidget.newFolder();
         });
         this.addButton(newFolder);
-        removeFile = new MCGButtonWidget(coordinateFileManagerWidget.getRight() + 5, newFolder.getBottom() + 5, coordinateFileManagerWidget.getButtonWidth(), 20, new LiteralText("Remove File/Folder"), press -> {
+        removeFile = new MCGButtonWidget(coordinateFileManagerWidget.getRight() + 5, newFolder.getBottom() + 5, coordinateFileManagerWidget.getButtonWidth(), 20, new TranslatableText("mcg.button.remove"), press -> {
             coordinateFileManagerWidget.removeFile();
         });
         this.addButton(removeFile);
@@ -53,7 +55,7 @@ public class CoordinateFileManager extends Screen {
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
         updateButtonStates();
         this.renderBackground(matrices);
-        drawCenteredString(matrices, textRenderer, "Coordinate File Manager", width / 2, 10, 16777215);
+        drawCenteredString(matrices, textRenderer, I18n.translate("mcg.file.managertitle"), width / 2, 10, 16777215);
         drawStringWithShadow(matrices, textRenderer, String.format("%s" + coordinateFileManagerWidget.getCurrentDirectory().toString().substring(coordinateFileManagerWidget.getCurrentDirectory().toString().indexOf("coordinates")), Formatting.BLUE), coordinateFileManagerWidget.getLeft(), coordinateFileManagerWidget.getTop() - 10, 16777215);
         coordinateFileManagerWidget.render(matrices, mouseX, mouseY, delta);
         super.render(matrices, mouseX, mouseY, delta);
