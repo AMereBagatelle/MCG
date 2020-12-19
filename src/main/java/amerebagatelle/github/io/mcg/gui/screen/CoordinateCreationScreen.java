@@ -9,6 +9,7 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.LiteralText;
+import net.minecraft.util.math.BlockPos;
 
 import javax.annotation.Nullable;
 import java.io.IOException;
@@ -16,11 +17,12 @@ import java.util.Objects;
 import java.util.function.Predicate;
 
 public class CoordinateCreationScreen extends Screen {
-    private final Predicate<String> coordinateFilter = (string) -> string.matches("\\d+") || string.equals("-");
+    private final Predicate<String> coordinateFilter = (string) -> string.matches("\\d+") || string.equals("-") || string.equals("~") || string.isEmpty();
     private TextFieldWidget nameField;
     private TextFieldWidget xField;
     private TextFieldWidget yField;
     private TextFieldWidget zField;
+    private MCGButtonWidget setAtPos;
     private TextFieldWidget descriptionField;
     private MCGButtonWidget confirmButton;
     private MCGButtonWidget cancelButton;
@@ -48,6 +50,15 @@ public class CoordinateCreationScreen extends Screen {
         zField = new TextFieldWidget(textRenderer, 140, 80, 50, 20, new LiteralText("Z"));
         zField.setTextPredicate(coordinateFilter);
         this.addChild(zField);
+
+        setAtPos = new MCGButtonWidget(200, 78, 100, 25, new LiteralText("Set to Current"), onPress -> {
+            BlockPos pos = Objects.requireNonNull(client.player).getBlockPos();
+            xField.setText(Integer.toString(pos.getX()));
+            yField.setText(Integer.toString(pos.getY()));
+            zField.setText(Integer.toString(pos.getZ()));
+        });
+        this.addButton(setAtPos);
+
         descriptionField = new TextFieldWidget(textRenderer, 20, 120, 200, 20, new LiteralText("Description"));
         this.addChild(descriptionField);
 
@@ -87,7 +98,7 @@ public class CoordinateCreationScreen extends Screen {
     }
 
     private void updateButtonStates() {
-        confirmButton.active = nameField.getText().length() != 0 && xField.getText().length() != 0 && yField.getText().length() != 0 && zField.getText().length() != 0;
+        confirmButton.active = nameField.getText().length() != 0 && xField.getText().length() != 0 && yField.getText().length() != 0 && zField.getText().length() != 0 && (xField.getText().equals("~") || yField.getText().equals("~") || zField.getText().equals("~"));
     }
 
     @Override
@@ -97,13 +108,34 @@ public class CoordinateCreationScreen extends Screen {
 
     private void confirm() {
         try {
-            MCG.coordinatesManager.writeToCoordinates(parent.getFilepath(), new CoordinatesSet(nameField.getText(), Integer.parseInt(xField.getText()), Integer.parseInt(yField.getText()), Integer.parseInt(zField.getText()), descriptionField.getText()));
-        } catch (IOException e) {
+            CoordinatesSet set = parseCoordinate(nameField.getText(), xField.getText(), yField.getText(), zField.getText(), descriptionField.getText());
+            MCG.coordinatesManager.writeToCoordinates(parent.getFilepath(), set);
+        } catch (IOException | NumberFormatException e) {
             e.printStackTrace();
             parent.reportError("Could not write coordinate.");
         }
         parent.refresh();
         Objects.requireNonNull(client).openScreen(parent);
+    }
+
+    private CoordinatesSet parseCoordinate(String name, String x, String y, String z, String desc) {
+        CoordinatesSet result = new CoordinatesSet(name, 0, 0, 0, desc);
+        if (x.equals("~")) {
+            result.x = client.player.getBlockPos().getX();
+        } else {
+            result.x = Integer.parseInt(x);
+        }
+        if (y.equals("~")) {
+            result.y = client.player.getBlockPos().getY();
+        } else {
+            result.y = Integer.parseInt(y);
+        }
+        if (z.equals("~")) {
+            result.z = client.player.getBlockPos().getZ();
+        } else {
+            result.z = Integer.parseInt(z);
+        }
+        return result;
     }
 
     private void cancel() {
