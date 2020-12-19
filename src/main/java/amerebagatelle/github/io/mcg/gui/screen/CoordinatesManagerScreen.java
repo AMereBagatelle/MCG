@@ -47,7 +47,7 @@ public class CoordinatesManagerScreen extends Screen {
             coordinateManagerWidget.teleportToCoordinate();
         });
         this.addButton(teleportToCoordinate);
-        back = new MCGButtonWidget(coordinateManagerWidget.getRight() + 5, teleportToCoordinate.getBottom() + 5, coordinateManagerWidget.getButtonWidth(), 20, new LiteralText("Back"), press -> {
+        back = new MCGButtonWidget(coordinateManagerWidget.getRight() + 5, teleportToCoordinate.getBottom() + 5, coordinateManagerWidget.getButtonWidth(), 20, new TranslatableText("mcg.button.back"), press -> {
             client.openScreen(new CoordinateFileManager());
         });
         this.addButton(back);

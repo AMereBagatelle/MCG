@@ -11,6 +11,7 @@
   "mcg.button.openfile": "Open File",
   "mcg.button.return": "Return",
   "mcg.button.remove": "Remove File/Folder",
+  "mcg.button.back": "Back",
   "mcg.coordinate.creationtitle": "Create Coordinate",
   "mcg.coordinate.creationfail": "Could not write coordinate.",
   "mcg.coordinate.readfail": "Couldn't load coordinates from file.",
