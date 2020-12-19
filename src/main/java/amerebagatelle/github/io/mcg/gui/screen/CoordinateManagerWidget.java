@@ -16,9 +16,11 @@ import java.util.Objects;
 
 public class CoordinateManagerWidget extends MCGListWidget<CoordinateManagerWidget.Entry> {
     private Path filepath;
+    private final CoordinatesManagerScreen parent;
 
-    public CoordinateManagerWidget(MinecraftClient minecraftClient, int width, int height, int top, int bottom, int itemHeight, int left) {
+    public CoordinateManagerWidget(MinecraftClient minecraftClient, CoordinatesManagerScreen parent, int width, int height, int top, int bottom, int itemHeight, int left) {
         super(minecraftClient, width, height, top, bottom, itemHeight, left);
+        this.parent = parent;
     }
 
     public void setFile(Path filepath) {
@@ -36,7 +38,7 @@ public class CoordinateManagerWidget extends MCGListWidget<CoordinateManagerWidg
                 }
             }
         } catch (IOException e) {
-            MCG.logger.warn("Couldn't load coordinates from specified file.");
+            parent.reportError("Couldn't load coordinates from file.");
         }
     }
 
@@ -48,7 +50,7 @@ public class CoordinateManagerWidget extends MCGListWidget<CoordinateManagerWidg
         try {
             MCG.coordinatesManager.removeCoordinate(filepath, ((CoordinateEntry) Objects.requireNonNull(this.getSelected())).coordinate);
         } catch (IOException e) {
-            MCG.logger.warn("Couldn't remove coordinate.");
+            parent.reportError("Couldn't remove coordinate from file.");
         }
         refreshEntries();
         this.setSelected(null);
@@ -56,9 +58,11 @@ public class CoordinateManagerWidget extends MCGListWidget<CoordinateManagerWidg
 
     public void teleportToCoordinate() {
         Objects.requireNonNull(client.player);
-        if (client.player.isCreative() || client.player.isSpectator()) {
+        if (client.player.isCreativeLevelTwoOp()) {
             CoordinatesSet coordinateSet = ((CoordinateEntry) Objects.requireNonNull(this.getSelected())).coordinate;
             client.player.sendChatMessage(String.format("/tp %s %s %s", coordinateSet.x, coordinateSet.y, coordinateSet.z));
+        } else {
+            parent.reportError("You are not a level 2 operator!");
         }
     }
 

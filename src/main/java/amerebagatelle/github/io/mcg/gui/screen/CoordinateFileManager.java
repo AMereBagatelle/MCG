@@ -8,7 +8,6 @@ import net.minecraft.text.LiteralText;
 import net.minecraft.util.Formatting;
 
 public class CoordinateFileManager extends Screen {
-    // TODO: Splitscreen option for file managing (like before) very future improvement
 
     // Widgets/Buttons
     private CoordinateFileManagerWidget coordinateFileManagerWidget;

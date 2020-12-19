@@ -3,6 +3,7 @@ package amerebagatelle.github.io.mcg.gui.screen;
 import amerebagatelle.github.io.mcg.MCG;
 import amerebagatelle.github.io.mcg.coordinates.CoordinatesSet;
 import amerebagatelle.github.io.mcg.gui.MCGButtonWidget;
+import amerebagatelle.github.io.mcg.gui.overlay.ErrorDisplayOverlay;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.TextFieldWidget;
@@ -11,6 +12,7 @@ import net.minecraft.text.LiteralText;
 
 import javax.annotation.Nullable;
 import java.io.IOException;
+import java.util.Objects;
 import java.util.function.Predicate;
 
 public class CoordinateCreationScreen extends Screen {
@@ -56,7 +58,7 @@ public class CoordinateCreationScreen extends Screen {
             zField.setText(Integer.toString(coordinate.z));
             descriptionField.setText(coordinate.description);
         } else {
-            yField.setText(Integer.toString(client.player.getBlockPos().getY()));
+            yField.setText(Integer.toString(Objects.requireNonNull(client.player).getBlockPos().getY()));
         }
 
         confirmButton = new MCGButtonWidget(width - 105, height - 25, 100, 20, new LiteralText("Confirm"), press -> confirm());
@@ -81,6 +83,7 @@ public class CoordinateCreationScreen extends Screen {
         drawStringWithShadow(matrices, textRenderer, "Description", descriptionField.x, descriptionField.y - 10, 16777215);
         descriptionField.render(matrices, mouseX, mouseY, delta);
         super.render(matrices, mouseX, mouseY, delta);
+        ErrorDisplayOverlay.INSTANCE.render(matrices, height);
     }
 
     private void updateButtonStates() {
@@ -96,13 +99,14 @@ public class CoordinateCreationScreen extends Screen {
         try {
             MCG.coordinatesManager.writeToCoordinates(parent.getFilepath(), new CoordinatesSet(nameField.getText(), Integer.parseInt(xField.getText()), Integer.parseInt(yField.getText()), Integer.parseInt(zField.getText()), descriptionField.getText()));
         } catch (IOException e) {
-            MCG.logger.warn("Could not write coordinate.");
+            e.printStackTrace();
+            parent.reportError("Could not write coordinate.");
         }
         parent.refresh();
-        client.openScreen(parent);
+        Objects.requireNonNull(client).openScreen(parent);
     }
 
     private void cancel() {
-        client.openScreen(parent);
+        Objects.requireNonNull(client).openScreen(parent);
     }
 }

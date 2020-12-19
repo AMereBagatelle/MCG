@@ -1,13 +1,16 @@
 package amerebagatelle.github.io.mcg.gui.screen;
 
+import amerebagatelle.github.io.mcg.MCG;
 import amerebagatelle.github.io.mcg.coordinates.CoordinatesSet;
 import amerebagatelle.github.io.mcg.gui.MCGButtonWidget;
+import amerebagatelle.github.io.mcg.gui.overlay.ErrorDisplayOverlay;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.LiteralText;
 
 import java.nio.file.Path;
+import java.util.Objects;
 
 public class CoordinatesManagerScreen extends Screen {
     private CoordinateManagerWidget coordinateManagerWidget;
@@ -27,7 +30,7 @@ public class CoordinatesManagerScreen extends Screen {
     @Override
     public void init(MinecraftClient client, int width, int height) {
         super.init(client, width, height);
-        coordinateManagerWidget = new CoordinateManagerWidget(client, width / 3 * 2, height - 60, 40, this.height - 20, 15, 10);
+        coordinateManagerWidget = new CoordinateManagerWidget(client, this, width / 3 * 2, height - 60, 40, this.height - 20, 15, 10);
         coordinateManagerWidget.setFile(filepath);
         this.addChild(coordinateManagerWidget);
         newCoordinate = new MCGButtonWidget(coordinateManagerWidget.getRight() + 5, coordinateManagerWidget.getTop(), coordinateManagerWidget.getButtonWidth(), 20, new LiteralText("New Coordinate"), press -> {
@@ -66,6 +69,7 @@ public class CoordinatesManagerScreen extends Screen {
             drawStringWithShadow(matrices, textRenderer, set.description, coordinateManagerWidget.getRight() + 5, drawY + 50, 16777215);
         }
         super.render(matrices, mouseX, mouseY, delta);
+        ErrorDisplayOverlay.INSTANCE.render(matrices, height);
     }
 
     public void refresh() {
@@ -74,7 +78,7 @@ public class CoordinatesManagerScreen extends Screen {
 
     public void updateButtonStates() {
         removeCoordinate.active = coordinateManagerWidget.getSelected() != null;
-        teleportToCoordinate.active = coordinateManagerWidget.getSelected() != null && client.player.isCreative();
+        teleportToCoordinate.active = coordinateManagerWidget.getSelected() != null && Objects.requireNonNull(Objects.requireNonNull(client).player).isCreative();
     }
 
     public Path getFilepath() {
@@ -84,5 +88,10 @@ public class CoordinatesManagerScreen extends Screen {
     @Override
     public boolean isPauseScreen() {
         return false;
+    }
+
+    public void reportError(String error) {
+        MCG.logger.warn(error);
+        ErrorDisplayOverlay.INSTANCE.addError(error);
     }
 }

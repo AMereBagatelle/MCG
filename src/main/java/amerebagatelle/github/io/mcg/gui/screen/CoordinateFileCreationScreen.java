@@ -2,6 +2,7 @@ package amerebagatelle.github.io.mcg.gui.screen;
 
 import amerebagatelle.github.io.mcg.MCG;
 import amerebagatelle.github.io.mcg.gui.MCGButtonWidget;
+import amerebagatelle.github.io.mcg.gui.overlay.ErrorDisplayOverlay;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.TextFieldWidget;
@@ -46,6 +47,7 @@ public class CoordinateFileCreationScreen extends Screen {
         drawCenteredString(matrices, textRenderer, "New " + fileType, this.width / 2, 50, 16777215);
         fileNameWidget.render(matrices, mouseX, mouseY, delta);
         super.render(matrices, mouseX, mouseY, delta);
+        ErrorDisplayOverlay.INSTANCE.render(matrices, height);
     }
 
     @Override
