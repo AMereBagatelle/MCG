@@ -14,7 +14,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 public class CoordinatesManager {
@@ -59,11 +61,11 @@ public class CoordinatesManager {
         folderFile.mkdir();
     }
 
-    public CoordinatesList loadCoordinates(Path filepath) throws IOException {
+    public List<CoordinatesSet> loadCoordinates(Path filepath) throws IOException {
         File coordinatesFile = new File(filepath.toUri());
         if (!coordinatesFile.exists()) return null;
 
-        CoordinatesList loadedList = new CoordinatesList();
+        List<CoordinatesSet> loadedList = new ArrayList<>();
         BufferedReader reader = new BufferedReader(new FileReader(coordinatesFile));
         JsonObject coordinatesJson = gson.fromJson(reader, JsonObject.class);
         reader.close();

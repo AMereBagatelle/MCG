@@ -1,7 +1,6 @@
 package amerebagatelle.github.io.mcg.gui.screen;
 
 import amerebagatelle.github.io.mcg.MCG;
-import amerebagatelle.github.io.mcg.coordinates.CoordinatesList;
 import amerebagatelle.github.io.mcg.coordinates.CoordinatesSet;
 import amerebagatelle.github.io.mcg.gui.MCGListWidget;
 import net.fabricmc.api.EnvType;
@@ -12,6 +11,7 @@ import net.minecraft.client.util.math.MatrixStack;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.Objects;
 
 public class CoordinateManagerWidget extends MCGListWidget<CoordinateManagerWidget.Entry> {
@@ -29,7 +29,7 @@ public class CoordinateManagerWidget extends MCGListWidget<CoordinateManagerWidg
     public void refreshEntries() {
         clearEntries();
         try {
-            CoordinatesList list = MCG.coordinatesManager.loadCoordinates(filepath);
+            List<CoordinatesSet> list = MCG.coordinatesManager.loadCoordinates(filepath);
             if (list != null) {
                 for (CoordinatesSet set : list) {
                     this.addEntry(new CoordinateEntry(set));
