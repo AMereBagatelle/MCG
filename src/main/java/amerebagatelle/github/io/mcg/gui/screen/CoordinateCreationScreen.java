@@ -100,7 +100,7 @@ public class CoordinateCreationScreen extends Screen {
     }
 
     private void updateButtonStates() {
-        confirmButton.active = nameField.getText().length() != 0 && xField.getText().length() != 0 && yField.getText().length() != 0 && zField.getText().length() != 0 && (xField.getText().equals("~") || yField.getText().equals("~") || zField.getText().equals("~"));
+        confirmButton.active = nameField.getText().length() != 0 && xField.getText().length() != 0 && yField.getText().length() != 0 && zField.getText().length() != 0;
     }
 
     @Override
