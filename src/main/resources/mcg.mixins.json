@@ -5,6 +5,7 @@
   "mixins": [
   ],
   "client": [
+    "InGameHudMixin",
     "MinecraftClientMixin"
   ],
   "injectors": {

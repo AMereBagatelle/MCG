@@ -3,6 +3,7 @@ package amerebagatelle.github.io.mcg.gui.screen;
 import amerebagatelle.github.io.mcg.MCG;
 import amerebagatelle.github.io.mcg.coordinates.CoordinatesSet;
 import amerebagatelle.github.io.mcg.gui.MCGListWidget;
+import amerebagatelle.github.io.mcg.gui.overlay.CoordinateHudOverlay;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
@@ -55,6 +56,10 @@ public class CoordinateManagerWidget extends MCGListWidget<CoordinateManagerWidg
         }
         refreshEntries();
         this.setSelected(null);
+    }
+
+    public void setOverlayToSelected() {
+        CoordinateHudOverlay.INSTANCE.setCurrentCoordinate(((CoordinateEntry) Objects.requireNonNull(this.getSelected())).coordinate);
     }
 
     public void teleportToCoordinate() {

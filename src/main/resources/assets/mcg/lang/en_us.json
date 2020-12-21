@@ -19,6 +19,8 @@
   "mcg.coordinate.coordinatesof": "Coordinates of ",
   "mcg.coordinate.newcoordinate": "New Coordinate",
   "mcg.coordinate.removecoordinate": "Remove Coordinate",
+  "mcg.coordinate.setoverlay": "Overlay Coordinate",
+  "mcg.coordinate.clearoverlay": "Clear Overlay",
   "mcg.coordinate.tp": "TP to Selected",
   "mcg.keybinding.main": "Open MCG"
 }

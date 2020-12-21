@@ -3,6 +3,7 @@ package amerebagatelle.github.io.mcg.gui.screen;
 import amerebagatelle.github.io.mcg.MCG;
 import amerebagatelle.github.io.mcg.coordinates.CoordinatesSet;
 import amerebagatelle.github.io.mcg.gui.MCGButtonWidget;
+import amerebagatelle.github.io.mcg.gui.overlay.CoordinateHudOverlay;
 import amerebagatelle.github.io.mcg.gui.overlay.ErrorDisplayOverlay;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
@@ -22,6 +23,8 @@ public class CoordinatesManagerScreen extends Screen {
     private MCGButtonWidget newCoordinate;
     private MCGButtonWidget removeCoordinate;
     private MCGButtonWidget teleportToCoordinate;
+    private MCGButtonWidget overlayCoordinate;
+    private MCGButtonWidget clearOverlay;
     private MCGButtonWidget back;
 
     public CoordinatesManagerScreen(Path filepath) {
@@ -47,7 +50,15 @@ public class CoordinatesManagerScreen extends Screen {
             coordinateManagerWidget.teleportToCoordinate();
         });
         this.addButton(teleportToCoordinate);
-        back = new MCGButtonWidget(coordinateManagerWidget.getRight() + 5, teleportToCoordinate.getBottom() + 5, coordinateManagerWidget.getButtonWidth(), 20, new TranslatableText("mcg.button.back"), press -> {
+        overlayCoordinate = new MCGButtonWidget(coordinateManagerWidget.getRight() + 5, teleportToCoordinate.getBottom() + 5, coordinateManagerWidget.getButtonWidth(), 20, new TranslatableText("mcg.coordinate.setoverlay"), press -> {
+            coordinateManagerWidget.setOverlayToSelected();
+        });
+        this.addButton(overlayCoordinate);
+        clearOverlay = new MCGButtonWidget(coordinateManagerWidget.getRight() + 5, overlayCoordinate.getBottom() + 5, coordinateManagerWidget.getButtonWidth(), 20, new TranslatableText("mcg.coordinate.clearoverlay"), press -> {
+            CoordinateHudOverlay.INSTANCE.clearCoordinate();
+        });
+        this.addButton(clearOverlay);
+        back = new MCGButtonWidget(coordinateManagerWidget.getRight() + 5, clearOverlay.getBottom() + 5, coordinateManagerWidget.getButtonWidth(), 20, new TranslatableText("mcg.button.back"), press -> {
             client.openScreen(new CoordinateFileManager());
         });
         this.addButton(back);
@@ -81,6 +92,7 @@ public class CoordinatesManagerScreen extends Screen {
     public void updateButtonStates() {
         removeCoordinate.active = coordinateManagerWidget.getSelected() != null;
         teleportToCoordinate.active = coordinateManagerWidget.getSelected() != null && Objects.requireNonNull(Objects.requireNonNull(client).player).isCreativeLevelTwoOp();
+        overlayCoordinate.active = coordinateManagerWidget.getSelected() != null;
     }
 
     public Path getFilepath() {
