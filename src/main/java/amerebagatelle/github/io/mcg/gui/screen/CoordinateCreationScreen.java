@@ -19,7 +19,7 @@ import java.util.Objects;
 import java.util.function.Predicate;
 
 public class CoordinateCreationScreen extends Screen {
-    private final Predicate<String> coordinateFilter = (string) -> string.matches("\\d+") || string.equals("-") || string.equals("~") || string.isEmpty();
+    private final Predicate<String> coordinateFilter = (string) -> string.matches("-?\\d+") || string.equals("-") || string.equals("~") || string.isEmpty();
     private TextFieldWidget nameField;
     private TextFieldWidget xField;
     private TextFieldWidget yField;
