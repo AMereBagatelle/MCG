@@ -17,7 +17,7 @@
   "mcg.coordinate.readfail": "Couldn't load coordinates from file.",
   "mcg.coordinate.removefail": "Couldn't remove coordinate from file.",
   "mcg.coordinate.coordinatesof": "Coordinates of ",
-  "mcg.coordinate.newcoordinate": "New Coordinate",
+  "mcg.coordinate.newcoordinate": "New/Edit Coordinate",
   "mcg.coordinate.removecoordinate": "Remove Coordinate",
   "mcg.coordinate.setoverlay": "Overlay Coordinate",
   "mcg.coordinate.clearoverlay": "Clear Overlay",
