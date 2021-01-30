@@ -3,15 +3,14 @@
   "id": "mcg",
   "version": "${version}",
   "name": "MCG",
-  "description": "A mod to list all your coordinates, and that has simple saving of coordinates, so that you don't have to remember them!",
+  "description": "Stores coordinates in an easy-to-access way.",
   "authors": [
     "AMereBagatelle"
   ],
   "contact": {
-    "homepage": "amerebagatelle.github.io",
     "sources": "https://github.com/AMereBagatelle/MCG"
   },
-  "license": "CC0-1.0",
+  "license": "LGPL-3.0",
   "icon": "assets/mcg/icon.png",
   "environment": "client",
   "entrypoints": {
