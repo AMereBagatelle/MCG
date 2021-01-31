@@ -41,13 +41,8 @@ public class CoordinateFileManagerWidget extends MCGListWidget<CoordinateFileMan
         this.ensureVisible(entry);
     }
 
-    public boolean getSelectedEntry(Entry entry) {
-        for (Entry possibleEntry : this.children()) {
-            if (this.getSelected() == entry) {
-                return true;
-            }
-        }
-        return false;
+    public boolean isEntrySelected(Entry entry) {
+        return this.getSelected() == entry;
     }
 
     public void openFile() {
@@ -108,7 +103,7 @@ public class CoordinateFileManagerWidget extends MCGListWidget<CoordinateFileMan
 
         @Override
         public boolean mouseClicked(double mouseX, double mouseY, int button) {
-            if (CoordinateFileManagerWidget.this.getSelectedEntry(this)) {
+            if (CoordinateFileManagerWidget.this.isEntrySelected(this)) {
                 openFile();
             } else {
                 CoordinateFileManagerWidget.this.select(this);
@@ -139,7 +134,7 @@ public class CoordinateFileManagerWidget extends MCGListWidget<CoordinateFileMan
 
         @Override
         public boolean mouseClicked(double mouseX, double mouseY, int button) {
-            if (CoordinateFileManagerWidget.this.getSelectedEntry(this)) {
+            if (CoordinateFileManagerWidget.this.isEntrySelected(this)) {
                 CoordinateFileManagerWidget.this.addToDirectory(name);
             } else {
                 CoordinateFileManagerWidget.this.select(this);
