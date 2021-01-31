@@ -11,7 +11,7 @@ public class CoordinateHudOverlay {
     private String currentCoordinate;
 
     public void render(MatrixStack matrixStack, int windowHeight) {
-        DrawableHelper.drawStringWithShadow(matrixStack, client.textRenderer, currentCoordinate, 10, windowHeight - 20, 16777215);
+        DrawableHelper.drawStringWithShadow(matrixStack, client.textRenderer, currentCoordinate, 10, windowHeight - 30, 16777215);
     }
 
     public void setCurrentCoordinate(CoordinatesSet set) {
