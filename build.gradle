@@ -40,7 +40,6 @@ dependencies {
     modCompile "net.fabricmc.fabric-api:fabric-key-binding-api-v1:${project.fabric_keybindings_version}"
     include "net.fabricmc.fabric-api:fabric-key-binding-api-v1:${project.fabric_keybindings_version}"
     // performance mods for convenience in dev
-    modRuntime "curse.maven:lithium-577919458:${project.lithium_file}"
     modRuntime "curse.maven:phosphor-577919458:${project.phosphor_file}"
     modRuntime "curse.maven:sodium-577919458:${project.sodium_file}"
     modRuntime ("com.github.SuperCoder7979:databreaker:${project.databreaker_version}") {
