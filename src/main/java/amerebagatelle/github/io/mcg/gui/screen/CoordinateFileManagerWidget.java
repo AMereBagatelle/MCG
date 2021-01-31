@@ -108,7 +108,11 @@ public class CoordinateFileManagerWidget extends MCGListWidget<CoordinateFileMan
 
         @Override
         public boolean mouseClicked(double mouseX, double mouseY, int button) {
-            CoordinateFileManagerWidget.this.select(this);
+            if (CoordinateFileManagerWidget.this.getSelectedEntry(this)) {
+                openFile();
+            } else {
+                CoordinateFileManagerWidget.this.select(this);
+            }
             return false;
         }
 
