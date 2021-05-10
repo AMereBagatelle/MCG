@@ -1,6 +1,7 @@
 package amerebagatelle.github.io.mcg.gui.screen;
 
 import amerebagatelle.github.io.mcg.gui.MCGButtonWidget;
+import amerebagatelle.github.io.mcg.gui.overlay.CoordinateHudOverlay;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.resource.language.I18n;
@@ -18,6 +19,7 @@ public class CoordinateFileManager extends Screen {
     private MCGButtonWidget newFile;
     private MCGButtonWidget newFolder;
     private MCGButtonWidget removeFile;
+    private MCGButtonWidget clearOverlay;
 
     public CoordinateFileManager() {
         super(new LiteralText("CoordinateFileManagerScreen"));
@@ -49,6 +51,10 @@ public class CoordinateFileManager extends Screen {
             coordinateFileManagerWidget.removeFile();
         });
         this.addButton(removeFile);
+        clearOverlay = new MCGButtonWidget(coordinateFileManagerWidget.getRight() + 5, removeFile.getBottom() + 5, coordinateFileManagerWidget.getButtonWidth(), 20, new TranslatableText("mcg.coordinate.clearoverlay"), press -> {
+            CoordinateHudOverlay.INSTANCE.clearCoordinate();
+        });
+        this.addButton(clearOverlay);
     }
 
     @Override
