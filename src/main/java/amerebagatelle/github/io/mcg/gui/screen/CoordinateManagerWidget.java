@@ -58,6 +58,10 @@ public class CoordinateManagerWidget extends MCGListWidget<CoordinateManagerWidg
         this.setSelected(null);
     }
 
+    public boolean isEntrySelected(Entry entry) {
+        return this.getSelected() == entry;
+    }
+
     public void setOverlayToSelected() {
         CoordinateHudOverlay.INSTANCE.setCurrentCoordinate(((CoordinateEntry) Objects.requireNonNull(this.getSelected())).coordinate);
     }
@@ -101,7 +105,11 @@ public class CoordinateManagerWidget extends MCGListWidget<CoordinateManagerWidg
 
         @Override
         public boolean mouseClicked(double mouseX, double mouseY, int button) {
-            CoordinateManagerWidget.this.select(this);
+            if (CoordinateManagerWidget.this.isEntrySelected(this)) {
+                CoordinateManagerWidget.this.setOverlayToSelected();
+            } else {
+                CoordinateManagerWidget.this.select(this);
+            }
             return false;
         }
 
