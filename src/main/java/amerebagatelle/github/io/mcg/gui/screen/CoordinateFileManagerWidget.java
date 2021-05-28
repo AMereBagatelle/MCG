@@ -7,6 +7,8 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.widget.AlwaysSelectedEntryListWidget;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -119,6 +121,11 @@ public class CoordinateFileManagerWidget extends MCGListWidget<CoordinateFileMan
         public String getName() {
             return name;
         }
+
+        @Override
+        public Text method_37006() {
+            return null; // TODO: Find out exactly what this method does
+        }
     }
 
     public class FolderEntry extends CoordinateFileManagerWidget.Entry {
@@ -149,6 +156,11 @@ public class CoordinateFileManagerWidget extends MCGListWidget<CoordinateFileMan
 
         public String getName() {
             return name;
+        }
+
+        @Override
+        public Text method_37006() {
+            return null; // TODO: Find out exactly what this method does
         }
     }
 

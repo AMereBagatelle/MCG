@@ -39,19 +39,18 @@ public class CoordinateCreationScreen extends Screen {
     }
 
     @Override
-    public void init(MinecraftClient client, int width, int height) {
-        super.init(client, width, height);
+    public void init() {
         nameField = new TextFieldWidget(textRenderer, 20, 40, 200, 20, new TranslatableText("mcg.button.name"));
-        this.addChild(nameField);
+        this.addSelectableChild(nameField);
         xField = new TextFieldWidget(textRenderer, 20, 80, 50, 20, new LiteralText("X"));
         xField.setTextPredicate(coordinateFilter);
-        this.addChild(xField);
+        this.addSelectableChild(xField);
         yField = new TextFieldWidget(textRenderer, 80, 80, 50, 20, new LiteralText("Y"));
         yField.setTextPredicate(coordinateFilter);
-        this.addChild(yField);
+        this.addSelectableChild(yField);
         zField = new TextFieldWidget(textRenderer, 140, 80, 50, 20, new LiteralText("Z"));
         zField.setTextPredicate(coordinateFilter);
-        this.addChild(zField);
+        this.addSelectableChild(zField);
 
         setAtPos = new MCGButtonWidget(200, 78, 100, 25, new TranslatableText("mcg.button.setcurrent"), onPress -> {
             BlockPos pos = Objects.requireNonNull(client.player).getBlockPos();
@@ -59,10 +58,10 @@ public class CoordinateCreationScreen extends Screen {
             yField.setText(Integer.toString(pos.getY()));
             zField.setText(Integer.toString(pos.getZ()));
         });
-        this.addButton(setAtPos);
+        this.addDrawableChild(setAtPos);
 
         descriptionField = new TextFieldWidget(textRenderer, 20, 120, 200, 20, new TranslatableText("mcg.button.description"));
-        this.addChild(descriptionField);
+        this.addSelectableChild(descriptionField);
 
         if (coordinate != null) {
             nameField.setText(coordinate.name);
@@ -75,16 +74,16 @@ public class CoordinateCreationScreen extends Screen {
         }
 
         confirmButton = new MCGButtonWidget(width - 105, height - 25, 100, 20, new TranslatableText("mcg.button.confirm"), press -> confirm());
-        this.addButton(confirmButton);
+        this.addDrawableChild(confirmButton);
         cancelButton = new MCGButtonWidget(width - 210, height - 25, 100, 20, new TranslatableText("mcg.button.cancel"), press -> cancel());
-        this.addButton(cancelButton);
+        this.addDrawableChild(cancelButton);
     }
 
     @Override
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
         updateButtonStates();
         this.renderBackground(matrices);
-        drawCenteredString(matrices, textRenderer, I18n.translate("mcg.coordinate.creationtitle"), width / 2, 10, 16777215);
+        drawCenteredText(matrices, textRenderer, I18n.translate("mcg.coordinate.creationtitle"), width / 2, 10, 16777215);
         drawStringWithShadow(matrices, textRenderer, I18n.translate("mcg.button.name"), nameField.x, nameField.y - 10, 16777215);
         nameField.render(matrices, mouseX, mouseY, delta);
         drawStringWithShadow(matrices, textRenderer, "X", xField.x, xField.y - 10, 16777215);

@@ -31,22 +31,21 @@ public class CoordinateFileCreationScreen extends Screen {
     }
 
     @Override
-    public void init(MinecraftClient client, int width, int height) {
-        super.init(client, width, height);
+    public void init() {
         fileNameWidget = new TextFieldWidget(textRenderer, width / 2 - 100, 100, 200, 20, new TranslatableText("mcg.button.name"));
-        this.addChild(fileNameWidget);
+        this.addSelectableChild(fileNameWidget);
 
         confirmButton = new MCGButtonWidget(width / 2 - 50, height - 100, 100, 20, new TranslatableText("mcg.button.confirm"), press -> confirm());
-        this.addButton(confirmButton);
+        this.addDrawableChild(confirmButton);
         cancelButton = new MCGButtonWidget(width / 2 - 50, height - 70, 100, 20, new TranslatableText("mcg.button.cancel"), press -> cancel());
-        this.addButton(cancelButton);
+        this.addDrawableChild(cancelButton);
     }
 
     @Override
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
         updateButtonStates();
         this.renderBackground(matrices);
-        drawCenteredString(matrices, textRenderer, I18n.translate("mcg.file.new" + fileType), this.width / 2, 50, 16777215);
+        drawCenteredText(matrices, textRenderer, I18n.translate("mcg.file.new" + fileType), this.width / 2, 50, 16777215);
         fileNameWidget.render(matrices, mouseX, mouseY, delta);
         super.render(matrices, mouseX, mouseY, delta);
         ErrorDisplayOverlay.INSTANCE.render(matrices, height);

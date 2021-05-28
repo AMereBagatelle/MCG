@@ -6,6 +6,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.Tessellator;
+import net.minecraft.client.render.VertexFormat;
 import net.minecraft.client.render.VertexFormats;
 
 @Environment(EnvType.CLIENT)
@@ -14,12 +15,12 @@ public class RenderUtils {
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder builder = tessellator.getBuffer();
 
-        GlStateManager.enableBlend();
-        GlStateManager.disableTexture();
-        GlStateManager.blendFuncSeparate(GlStateManager.SrcFactor.SRC_COLOR.field_22545, GlStateManager.DstFactor.ONE_MINUS_SRC_ALPHA.field_22528, GlStateManager.SrcFactor.ONE.field_22545, GlStateManager.DstFactor.ZERO.field_22528);
-        RenderSystem.color4f(red, green, blue, alpha);
+        GlStateManager._enableBlend();
+        GlStateManager._disableTexture();
+        GlStateManager.glBlendFuncSeparate(GlStateManager.SrcFactor.SRC_COLOR.value, GlStateManager.DstFactor.ONE_MINUS_SRC_ALPHA.value, GlStateManager.SrcFactor.ONE.value, GlStateManager.DstFactor.ZERO.value);
+        RenderSystem.setShaderColor(red, green, blue, alpha);
 
-        builder.begin(7, VertexFormats.POSITION);
+        builder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION);
         builder.vertex(x, y, 0.0).next();
         builder.vertex(x, y + height, 0.0).next();
         builder.vertex(x + width, y + height, 0.0).next();
@@ -27,7 +28,7 @@ public class RenderUtils {
 
         tessellator.draw();
 
-        GlStateManager.enableTexture();
-        GlStateManager.disableBlend();
+        GlStateManager._enableTexture();
+        GlStateManager._disableBlend();
     }
 }

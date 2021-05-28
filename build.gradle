@@ -1,11 +1,8 @@
 plugins {
-    id 'fabric-loom' version '0.5-SNAPSHOT'
+    id 'fabric-loom' version '0.8-SNAPSHOT'
     id 'maven-publish'
     id "com.modrinth.minotaur" version "1.1.0"
 }
-
-sourceCompatibility = JavaVersion.VERSION_1_8
-targetCompatibility = JavaVersion.VERSION_1_8
 
 archivesBaseName = project.archives_base_name + "-" + project.minecraft_version
 version = project.mod_version
@@ -27,7 +24,7 @@ minecraft {
 dependencies {
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
     mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
-    modCompile "net.fabricmc:fabric-loader:${project.loader_version}"
+    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
     // Non-mod imports
 
@@ -35,29 +32,24 @@ dependencies {
     compileOnly 'org.jetbrains:annotations:16.0.2'
 
     // fabric api resource loader
-    modCompile "net.fabricmc.fabric-api:fabric-resource-loader-v0:${project.fabric_resource_loader_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-resource-loader-v0:${project.fabric_resource_loader_version}"
     include "net.fabricmc.fabric-api:fabric-resource-loader-v0:${project.fabric_resource_loader_version}"
     // fabric api keybindings
-    modCompile "net.fabricmc.fabric-api:fabric-key-binding-api-v1:${project.fabric_keybindings_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-key-binding-api-v1:${project.fabric_keybindings_version}"
     include "net.fabricmc.fabric-api:fabric-key-binding-api-v1:${project.fabric_keybindings_version}"
     // performance mods for convenience in dev
-    modRuntime "curse.maven:phosphor-577919458:${project.phosphor_file}"
-    modRuntime "curse.maven:sodium-577919458:${project.sodium_file}"
-    modRuntime ("com.github.SuperCoder7979:databreaker:${project.databreaker_version}") {
-        exclude module: "fabric-loader"
-    }
+    //modRuntime "curse.maven:phosphor-577919458:${project.phosphor_file}"
+    //modRuntime "curse.maven:sodium-577919458:${project.sodium_file}"
+    //modRuntime ("com.github.SuperCoder7979:databreaker:${project.databreaker_version}") {
+    //    exclude module: "fabric-loader"
+    //}
 }
 
 processResources {
     inputs.property "version", project.version
 
-    from(sourceSets.main.resources.srcDirs) {
-        include "fabric.mod.json"
+    filesMatching("fabric.mod.json") {
         expand "version": project.version
-    }
-
-    from(sourceSets.main.resources.srcDirs) {
-        exclude "fabric.mod.json"
     }
 }
 

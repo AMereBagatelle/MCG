@@ -33,42 +33,41 @@ public class CoordinatesManagerScreen extends Screen {
     }
 
     @Override
-    public void init(MinecraftClient client, int width, int height) {
-        super.init(client, width, height);
+    public void init() {
         coordinateManagerWidget = new CoordinateManagerWidget(client, this, width / 3 * 2, height - 60, 40, this.height - 20, 15, 10);
         coordinateManagerWidget.setFile(filepath);
-        this.addChild(coordinateManagerWidget);
+        this.addSelectableChild(coordinateManagerWidget);
         newCoordinate = new MCGButtonWidget(coordinateManagerWidget.getRight() + 5, coordinateManagerWidget.getTop(), coordinateManagerWidget.getButtonWidth(), 20, new TranslatableText("mcg.coordinate.newcoordinate"), press -> {
             coordinateManagerWidget.newCoordinate(this);
         });
-        this.addButton(newCoordinate);
+        this.addDrawableChild(newCoordinate);
         removeCoordinate = new MCGButtonWidget(coordinateManagerWidget.getRight() + 5, newCoordinate.getBottom() + 5, coordinateManagerWidget.getButtonWidth(), 20, new TranslatableText("mcg.coordinate.removecoordinate"), press -> {
             coordinateManagerWidget.removeCoordinate();
         });
-        this.addButton(removeCoordinate);
+        this.addDrawableChild(removeCoordinate);
         teleportToCoordinate = new MCGButtonWidget(coordinateManagerWidget.getRight() + 5, removeCoordinate.getBottom() + 5, coordinateManagerWidget.getButtonWidth(), 20, new TranslatableText("mcg.coordinate.tp"), press -> {
             coordinateManagerWidget.teleportToCoordinate();
         });
-        this.addButton(teleportToCoordinate);
+        this.addDrawableChild(teleportToCoordinate);
         overlayCoordinate = new MCGButtonWidget(coordinateManagerWidget.getRight() + 5, teleportToCoordinate.getBottom() + 5, coordinateManagerWidget.getButtonWidth(), 20, new TranslatableText("mcg.coordinate.setoverlay"), press -> {
             coordinateManagerWidget.setOverlayToSelected();
         });
-        this.addButton(overlayCoordinate);
+        this.addDrawableChild(overlayCoordinate);
         clearOverlay = new MCGButtonWidget(coordinateManagerWidget.getRight() + 5, overlayCoordinate.getBottom() + 5, coordinateManagerWidget.getButtonWidth(), 20, new TranslatableText("mcg.coordinate.clearoverlay"), press -> {
             CoordinateHudOverlay.INSTANCE.clearCoordinate();
         });
-        this.addButton(clearOverlay);
+        this.addDrawableChild(clearOverlay);
         back = new MCGButtonWidget(coordinateManagerWidget.getRight() + 5, clearOverlay.getBottom() + 5, coordinateManagerWidget.getButtonWidth(), 20, new TranslatableText("mcg.button.back"), press -> {
             client.openScreen(new CoordinateFileManager());
         });
-        this.addButton(back);
+        this.addDrawableChild(back);
     }
 
     @Override
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
         updateButtonStates();
         this.renderBackground(matrices);
-        drawCenteredString(matrices, textRenderer, I18n.translate("mcg.coordinate.coordinatesof") + filepath.getFileName().toString().replace(".coordinates", ""), width / 2, 10, 16777215);
+        drawCenteredText(matrices, textRenderer, I18n.translate("mcg.coordinate.coordinatesof") + filepath.getFileName().toString().replace(".coordinates", ""), width / 2, 10, 16777215);
         coordinateManagerWidget.render(matrices, mouseX, mouseY, delta);
 
         // selected coordinate view

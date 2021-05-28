@@ -10,6 +10,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.widget.AlwaysSelectedEntryListWidget;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.text.Text;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -116,6 +117,11 @@ public class CoordinateManagerWidget extends MCGListWidget<CoordinateManagerWidg
         @Override
         public boolean mouseReleased(double mouseX, double mouseY, int button) {
             return false;
+        }
+
+        @Override
+        public Text method_37006() {
+            return null; // TODO: Find out exactly what this method does
         }
     }
 
