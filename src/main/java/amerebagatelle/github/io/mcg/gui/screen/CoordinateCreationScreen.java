@@ -40,6 +40,8 @@ public class CoordinateCreationScreen extends Screen {
 
     @Override
     public void init() {
+        Objects.requireNonNull(client);
+
         nameField = new TextFieldWidget(textRenderer, 20, 40, 200, 20, new TranslatableText("mcg.button.name"));
         this.addSelectableChild(nameField);
         xField = new TextFieldWidget(textRenderer, 20, 80, 50, 20, new LiteralText("X"));
@@ -120,6 +122,8 @@ public class CoordinateCreationScreen extends Screen {
     }
 
     private CoordinatesSet parseCoordinate(String name, String x, String y, String z, String desc) {
+        Objects.requireNonNull(client);
+        Objects.requireNonNull(client.player);
         CoordinatesSet result = new CoordinatesSet(name, 0, 0, 0, desc);
         if (x.equals("~")) {
             result.x = client.player.getBlockPos().getX();

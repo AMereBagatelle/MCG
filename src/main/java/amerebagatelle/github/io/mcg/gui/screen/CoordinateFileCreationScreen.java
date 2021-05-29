@@ -3,7 +3,6 @@ package amerebagatelle.github.io.mcg.gui.screen;
 import amerebagatelle.github.io.mcg.MCG;
 import amerebagatelle.github.io.mcg.gui.MCGButtonWidget;
 import amerebagatelle.github.io.mcg.gui.overlay.ErrorDisplayOverlay;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.resource.language.I18n;

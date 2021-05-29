@@ -61,6 +61,7 @@ public class CoordinateFileManagerWidget extends MCGListWidget<CoordinateFileMan
     }
 
     public void removeFile() {
+        //noinspection ResultOfMethodCallIgnored
         new File(currentDirectory.toString(), Objects.requireNonNull(this.getSelected()).getName()).delete();
         updateEntries(currentDirectory);
     }

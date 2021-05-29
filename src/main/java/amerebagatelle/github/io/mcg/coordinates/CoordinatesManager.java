@@ -14,16 +14,13 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class CoordinatesManager {
     public final Path coordinatesFolder = getCoordinateDirectory();
     private final Logger logger = LogManager.getLogger();
     private final Gson gson;
-    
+
     public CoordinatesManager() {
         gson = new Gson();
     }
@@ -31,9 +28,10 @@ public class CoordinatesManager {
     public void initCoordinatesFolder() throws IOException {
         File coordinatesFolderFile = new File(coordinatesFolder.toUri());
         if (!coordinatesFolderFile.exists() && !coordinatesFolderFile.isDirectory()) {
+            //noinspection ResultOfMethodCallIgnored
             coordinatesFolderFile.mkdir();
         }
-        if (coordinatesFolderFile.isDirectory() && coordinatesFolderFile.listFiles().length == 0) {
+        if (coordinatesFolderFile.isDirectory() && Objects.requireNonNull(coordinatesFolderFile.listFiles()).length == 0) {
             initNewCoordinatesFile(Paths.get(coordinatesFolder.toString(), "newCoordinates.coordinates"));
         }
     }
@@ -58,6 +56,7 @@ public class CoordinatesManager {
     public void createFolder(Path filepath) {
         File folderFile = new File(filepath.toUri());
         if (folderFile.exists()) return;
+        //noinspection ResultOfMethodCallIgnored
         folderFile.mkdir();
     }
 
@@ -83,7 +82,7 @@ public class CoordinatesManager {
         String jsonAsString = new String(Files.readAllBytes(filepath));
         JsonObject coordinatesJson = gson.fromJson(jsonAsString, JsonObject.class);
 
-        Map<String, String> map = new LinkedHashMap<String, String>();
+        Map<String, String> map = new LinkedHashMap<>();
         map.put("x", Integer.toString(coordinates.x));
         map.put("y", Integer.toString(coordinates.y));
         map.put("z", Integer.toString(coordinates.z));
