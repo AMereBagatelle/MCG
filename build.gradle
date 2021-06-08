@@ -76,7 +76,7 @@ import com.modrinth.minotaur.TaskModrinthUpload
 
 task publishModrinth(type: TaskModrinthUpload) {
     token = System.getenv('MODRINTH_TOKEN')
-    projectId = '65jTHvHz'
+    projectId = 'eVXHt0JE'
     versionName = "${project.archives_base_name} ${project.version}"
     versionNumber = project.version
     changelog = System.getenv('CHANGELOG_BODY')
