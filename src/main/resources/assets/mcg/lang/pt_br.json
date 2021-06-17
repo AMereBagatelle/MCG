@@ -9,7 +9,7 @@
   "mcg.button.description": "Descrição",
   "mcg.button.setcurrent": "Definir para atual",
   "mcg.button.openfile": "Abrir arquivo",
-  "mcg.button.return": "Retornar",
+  "mcg.button.return": "←",
   "mcg.button.remove": "Apagar arquivo/pasta",
   "mcg.button.back": "Voltar",
   "mcg.coordinate.creationtitle": "Criar coordenada",

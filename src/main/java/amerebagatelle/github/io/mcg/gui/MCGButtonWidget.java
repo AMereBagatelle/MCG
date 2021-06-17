@@ -21,4 +21,8 @@ public class MCGButtonWidget extends ButtonWidget {
     public int getBottom() {
         return y + height;
     }
+
+    public int getRight() {
+        return x + width;
+    }
 }
