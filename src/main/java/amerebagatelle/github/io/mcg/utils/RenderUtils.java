@@ -4,10 +4,7 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.render.BufferBuilder;
-import net.minecraft.client.render.Tessellator;
-import net.minecraft.client.render.VertexFormat;
-import net.minecraft.client.render.VertexFormats;
+import net.minecraft.client.render.*;
 
 @Environment(EnvType.CLIENT)
 public class RenderUtils {
@@ -17,6 +14,7 @@ public class RenderUtils {
 
         GlStateManager._enableBlend();
         GlStateManager._disableTexture();
+        RenderSystem.setShader(GameRenderer::getPositionTexShader);
         GlStateManager.glBlendFuncSeparate(GlStateManager.SrcFactor.SRC_COLOR.value, GlStateManager.DstFactor.ONE_MINUS_SRC_ALPHA.value, GlStateManager.SrcFactor.ONE.value, GlStateManager.DstFactor.ZERO.value);
         RenderSystem.setShaderColor(red, green, blue, alpha);
 

@@ -13,7 +13,7 @@ public class MCGButtonWidget extends ButtonWidget {
 
     @Override
     public void renderButton(MatrixStack matrices, int mouseX, int mouseY, float delta) {
-        float darkness = this.isHovered() ? 0.3f : 0.1f;
+        float darkness = this.isHovered() && active ? 0.3f : 0.1f;
         RenderUtils.drawBox(this.x, this.y, this.width, this.height, darkness, darkness, darkness, 0.3f);
         drawCenteredText(matrices, MinecraftClient.getInstance().textRenderer, this.getMessage().getString(), this.x + (this.width / 2), this.y + (this.height / 2) - 5, active ? 16777215 : 10526880);
     }
