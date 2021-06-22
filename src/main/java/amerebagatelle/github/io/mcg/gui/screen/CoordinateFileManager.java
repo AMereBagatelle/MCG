@@ -29,12 +29,11 @@ public class CoordinateFileManager extends Screen {
         coordinateFileManagerWidget = new CoordinateFileManagerWidget(this.client, width / 3 * 2, height - 60, 40, this.height - 20, 15, 10);
         this.addSelectableChild(coordinateFileManagerWidget);
 
-        returnFolder = new MCGButtonWidget(coordinateFileManagerWidget.getLeft(), coordinateFileManagerWidget.getTop() - 11, textRenderer.fontHeight + 1, textRenderer.fontHeight + 1, new TranslatableText("mcg.button.return"), press -> coordinateFileManagerWidget.backUpFolder());
-        this.addDrawableChild(returnFolder);
-
         openFile = new MCGButtonWidget(coordinateFileManagerWidget.getRight() + 5, coordinateFileManagerWidget.getTop(), coordinateFileManagerWidget.getButtonWidth(), 20, new TranslatableText("mcg.button.openfile"), press -> coordinateFileManagerWidget.openFile());
         this.addDrawableChild(openFile);
-        newFile = new MCGButtonWidget(coordinateFileManagerWidget.getRight() + 5, openFile.getBottom() + 5, coordinateFileManagerWidget.getButtonWidth(), 20, new TranslatableText("mcg.file.newfile"), press -> coordinateFileManagerWidget.newFile());
+        returnFolder = new MCGButtonWidget(coordinateFileManagerWidget.getRight() + 5, openFile.getBottom() + 5, coordinateFileManagerWidget.getButtonWidth(), 20, new TranslatableText("mcg.button.return"), press -> coordinateFileManagerWidget.backUpFolder());
+        this.addDrawableChild(returnFolder);
+        newFile = new MCGButtonWidget(coordinateFileManagerWidget.getRight() + 5, returnFolder.getBottom() + 5, coordinateFileManagerWidget.getButtonWidth(), 20, new TranslatableText("mcg.file.newfile"), press -> coordinateFileManagerWidget.newFile());
         this.addDrawableChild(newFile);
         newFolder = new MCGButtonWidget(coordinateFileManagerWidget.getRight() + 5, newFile.getBottom() + 5, coordinateFileManagerWidget.getButtonWidth(), 20, new TranslatableText("mcg.file.newfolder"), press -> coordinateFileManagerWidget.newFolder());
         this.addDrawableChild(newFolder);
@@ -49,7 +48,7 @@ public class CoordinateFileManager extends Screen {
         updateButtonStates();
         this.renderBackground(matrices);
         drawCenteredText(matrices, textRenderer, I18n.translate("mcg.file.managertitle"), width / 2, 10, 16777215);
-        drawStringWithShadow(matrices, textRenderer, String.format("%s" + coordinateFileManagerWidget.getCurrentDirectory().toString().substring(coordinateFileManagerWidget.getCurrentDirectory().toString().indexOf("coordinates")), Formatting.BLUE), returnFolder.getRight() + 5, coordinateFileManagerWidget.getTop() - 10, 16777215);
+        drawStringWithShadow(matrices, textRenderer, String.format("%s" + coordinateFileManagerWidget.getCurrentDirectory().toString().substring(coordinateFileManagerWidget.getCurrentDirectory().toString().indexOf("coordinates")), Formatting.BLUE), coordinateFileManagerWidget.getLeft(), coordinateFileManagerWidget.getTop() - 10, 16777215);
         coordinateFileManagerWidget.render(matrices, mouseX, mouseY, delta);
         super.render(matrices, mouseX, mouseY, delta);
     }
