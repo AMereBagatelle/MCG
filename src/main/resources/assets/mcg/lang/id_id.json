@@ -19,8 +19,8 @@
   "mcg.coordinate.coordinatesof": "Kordinat dari",
   "mcg.coordinate.newcoordinate": "Buat/Edit Kordinat",
   "mcg.coordinate.removecoordinate": "Hapus Kordinat",
-  "mcg.coordinate.setoverlay": "Overlay Coordinate ",
-  "mcg.coordinate.clearoverlay": "Clear Overlay ",
+  "mcg.coordinate.setoverlay": "Hamparan kordinat",
+  "mcg.coordinate.clearoverlay": "Bersihkan hamparan",
   "mcg.coordinate.tp": "Teleportasi ke kordinat yang anda pilih",
   "mcg.keybinding.main": "Buka MCG"
 }
