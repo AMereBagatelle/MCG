@@ -66,12 +66,12 @@ public class CoordinateFileCreationScreen extends Screen {
             MCG.logger.debug("Can't make new coordinates file.");
             ErrorDisplayOverlay.INSTANCE.addError(I18n.translate("mcg.file.creationfail"));
         } finally {
-            Objects.requireNonNull(client).openScreen(new CoordinateFileManager());
+            Objects.requireNonNull(client).setScreen(new CoordinateFileManager());
         }
     }
 
     private void cancel() {
-        Objects.requireNonNull(client).openScreen(new CoordinateFileManager());
+        Objects.requireNonNull(client).setScreen(new CoordinateFileManager());
     }
 
     private void updateButtonStates() {

@@ -48,7 +48,7 @@ public class CoordinatesManagerScreen extends Screen {
         this.addDrawableChild(overlayCoordinate);
         clearOverlay = new MCGButtonWidget(coordinateManagerWidget.getRight() + 5, overlayCoordinate.getBottom() + 5, coordinateManagerWidget.getButtonWidth(), 20, new TranslatableText("mcg.coordinate.clearoverlay"), press -> CoordinateHudOverlay.INSTANCE.clearCoordinate());
         this.addDrawableChild(clearOverlay);
-        back = new MCGButtonWidget(coordinateManagerWidget.getRight() + 5, clearOverlay.getBottom() + 5, coordinateManagerWidget.getButtonWidth(), 20, new TranslatableText("mcg.button.back"), press -> client.openScreen(new CoordinateFileManager()));
+        back = new MCGButtonWidget(coordinateManagerWidget.getRight() + 5, clearOverlay.getBottom() + 5, coordinateManagerWidget.getButtonWidth(), 20, new TranslatableText("mcg.button.back"), press -> client.setScreen(new CoordinateFileManager()));
         this.addDrawableChild(back);
     }
 
@@ -60,8 +60,8 @@ public class CoordinatesManagerScreen extends Screen {
         coordinateManagerWidget.render(matrices, mouseX, mouseY, delta);
 
         // selected coordinate view
-        if (coordinateManagerWidget.getSelected() != null) {
-            CoordinatesSet set = ((CoordinateManagerWidget.CoordinateEntry) coordinateManagerWidget.getSelected()).coordinate;
+        if (coordinateManagerWidget.getSelectedOrNull() != null) {
+            CoordinatesSet set = ((CoordinateManagerWidget.CoordinateEntry) coordinateManagerWidget.getSelectedOrNull()).coordinate;
             int drawY = back.getBottom() + 20;
             drawStringWithShadow(matrices, textRenderer, set.name, coordinateManagerWidget.getRight() + 5, drawY, 16777215);
             drawStringWithShadow(matrices, textRenderer, Integer.toString(set.x), coordinateManagerWidget.getRight() + 5, drawY + 15, 16777215);
@@ -78,9 +78,9 @@ public class CoordinatesManagerScreen extends Screen {
     }
 
     public void updateButtonStates() {
-        removeCoordinate.active = coordinateManagerWidget.getSelected() != null;
-        teleportToCoordinate.active = coordinateManagerWidget.getSelected() != null && Objects.requireNonNull(Objects.requireNonNull(client).player).isCreativeLevelTwoOp();
-        overlayCoordinate.active = coordinateManagerWidget.getSelected() != null;
+        removeCoordinate.active = coordinateManagerWidget.getSelectedOrNull() != null;
+        teleportToCoordinate.active = coordinateManagerWidget.getSelectedOrNull() != null && Objects.requireNonNull(Objects.requireNonNull(client).player).isCreativeLevelTwoOp();
+        overlayCoordinate.active = coordinateManagerWidget.getSelectedOrNull() != null;
     }
 
     public Path getFilepath() {

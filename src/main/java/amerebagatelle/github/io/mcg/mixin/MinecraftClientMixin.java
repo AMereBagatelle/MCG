@@ -18,7 +18,7 @@ public class MinecraftClientMixin {
     @Inject(method = "tick", at = @At("TAIL"))
     private void onTick(CallbackInfo ci) {
         if(MCG.binding.isPressed() && !keybindPressed) {
-            MinecraftClient.getInstance().openScreen(new CoordinateFileManager());
+            MinecraftClient.getInstance().setScreen(new CoordinateFileManager());
         }
         keybindPressed = MCG.binding.isPressed();
     }

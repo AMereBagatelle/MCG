@@ -7,8 +7,8 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.widget.AlwaysSelectedEntryListWidget;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -44,34 +44,34 @@ public class CoordinateFileManagerWidget extends MCGListWidget<CoordinateFileMan
     }
 
     public boolean isEntrySelected(Entry entry) {
-        return this.getSelected() == entry;
+        return this.getSelectedOrNull() == entry;
     }
 
     public void openFile() {
-        CoordinatesManagerScreen screen = new CoordinatesManagerScreen(new File(currentDirectory.toString(), (Objects.requireNonNull(this.getSelected()).getName())).toPath());
-        client.openScreen(screen);
+        CoordinatesManagerScreen screen = new CoordinatesManagerScreen(new File(currentDirectory.toString(), (Objects.requireNonNull(this.getSelectedOrNull()).getName())).toPath());
+        client.setScreen(screen);
     }
 
     public void newFile() {
-        client.openScreen(new CoordinateFileCreationScreen("file", currentDirectory));
+        client.setScreen(new CoordinateFileCreationScreen("file", currentDirectory));
     }
 
     public void newFolder() {
-        client.openScreen(new CoordinateFileCreationScreen("folder", currentDirectory));
+        client.setScreen(new CoordinateFileCreationScreen("folder", currentDirectory));
     }
 
     public void removeFile() {
         //noinspection ResultOfMethodCallIgnored
-        new File(currentDirectory.toString(), Objects.requireNonNull(this.getSelected()).getName()).delete();
+        new File(currentDirectory.toString(), Objects.requireNonNull(this.getSelectedOrNull()).getName()).delete();
         updateEntries(currentDirectory);
     }
 
     public boolean hasFileSelected() {
-        return this.getSelected() instanceof FileEntry;
+        return this.getSelectedOrNull() instanceof FileEntry;
     }
 
     public boolean hasSelected() {
-        return this.getSelected() != null;
+        return this.getSelectedOrNull() != null;
     }
 
     public Path getCurrentDirectory() {
@@ -124,8 +124,8 @@ public class CoordinateFileManagerWidget extends MCGListWidget<CoordinateFileMan
         }
 
         @Override
-        public Text method_37006() {
-            return null; // TODO: Find out exactly what this method does
+        public Text getNarration() {
+            return new LiteralText(name.replace(".coordinates", ""));
         }
     }
 
@@ -160,8 +160,8 @@ public class CoordinateFileManagerWidget extends MCGListWidget<CoordinateFileMan
         }
 
         @Override
-        public Text method_37006() {
-            return null; // TODO: Find out exactly what this method does
+        public Text getNarration() {
+            return new LiteralText(name);
         }
     }
 

@@ -4,7 +4,6 @@ import amerebagatelle.github.io.mcg.MCG;
 import amerebagatelle.github.io.mcg.coordinates.CoordinatesSet;
 import amerebagatelle.github.io.mcg.gui.MCGButtonWidget;
 import amerebagatelle.github.io.mcg.gui.overlay.ErrorDisplayOverlay;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.resource.language.I18n;
@@ -118,7 +117,7 @@ public class CoordinateCreationScreen extends Screen {
             parent.reportError(I18n.translate("mcg.coordinate.creationfail"));
         }
         parent.refresh();
-        Objects.requireNonNull(client).openScreen(parent);
+        Objects.requireNonNull(client).setScreen(parent);
     }
 
     private CoordinatesSet parseCoordinate(String name, String x, String y, String z, String desc) {
@@ -144,6 +143,6 @@ public class CoordinateCreationScreen extends Screen {
     }
 
     private void cancel() {
-        Objects.requireNonNull(client).openScreen(parent);
+        Objects.requireNonNull(client).setScreen(parent);
     }
 }

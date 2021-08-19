@@ -22,5 +22,6 @@
   "mcg.coordinate.setoverlay": "Overlay Coordinate",
   "mcg.coordinate.clearoverlay": "Clear Overlay",
   "mcg.coordinate.tp": "TP to Selected",
-  "mcg.keybinding.main": "Open MCG"
+  "mcg.keybinding.main": "Open MCG",
+  "mcg.narration.coordinateentry": "Coordinate: %s X: %s Y: %s Z: %s Description: %s"
 }

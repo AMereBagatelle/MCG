@@ -11,6 +11,7 @@ import net.minecraft.client.gui.widget.AlwaysSelectedEntryListWidget;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -46,12 +47,12 @@ public class CoordinateManagerWidget extends MCGListWidget<CoordinateManagerWidg
     }
 
     public void newCoordinate(CoordinatesManagerScreen screen) {
-        client.openScreen(new CoordinateCreationScreen(this.getSelected() != null ? ((CoordinateEntry) this.getSelected()).coordinate : null, screen));
+        client.setScreen(new CoordinateCreationScreen(this.getSelectedOrNull() != null ? ((CoordinateEntry) this.getSelectedOrNull()).coordinate : null, screen));
     }
 
     public void removeCoordinate() {
         try {
-            MCG.coordinatesManager.removeCoordinate(filepath, ((CoordinateEntry) Objects.requireNonNull(this.getSelected())).coordinate);
+            MCG.coordinatesManager.removeCoordinate(filepath, ((CoordinateEntry) Objects.requireNonNull(this.getSelectedOrNull())).coordinate);
         } catch (IOException e) {
             parent.reportError(I18n.translate("mcg.coordinate.removefail"));
         }
@@ -60,17 +61,17 @@ public class CoordinateManagerWidget extends MCGListWidget<CoordinateManagerWidg
     }
 
     public boolean isEntrySelected(Entry entry) {
-        return this.getSelected() == entry;
+        return this.getSelectedOrNull() == entry;
     }
 
     public void setOverlayToSelected() {
-        CoordinateHudOverlay.INSTANCE.setCurrentCoordinate(((CoordinateEntry) Objects.requireNonNull(this.getSelected())).coordinate);
+        CoordinateHudOverlay.INSTANCE.setCurrentCoordinate(((CoordinateEntry) Objects.requireNonNull(this.getSelectedOrNull())).coordinate);
     }
 
     public void teleportToCoordinate() {
         Objects.requireNonNull(client.player);
         if (client.player.isCreativeLevelTwoOp()) {
-            CoordinatesSet coordinateSet = ((CoordinateEntry) Objects.requireNonNull(this.getSelected())).coordinate;
+            CoordinatesSet coordinateSet = ((CoordinateEntry) Objects.requireNonNull(this.getSelectedOrNull())).coordinate;
             client.player.sendChatMessage(String.format("/tp %s %s %s", coordinateSet.x, coordinateSet.y, coordinateSet.z));
         } else {
             parent.reportError(I18n.translate("commands.help.failed"));
@@ -120,8 +121,8 @@ public class CoordinateManagerWidget extends MCGListWidget<CoordinateManagerWidg
         }
 
         @Override
-        public Text method_37006() {
-            return null; // TODO: Find out exactly what this method does
+        public Text getNarration() {
+            return new TranslatableText("mcg.narration.coordinateentry", coordinate.name, coordinate.x, coordinate.y, coordinate.z, coordinate.description);
         }
     }
 
