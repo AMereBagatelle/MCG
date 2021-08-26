@@ -23,4 +23,5 @@
   "mcg.coordinate.clearoverlay": "Remover sobreposição",
   "mcg.coordinate.tp": "TP para coord.",
   "mcg.keybinding.main": "Abrir MCG"
+  "mcg.narration.coordinateentry": "Coordenada: %s X: %s Y: %s Z: %s Descrição: %s"
 }
