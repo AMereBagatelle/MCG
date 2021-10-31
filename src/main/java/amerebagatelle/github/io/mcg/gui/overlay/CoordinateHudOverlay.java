@@ -1,5 +1,6 @@
 package amerebagatelle.github.io.mcg.gui.overlay;
 
+import amerebagatelle.github.io.mcg.MCG;
 import amerebagatelle.github.io.mcg.coordinates.CoordinatesSet;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
@@ -10,8 +11,8 @@ public class CoordinateHudOverlay {
     private final MinecraftClient client = MinecraftClient.getInstance();
     private String currentCoordinate;
 
-    public void render(MatrixStack matrixStack, int windowHeight) {
-        DrawableHelper.drawStringWithShadow(matrixStack, client.textRenderer, currentCoordinate, 10, windowHeight - 30, 16777215);
+    public void render(MatrixStack matrixStack) {
+        DrawableHelper.drawStringWithShadow(matrixStack, client.textRenderer, currentCoordinate, MCG.config.overlayX, MCG.config.overlayY, 16777215);
     }
 
     public void setCurrentCoordinate(CoordinatesSet set) {

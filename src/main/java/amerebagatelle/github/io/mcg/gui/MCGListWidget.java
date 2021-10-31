@@ -36,6 +36,10 @@ public class MCGListWidget<E extends AlwaysSelectedEntryListWidget.Entry<E>> ext
         return width;
     }
 
+    public int getBottom() {
+        return top + height;
+    }
+
     public int getButtonWidth() {
         return Objects.requireNonNull(client.currentScreen).width - left - width - 10;
     }

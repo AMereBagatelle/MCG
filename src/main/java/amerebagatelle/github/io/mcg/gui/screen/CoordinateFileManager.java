@@ -10,6 +10,8 @@ import net.minecraft.text.LiteralText;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
 
+import java.util.Objects;
+
 public class CoordinateFileManager extends Screen {
 
     // Widgets/Buttons
@@ -20,6 +22,7 @@ public class CoordinateFileManager extends Screen {
     private MCGButtonWidget newFolder;
     private MCGButtonWidget removeFile;
     private MCGButtonWidget clearOverlay;
+    private MCGButtonWidget config;
 
     public CoordinateFileManager() {
         super(new LiteralText("CoordinateFileManagerScreen"));
@@ -42,6 +45,8 @@ public class CoordinateFileManager extends Screen {
         this.addDrawableChild(removeFile);
         clearOverlay = new MCGButtonWidget(coordinateFileManagerWidget.getRight() + 5, removeFile.getBottom() + 5, coordinateFileManagerWidget.getButtonWidth(), 20, new TranslatableText("mcg.coordinate.clearoverlay"), press -> CoordinateHudOverlay.INSTANCE.clearCoordinate());
         this.addDrawableChild(clearOverlay);
+        config = new MCGButtonWidget(coordinateFileManagerWidget.getRight() + 5, coordinateFileManagerWidget.getBottom() - 20, coordinateFileManagerWidget.getButtonWidth(), 20, new TranslatableText("mcg.button.config"), press -> Objects.requireNonNull(client).setScreen(new ConfigScreen(this)));
+        this.addDrawableChild(config);
     }
 
     @Override

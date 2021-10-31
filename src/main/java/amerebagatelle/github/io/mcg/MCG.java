@@ -2,6 +2,7 @@ package amerebagatelle.github.io.mcg;
 
 import amerebagatelle.github.io.mcg.coordinates.CoordinatesManager;
 import amerebagatelle.github.io.mcg.gui.screen.CoordinateFileManager;
+import amerebagatelle.github.io.mcg.utils.Config;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -18,6 +19,7 @@ import java.io.IOException;
 public class MCG implements ClientModInitializer {
     public static final Logger logger = LogManager.getLogger();
     public static final CoordinatesManager coordinatesManager = new CoordinatesManager();
+    public static final Config config = new Config();
 
     public static KeyBinding binding;
     public static Screen managerScreenInstance = new CoordinateFileManager();

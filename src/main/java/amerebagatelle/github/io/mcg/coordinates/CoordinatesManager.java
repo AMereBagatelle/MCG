@@ -1,5 +1,6 @@
 package amerebagatelle.github.io.mcg.coordinates;
 
+import amerebagatelle.github.io.mcg.utils.Config;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -19,10 +20,9 @@ import java.util.*;
 public class CoordinatesManager {
     public final Path coordinatesFolder = getCoordinateDirectory();
     private final Logger logger = LogManager.getLogger();
-    private final Gson gson;
+    private final Gson gson = Config.gson;
 
     public CoordinatesManager() {
-        gson = new Gson();
     }
 
     public void initCoordinatesFolder() throws IOException {
