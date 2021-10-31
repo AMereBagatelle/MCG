@@ -92,6 +92,12 @@ public class CoordinatesManagerScreen extends Screen {
         return false;
     }
 
+    @Override
+    public void onClose() {
+        MCG.managerScreenInstance = this;
+        super.onClose();
+    }
+
     public void reportError(String error) {
         MCG.logger.warn(error);
         ErrorDisplayOverlay.INSTANCE.addError(error);

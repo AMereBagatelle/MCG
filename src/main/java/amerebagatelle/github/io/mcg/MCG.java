@@ -1,10 +1,12 @@
 package amerebagatelle.github.io.mcg;
 
 import amerebagatelle.github.io.mcg.coordinates.CoordinatesManager;
+import amerebagatelle.github.io.mcg.gui.screen.CoordinateFileManager;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.option.KeyBinding;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,6 +20,7 @@ public class MCG implements ClientModInitializer {
     public static final CoordinatesManager coordinatesManager = new CoordinatesManager();
 
     public static KeyBinding binding;
+    public static Screen managerScreenInstance = new CoordinateFileManager();
 
     @Override
     public void onInitializeClient() {

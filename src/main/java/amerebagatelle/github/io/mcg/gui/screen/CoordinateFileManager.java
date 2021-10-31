@@ -1,5 +1,6 @@
 package amerebagatelle.github.io.mcg.gui.screen;
 
+import amerebagatelle.github.io.mcg.MCG;
 import amerebagatelle.github.io.mcg.gui.MCGButtonWidget;
 import amerebagatelle.github.io.mcg.gui.overlay.CoordinateHudOverlay;
 import net.minecraft.client.gui.screen.Screen;
@@ -57,6 +58,12 @@ public class CoordinateFileManager extends Screen {
         openFile.active = coordinateFileManagerWidget.hasFileSelected();
         removeFile.active = coordinateFileManagerWidget.hasSelected();
         returnFolder.active = !coordinateFileManagerWidget.getCurrentDirectory().endsWith("coordinates");
+    }
+
+    @Override
+    public void onClose() {
+        MCG.managerScreenInstance = this;
+        super.onClose();
     }
 
     @Override
