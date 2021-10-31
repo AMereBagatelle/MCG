@@ -12,6 +12,9 @@
   "mcg.button.return": "Return",
   "mcg.button.remove": "Remove File/Folder",
   "mcg.button.back": "Back",
+  "mcg.button.config": "Configuration",
+  "mcg.button.overlayX": "Overlay X",
+  "mcg.button.overlayY": "Overlay Y",
   "mcg.coordinate.creationtitle": "Create Coordinate",
   "mcg.coordinate.creationfail": "Could not write coordinate.",
   "mcg.coordinate.readfail": "Couldn't load coordinates from file.",
@@ -23,5 +26,6 @@
   "mcg.coordinate.clearoverlay": "Clear Overlay",
   "mcg.coordinate.tp": "TP to Selected",
   "mcg.keybinding.main": "Open MCG",
-  "mcg.narration.coordinateentry": "Coordinate: %s X: %s Y: %s Z: %s Description: %s"
+  "mcg.narration.coordinateentry": "Coordinate: %s X: %s Y: %s Z: %s Description: %s",
+  "mcg.config.configTitle": "Configuration"
 }

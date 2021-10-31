@@ -48,7 +48,7 @@ public class ConfigScreen extends Screen {
         confirmButton.active = overlayXField.getText().length() > 0 && overlayYField.getText().length() > 0;
         this.renderBackground(matrices);
 
-        drawCenteredText(matrices, textRenderer, I18n.translate("mcg.coordinate.creationtitle"), width / 2, 10, 16777215);
+        drawCenteredText(matrices, textRenderer, I18n.translate("mcg.config.configTitle"), width / 2, 10, 16777215);
 
         drawStringWithShadow(matrices, textRenderer, I18n.translate("mcg.button.overlayX"), overlayXField.x, overlayXField.y - 10, 16777215);
         overlayXField.render(matrices, mouseX, mouseY, delta);
