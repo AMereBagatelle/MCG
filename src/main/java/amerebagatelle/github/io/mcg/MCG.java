@@ -32,7 +32,7 @@ public class MCG implements ClientModInitializer {
         binding = KeyBindingHelper.registerKeyBinding(new KeyBinding(
                 "mcg.keybinding.main",
                 GLFW.GLFW_KEY_Y,
-                "Miscellaneous"
+                "MCG"
         ));
     }
 }
