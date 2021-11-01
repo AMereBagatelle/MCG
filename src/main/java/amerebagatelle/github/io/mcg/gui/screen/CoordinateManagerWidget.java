@@ -60,6 +60,17 @@ public class CoordinateManagerWidget extends MCGListWidget<CoordinateManagerWidg
         this.setSelected(null);
     }
 
+    public void copyCoordinate() {
+        try {
+            CoordinatesSet coordinate = ((CoordinateEntry) Objects.requireNonNull(this.getSelectedOrNull())).coordinate;
+            coordinate.name = coordinate.name + "Copy";
+            MCG.coordinatesManager.writeToCoordinates(filepath, coordinate);
+        } catch (IOException e) {
+            parent.reportError(I18n.translate("mcg.coordinate.copyfail"));
+        }
+        refreshEntries();
+    }
+
     public boolean isEntrySelected(Entry entry) {
         return this.getSelectedOrNull() == entry;
     }

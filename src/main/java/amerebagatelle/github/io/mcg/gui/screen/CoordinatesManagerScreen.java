@@ -21,6 +21,7 @@ public class CoordinatesManagerScreen extends Screen {
 
     private MCGButtonWidget newCoordinate;
     private MCGButtonWidget removeCoordinate;
+    private MCGButtonWidget copyCoordinate;
     private MCGButtonWidget teleportToCoordinate;
     private MCGButtonWidget overlayCoordinate;
     private MCGButtonWidget clearOverlay;
@@ -42,7 +43,9 @@ public class CoordinatesManagerScreen extends Screen {
         this.addDrawableChild(newCoordinate);
         removeCoordinate = new MCGButtonWidget(coordinateManagerWidget.getRight() + 5, newCoordinate.getBottom() + 5, coordinateManagerWidget.getButtonWidth(), 20, new TranslatableText("mcg.coordinate.removecoordinate"), press -> coordinateManagerWidget.removeCoordinate());
         this.addDrawableChild(removeCoordinate);
-        teleportToCoordinate = new MCGButtonWidget(coordinateManagerWidget.getRight() + 5, removeCoordinate.getBottom() + 5, coordinateManagerWidget.getButtonWidth(), 20, new TranslatableText("mcg.coordinate.tp"), press -> coordinateManagerWidget.teleportToCoordinate());
+        copyCoordinate = new MCGButtonWidget(coordinateManagerWidget.getRight() + 5, removeCoordinate.getBottom() + 5, coordinateManagerWidget.getButtonWidth(), 20, new TranslatableText("mcg.coordinate.copycoordinate"), press -> coordinateManagerWidget.copyCoordinate());
+        this.addDrawableChild(copyCoordinate);
+        teleportToCoordinate = new MCGButtonWidget(coordinateManagerWidget.getRight() + 5, copyCoordinate.getBottom() + 5, coordinateManagerWidget.getButtonWidth(), 20, new TranslatableText("mcg.coordinate.tp"), press -> coordinateManagerWidget.teleportToCoordinate());
         this.addDrawableChild(teleportToCoordinate);
         overlayCoordinate = new MCGButtonWidget(coordinateManagerWidget.getRight() + 5, teleportToCoordinate.getBottom() + 5, coordinateManagerWidget.getButtonWidth(), 20, new TranslatableText("mcg.coordinate.setoverlay"), press -> coordinateManagerWidget.setOverlayToSelected());
         this.addDrawableChild(overlayCoordinate);
