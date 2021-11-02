@@ -84,6 +84,7 @@ public class CoordinatesManagerScreen extends Screen {
         removeCoordinate.active = coordinateManagerWidget.getSelectedOrNull() != null;
         teleportToCoordinate.active = coordinateManagerWidget.getSelectedOrNull() != null && Objects.requireNonNull(Objects.requireNonNull(client).player).isCreativeLevelTwoOp();
         overlayCoordinate.active = coordinateManagerWidget.getSelectedOrNull() != null;
+        copyCoordinate.active = coordinateManagerWidget.getSelectedOrNull() != null;
     }
 
     public Path getFilepath() {
