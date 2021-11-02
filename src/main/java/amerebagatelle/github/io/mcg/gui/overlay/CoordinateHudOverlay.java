@@ -16,7 +16,12 @@ public class CoordinateHudOverlay {
     }
 
     public void setCurrentCoordinate(CoordinatesSet set) {
-        this.currentCoordinate = String.format("%s @ %s %s %s", set.name, set.x, set.y, set.z);
+        this.currentCoordinate = MCG.config.overlayFormat
+                .replace("%name", set.name)
+                .replace("%x", Integer.toString(set.x))
+                .replace("%y", Integer.toString(set.y))
+                .replace("%z", Integer.toString(set.z))
+                .replace("%desc", set.description);
     }
 
     public void clearCoordinate() {

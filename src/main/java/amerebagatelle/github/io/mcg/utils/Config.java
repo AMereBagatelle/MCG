@@ -14,6 +14,7 @@ public class Config {
     public static final Gson gson = new GsonBuilder().create();
 
     public int overlayX, overlayY = 0;
+    public String overlayFormat = "%name @ %x %y %z";
 
     public Config() {
         if (!settingsFile.exists()) {
@@ -28,6 +29,7 @@ public class Config {
 
                 writeSetting("overlayX", "20");
                 writeSetting("overlayY", "20");
+                writeSetting("overlayFormat", "%name @ %x %y %z");
             } catch (IOException e) {
                 MCG.logger.error("Couldn't create a settings file.");
                 e.printStackTrace();
@@ -45,8 +47,18 @@ public class Config {
 
             try {
                 overlayX = settingsJson.get("overlayX").getAsInt();
+            } catch (NullPointerException e) {
+                writeSetting("overlayX", "20");
+            }
+            try {
                 overlayY = settingsJson.get("overlayY").getAsInt();
             } catch (NullPointerException e) {
+                writeSetting("overlayY", "20");
+            }
+            try {
+                overlayFormat = settingsJson.get("overlayFormat").getAsString();
+            } catch (NullPointerException e) {
+                writeSetting("overlayFormat", "%name @ %x %y %z");
             }
         } catch (IOException e) {
             MCG.logger.error("Couldn't read the settings file.\n");

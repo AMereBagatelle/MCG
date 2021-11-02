@@ -15,7 +15,7 @@ import java.util.function.Predicate;
 
 public class ConfigScreen extends Screen {
     private final Predicate<String> numberPredicate = (string) -> string.matches("-?\\d+") || string.equals("-") || string.isEmpty();
-    private TextFieldWidget overlayXField, overlayYField;
+    private TextFieldWidget overlayXField, overlayYField, overlayFormatField;
     private MCGButtonWidget confirmButton, cancelButton;
 
     private final CoordinateFileManager parent;
@@ -37,6 +37,10 @@ public class ConfigScreen extends Screen {
         overlayYField.setText(Integer.toString(MCG.config.overlayY));
         this.addSelectableChild(overlayYField);
 
+        overlayFormatField = new TextFieldWidget(textRenderer, 20, 120, 200, 20, new TranslatableText("mcg.button.overlayFormat"));
+        overlayFormatField.setText(MCG.config.overlayFormat);
+        this.addSelectableChild(overlayFormatField);
+
         confirmButton = new MCGButtonWidget(width - 105, height - 25, 100, 20, new TranslatableText("mcg.button.confirm"), press -> confirm());
         this.addDrawableChild(confirmButton);
         cancelButton = new MCGButtonWidget(width - 210, height - 25, 100, 20, new TranslatableText("mcg.button.cancel"), press -> cancel());
@@ -54,6 +58,8 @@ public class ConfigScreen extends Screen {
         overlayXField.render(matrices, mouseX, mouseY, delta);
         drawStringWithShadow(matrices, textRenderer, I18n.translate("mcg.button.overlayY"), overlayYField.x, overlayYField.y - 10, 16777215);
         overlayYField.render(matrices, mouseX, mouseY, delta);
+        drawStringWithShadow(matrices, textRenderer, I18n.translate("mcg.button.overlayFormat"), overlayFormatField.x, overlayFormatField.y - 10, 16777215);
+        overlayFormatField.render(matrices, mouseX, mouseY, delta);
 
         super.render(matrices, mouseX, mouseY, delta);
     }
@@ -62,6 +68,7 @@ public class ConfigScreen extends Screen {
         Config config = MCG.config;
         config.writeSetting("overlayX", overlayXField.getText());
         config.writeSetting("overlayY", overlayYField.getText());
+        config.writeSetting("overlayFormat", overlayFormatField.getText());
         config.loadSettings();
         Objects.requireNonNull(client).setScreen(parent);
     }
