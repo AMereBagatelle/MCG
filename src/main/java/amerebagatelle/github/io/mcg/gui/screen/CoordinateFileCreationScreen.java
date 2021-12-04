@@ -11,6 +11,7 @@ import net.minecraft.text.LiteralText;
 import net.minecraft.text.TranslatableText;
 
 import java.io.IOException;
+import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Objects;
@@ -62,11 +63,13 @@ public class CoordinateFileCreationScreen extends Screen {
             } else {
                 MCG.coordinatesManager.initNewCoordinatesFile(Paths.get(folderPath.toString(), fileNameWidget.getText().endsWith(".coordinates") ? fileNameWidget.getText() : fileNameWidget.getText() + ".coordinates"));
             }
+            Objects.requireNonNull(client).setScreen(new CoordinateFileManager());
         } catch (IOException e) {
             MCG.logger.debug("Can't make new coordinates file.");
             ErrorDisplayOverlay.INSTANCE.addError(I18n.translate("mcg.file.creationfail"));
-        } finally {
-            Objects.requireNonNull(client).setScreen(new CoordinateFileManager());
+        } catch (InvalidPathException e) {
+            MCG.logger.debug("Invalid name for new coordinates file.");
+            ErrorDisplayOverlay.INSTANCE.addError(I18n.translate("mcg.file.creationfail") + ": " + I18n.translate("mcg.file.invalidpath"));
         }
     }
 

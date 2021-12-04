@@ -1,5 +1,6 @@
 {
   "mcg.file.creationfail": "Coordinate file creation failed.",
+  "mcg.file.invalidpath": "Invalid filename.",
   "mcg.file.newfolder": "New Folder",
   "mcg.file.newfile": "New File",
   "mcg.file.managertitle": "Coordinate File Manager",
