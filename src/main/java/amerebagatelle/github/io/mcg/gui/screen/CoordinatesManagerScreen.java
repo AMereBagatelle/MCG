@@ -67,10 +67,16 @@ public class CoordinatesManagerScreen extends Screen {
             CoordinatesSet set = ((CoordinateManagerWidget.CoordinateEntry) coordinateManagerWidget.getSelectedOrNull()).coordinate;
             int drawY = back.getBottom() + 20;
             drawStringWithShadow(matrices, textRenderer, set.name, coordinateManagerWidget.getRight() + 5, drawY, 16777215);
-            drawStringWithShadow(matrices, textRenderer, Integer.toString(set.x), coordinateManagerWidget.getRight() + 5, drawY + 15, 16777215);
-            drawStringWithShadow(matrices, textRenderer, Integer.toString(set.y), coordinateManagerWidget.getRight() + 5, drawY + 25, 16777215);
-            drawStringWithShadow(matrices, textRenderer, Integer.toString(set.z), coordinateManagerWidget.getRight() + 5, drawY + 35, 16777215);
+            drawStringWithShadow(matrices, textRenderer, "X: " + set.x, coordinateManagerWidget.getRight() + 5, drawY + 15, 16777215);
+            drawStringWithShadow(matrices, textRenderer, "Y: " + set.y, coordinateManagerWidget.getRight() + 5, drawY + 25, 16777215);
+            drawStringWithShadow(matrices, textRenderer, "Z: " + set.z, coordinateManagerWidget.getRight() + 5, drawY + 35, 16777215);
             drawStringWithShadow(matrices, textRenderer, set.description, coordinateManagerWidget.getRight() + 5, drawY + 50, 16777215);
+
+            CoordinatesSet netherCoords = set.toNetherCoordinateSet();
+            drawStringWithShadow(matrices, textRenderer, I18n.translate("mcg.coordinate.nethercoords"), coordinateManagerWidget.getRight() + 5, drawY + 85, 16777215);
+            drawStringWithShadow(matrices, textRenderer, "X: " + netherCoords.x, coordinateManagerWidget.getRight() + 5, drawY + 100, 16777215);
+            drawStringWithShadow(matrices, textRenderer, "Y: " + netherCoords.y, coordinateManagerWidget.getRight() + 5, drawY + 110, 16777215);
+            drawStringWithShadow(matrices, textRenderer, "Z: " + netherCoords.z, coordinateManagerWidget.getRight() + 5, drawY + 120, 16777215);
         }
         super.render(matrices, mouseX, mouseY, delta);
         ErrorDisplayOverlay.INSTANCE.render(matrices, height);

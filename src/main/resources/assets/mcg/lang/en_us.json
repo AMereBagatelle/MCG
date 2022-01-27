@@ -29,6 +29,7 @@
   "mcg.coordinate.setoverlay": "Overlay Coordinate",
   "mcg.coordinate.clearoverlay": "Clear Overlay",
   "mcg.coordinate.tp": "TP to Selected",
+  "mcg.coordinate.nethercoords": "Nether Coordinates",
   "mcg.keybinding.main": "Open MCG",
   "mcg.narration.coordinateentry": "Coordinate: %s X: %s Y: %s Z: %s Description: %s",
   "mcg.config.configTitle": "Configuration"

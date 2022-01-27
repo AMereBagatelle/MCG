@@ -14,4 +14,8 @@ public class CoordinatesSet {
         this.z = z;
         this.description = description;
     }
+
+    public CoordinatesSet toNetherCoordinateSet() {
+        return new CoordinatesSet(name, x / 8, y / 8, z / 8, description);
+    }
 }
