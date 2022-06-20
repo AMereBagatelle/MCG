@@ -56,7 +56,7 @@ modrinth {
     versionNumber = project.version
     changelog = System.getenv('CHANGELOG_BODY')
     versionType = 'release'
-    uploadFile = jar.outputs.getFiles().asPath
+    uploadFile = remapJar
     gameVersions = ["${project.minecraft_version}"]
     loaders = ['fabric']
 }
