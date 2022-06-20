@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '0.10-SNAPSHOT'
+    id 'fabric-loom' version '0.12-SNAPSHOT'
     id 'maven-publish'
     id "com.modrinth.minotaur" version "1.1.0"
 }
@@ -18,9 +18,6 @@ repositories {
     }
 }
 
-minecraft {
-}
-
 dependencies {
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
     mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
@@ -32,17 +29,9 @@ dependencies {
     compileOnly 'org.jetbrains:annotations:16.0.2'
 
     // fabric api resource loader
-    modImplementation "net.fabricmc.fabric-api:fabric-resource-loader-v0:${project.fabric_resource_loader_version}"
-    include "net.fabricmc.fabric-api:fabric-resource-loader-v0:${project.fabric_resource_loader_version}"
+    modImplementation(include(fabricApi.module("fabric-resource-loader-v0", project.fabric_version)))
+    modImplementation(include(fabricApi.module("fabric-key-binding-api-v1", project.fabric_version)))
     // fabric api keybindings
-    modImplementation "net.fabricmc.fabric-api:fabric-key-binding-api-v1:${project.fabric_keybindings_version}"
-    include "net.fabricmc.fabric-api:fabric-key-binding-api-v1:${project.fabric_keybindings_version}"
-    // performance mods for convenience in dev
-    //modRuntime "curse.maven:phosphor-577919458:${project.phosphor_file}"
-    //modRuntime "curse.maven:sodium-577919458:${project.sodium_file}"
-    //modRuntime ("com.github.SuperCoder7979:databreaker:${project.databreaker_version}") {
-    //    exclude module: "fabric-loader"
-    //}
 }
 
 processResources {

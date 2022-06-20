@@ -8,8 +8,7 @@ import amerebagatelle.github.io.mcg.gui.overlay.ErrorDisplayOverlay;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.text.LiteralText;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.Text;
 
 import java.nio.file.Path;
 import java.util.Objects;
@@ -28,7 +27,7 @@ public class CoordinatesManagerScreen extends Screen {
     private MCGButtonWidget back;
 
     public CoordinatesManagerScreen(Path filepath) {
-        super(new LiteralText("CoordinateManagerScreen"));
+        super(Text.literal("CoordinateManagerScreen"));
         this.filepath = filepath;
     }
 
@@ -39,19 +38,19 @@ public class CoordinatesManagerScreen extends Screen {
         coordinateManagerWidget = new CoordinateManagerWidget(client, this, width / 3 * 2, height - 60, 40, this.height - 20, 15, 10);
         coordinateManagerWidget.setFile(filepath);
         this.addSelectableChild(coordinateManagerWidget);
-        newCoordinate = new MCGButtonWidget(coordinateManagerWidget.getRight() + 5, coordinateManagerWidget.getTop(), coordinateManagerWidget.getButtonWidth(), 20, new TranslatableText("mcg.coordinate.newcoordinate"), press -> coordinateManagerWidget.newCoordinate(this));
+        newCoordinate = new MCGButtonWidget(coordinateManagerWidget.getRight() + 5, coordinateManagerWidget.getTop(), coordinateManagerWidget.getButtonWidth(), 20, Text.translatable("mcg.coordinate.newcoordinate"), press -> coordinateManagerWidget.newCoordinate(this));
         this.addDrawableChild(newCoordinate);
-        removeCoordinate = new MCGButtonWidget(coordinateManagerWidget.getRight() + 5, newCoordinate.getBottom() + 5, coordinateManagerWidget.getButtonWidth(), 20, new TranslatableText("mcg.coordinate.removecoordinate"), press -> coordinateManagerWidget.removeCoordinate());
+        removeCoordinate = new MCGButtonWidget(coordinateManagerWidget.getRight() + 5, newCoordinate.getBottom() + 5, coordinateManagerWidget.getButtonWidth(), 20, Text.translatable("mcg.coordinate.removecoordinate"), press -> coordinateManagerWidget.removeCoordinate());
         this.addDrawableChild(removeCoordinate);
-        copyCoordinate = new MCGButtonWidget(coordinateManagerWidget.getRight() + 5, removeCoordinate.getBottom() + 5, coordinateManagerWidget.getButtonWidth(), 20, new TranslatableText("mcg.coordinate.copycoordinate"), press -> coordinateManagerWidget.copyCoordinate());
+        copyCoordinate = new MCGButtonWidget(coordinateManagerWidget.getRight() + 5, removeCoordinate.getBottom() + 5, coordinateManagerWidget.getButtonWidth(), 20, Text.translatable("mcg.coordinate.copycoordinate"), press -> coordinateManagerWidget.copyCoordinate());
         this.addDrawableChild(copyCoordinate);
-        teleportToCoordinate = new MCGButtonWidget(coordinateManagerWidget.getRight() + 5, copyCoordinate.getBottom() + 5, coordinateManagerWidget.getButtonWidth(), 20, new TranslatableText("mcg.coordinate.tp"), press -> coordinateManagerWidget.teleportToCoordinate());
+        teleportToCoordinate = new MCGButtonWidget(coordinateManagerWidget.getRight() + 5, copyCoordinate.getBottom() + 5, coordinateManagerWidget.getButtonWidth(), 20, Text.translatable("mcg.coordinate.tp"), press -> coordinateManagerWidget.teleportToCoordinate());
         this.addDrawableChild(teleportToCoordinate);
-        overlayCoordinate = new MCGButtonWidget(coordinateManagerWidget.getRight() + 5, teleportToCoordinate.getBottom() + 5, coordinateManagerWidget.getButtonWidth(), 20, new TranslatableText("mcg.coordinate.setoverlay"), press -> coordinateManagerWidget.setOverlayToSelected());
+        overlayCoordinate = new MCGButtonWidget(coordinateManagerWidget.getRight() + 5, teleportToCoordinate.getBottom() + 5, coordinateManagerWidget.getButtonWidth(), 20, Text.translatable("mcg.coordinate.setoverlay"), press -> coordinateManagerWidget.setOverlayToSelected());
         this.addDrawableChild(overlayCoordinate);
-        clearOverlay = new MCGButtonWidget(coordinateManagerWidget.getRight() + 5, overlayCoordinate.getBottom() + 5, coordinateManagerWidget.getButtonWidth(), 20, new TranslatableText("mcg.coordinate.clearoverlay"), press -> CoordinateHudOverlay.INSTANCE.clearCoordinate());
+        clearOverlay = new MCGButtonWidget(coordinateManagerWidget.getRight() + 5, overlayCoordinate.getBottom() + 5, coordinateManagerWidget.getButtonWidth(), 20, Text.translatable("mcg.coordinate.clearoverlay"), press -> CoordinateHudOverlay.INSTANCE.clearCoordinate());
         this.addDrawableChild(clearOverlay);
-        back = new MCGButtonWidget(coordinateManagerWidget.getRight() + 5, clearOverlay.getBottom() + 5, coordinateManagerWidget.getButtonWidth(), 20, new TranslatableText("mcg.button.back"), press -> client.setScreen(new CoordinateFileManager()));
+        back = new MCGButtonWidget(coordinateManagerWidget.getRight() + 5, clearOverlay.getBottom() + 5, coordinateManagerWidget.getButtonWidth(), 20, Text.translatable("mcg.button.back"), press -> client.setScreen(new CoordinateFileManager()));
         this.addDrawableChild(back);
     }
 
@@ -98,14 +97,14 @@ public class CoordinatesManagerScreen extends Screen {
     }
 
     @Override
-    public boolean isPauseScreen() {
+    public boolean shouldPause() {
         return false;
     }
 
     @Override
-    public void onClose() {
+    public void close() {
         MCG.managerScreenInstance = this;
-        super.onClose();
+        super.close();
     }
 
     public void reportError(String error) {

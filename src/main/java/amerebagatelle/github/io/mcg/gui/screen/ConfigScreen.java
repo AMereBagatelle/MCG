@@ -7,8 +7,7 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.text.LiteralText;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.Text;
 
 import java.util.Objects;
 import java.util.function.Predicate;
@@ -21,29 +20,29 @@ public class ConfigScreen extends Screen {
     private final CoordinateFileManager parent;
 
     public ConfigScreen(CoordinateFileManager parent) {
-        super(new LiteralText("ConfigScreen"));
+        super(Text.literal("ConfigScreen"));
         this.parent = parent;
     }
 
     @Override
     protected void init() {
-        overlayXField = new TextFieldWidget(textRenderer, 20, 40, 200, 20, new TranslatableText("mcg.button.overlayX"));
+        overlayXField = new TextFieldWidget(textRenderer, 20, 40, 200, 20, Text.translatable("mcg.button.overlayX"));
         overlayXField.setTextPredicate(numberPredicate);
         overlayXField.setText(Integer.toString(MCG.config.overlayX));
         this.addSelectableChild(overlayXField);
 
-        overlayYField = new TextFieldWidget(textRenderer, 20, 80, 200, 20, new TranslatableText("mcg.button.overlayY"));
+        overlayYField = new TextFieldWidget(textRenderer, 20, 80, 200, 20, Text.translatable("mcg.button.overlayY"));
         overlayYField.setTextPredicate(numberPredicate);
         overlayYField.setText(Integer.toString(MCG.config.overlayY));
         this.addSelectableChild(overlayYField);
 
-        overlayFormatField = new TextFieldWidget(textRenderer, 20, 120, 200, 20, new TranslatableText("mcg.button.overlayFormat"));
+        overlayFormatField = new TextFieldWidget(textRenderer, 20, 120, 200, 20, Text.translatable("mcg.button.overlayFormat"));
         overlayFormatField.setText(MCG.config.overlayFormat);
         this.addSelectableChild(overlayFormatField);
 
-        confirmButton = new MCGButtonWidget(width - 105, height - 25, 100, 20, new TranslatableText("mcg.button.confirm"), press -> confirm());
+        confirmButton = new MCGButtonWidget(width - 105, height - 25, 100, 20, Text.translatable("mcg.button.confirm"), press -> confirm());
         this.addDrawableChild(confirmButton);
-        cancelButton = new MCGButtonWidget(width - 210, height - 25, 100, 20, new TranslatableText("mcg.button.cancel"), press -> cancel());
+        cancelButton = new MCGButtonWidget(width - 210, height - 25, 100, 20, Text.translatable("mcg.button.cancel"), press -> cancel());
         this.addDrawableChild(cancelButton);
     }
 

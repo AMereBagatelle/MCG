@@ -7,8 +7,7 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.text.LiteralText;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.Text;
 
 import java.io.IOException;
 import java.nio.file.InvalidPathException;
@@ -25,19 +24,19 @@ public class CoordinateFileCreationScreen extends Screen {
     private final Path folderPath;
 
     public CoordinateFileCreationScreen(String fileType, Path folderPath) {
-        super(new LiteralText("CoordinateFileCreationScreen"));
+        super(Text.literal("CoordinateFileCreationScreen"));
         this.fileType = fileType;
         this.folderPath = folderPath;
     }
 
     @Override
     public void init() {
-        fileNameWidget = new TextFieldWidget(textRenderer, width / 2 - 100, 100, 200, 20, new TranslatableText("mcg.button.name"));
+        fileNameWidget = new TextFieldWidget(textRenderer, width / 2 - 100, 100, 200, 20, Text.translatable("mcg.button.name"));
         this.addSelectableChild(fileNameWidget);
 
-        confirmButton = new MCGButtonWidget(width / 2 - 50, height - 100, 100, 20, new TranslatableText("mcg.button.confirm"), press -> confirm());
+        confirmButton = new MCGButtonWidget(width / 2 - 50, height - 100, 100, 20, Text.translatable("mcg.button.confirm"), press -> confirm());
         this.addDrawableChild(confirmButton);
-        cancelButton = new MCGButtonWidget(width / 2 - 50, height - 70, 100, 20, new TranslatableText("mcg.button.cancel"), press -> cancel());
+        cancelButton = new MCGButtonWidget(width / 2 - 50, height - 70, 100, 20, Text.translatable("mcg.button.cancel"), press -> cancel());
         this.addDrawableChild(cancelButton);
     }
 
@@ -52,7 +51,7 @@ public class CoordinateFileCreationScreen extends Screen {
     }
 
     @Override
-    public boolean isPauseScreen() {
+    public boolean shouldPause() {
         return false;
     }
 

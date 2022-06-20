@@ -6,8 +6,7 @@ import amerebagatelle.github.io.mcg.gui.overlay.CoordinateHudOverlay;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.text.LiteralText;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 
 import java.util.Objects;
@@ -25,7 +24,7 @@ public class CoordinateFileManager extends Screen {
     private MCGButtonWidget config;
 
     public CoordinateFileManager() {
-        super(new LiteralText("CoordinateFileManagerScreen"));
+        super(Text.literal("CoordinateFileManagerScreen"));
     }
 
     @Override
@@ -33,19 +32,19 @@ public class CoordinateFileManager extends Screen {
         coordinateFileManagerWidget = new CoordinateFileManagerWidget(this.client, width / 3 * 2, height - 60, 40, this.height - 20, 15, 10);
         this.addSelectableChild(coordinateFileManagerWidget);
 
-        openFile = new MCGButtonWidget(coordinateFileManagerWidget.getRight() + 5, coordinateFileManagerWidget.getTop(), coordinateFileManagerWidget.getButtonWidth(), 20, new TranslatableText("mcg.button.openfile"), press -> coordinateFileManagerWidget.openFile());
+        openFile = new MCGButtonWidget(coordinateFileManagerWidget.getRight() + 5, coordinateFileManagerWidget.getTop(), coordinateFileManagerWidget.getButtonWidth(), 20, Text.translatable("mcg.button.openfile"), press -> coordinateFileManagerWidget.openFile());
         this.addDrawableChild(openFile);
-        returnFolder = new MCGButtonWidget(coordinateFileManagerWidget.getRight() + 5, openFile.getBottom() + 5, coordinateFileManagerWidget.getButtonWidth(), 20, new TranslatableText("mcg.button.return"), press -> coordinateFileManagerWidget.backUpFolder());
+        returnFolder = new MCGButtonWidget(coordinateFileManagerWidget.getRight() + 5, openFile.getBottom() + 5, coordinateFileManagerWidget.getButtonWidth(), 20, Text.translatable("mcg.button.return"), press -> coordinateFileManagerWidget.backUpFolder());
         this.addDrawableChild(returnFolder);
-        newFile = new MCGButtonWidget(coordinateFileManagerWidget.getRight() + 5, returnFolder.getBottom() + 5, coordinateFileManagerWidget.getButtonWidth(), 20, new TranslatableText("mcg.file.newfile"), press -> coordinateFileManagerWidget.newFile());
+        newFile = new MCGButtonWidget(coordinateFileManagerWidget.getRight() + 5, returnFolder.getBottom() + 5, coordinateFileManagerWidget.getButtonWidth(), 20, Text.translatable("mcg.file.newfile"), press -> coordinateFileManagerWidget.newFile());
         this.addDrawableChild(newFile);
-        newFolder = new MCGButtonWidget(coordinateFileManagerWidget.getRight() + 5, newFile.getBottom() + 5, coordinateFileManagerWidget.getButtonWidth(), 20, new TranslatableText("mcg.file.newfolder"), press -> coordinateFileManagerWidget.newFolder());
+        newFolder = new MCGButtonWidget(coordinateFileManagerWidget.getRight() + 5, newFile.getBottom() + 5, coordinateFileManagerWidget.getButtonWidth(), 20, Text.translatable("mcg.file.newfolder"), press -> coordinateFileManagerWidget.newFolder());
         this.addDrawableChild(newFolder);
-        removeFile = new MCGButtonWidget(coordinateFileManagerWidget.getRight() + 5, newFolder.getBottom() + 5, coordinateFileManagerWidget.getButtonWidth(), 20, new TranslatableText("mcg.button.remove"), press -> coordinateFileManagerWidget.removeFile());
+        removeFile = new MCGButtonWidget(coordinateFileManagerWidget.getRight() + 5, newFolder.getBottom() + 5, coordinateFileManagerWidget.getButtonWidth(), 20, Text.translatable("mcg.button.remove"), press -> coordinateFileManagerWidget.removeFile());
         this.addDrawableChild(removeFile);
-        clearOverlay = new MCGButtonWidget(coordinateFileManagerWidget.getRight() + 5, removeFile.getBottom() + 5, coordinateFileManagerWidget.getButtonWidth(), 20, new TranslatableText("mcg.coordinate.clearoverlay"), press -> CoordinateHudOverlay.INSTANCE.clearCoordinate());
+        clearOverlay = new MCGButtonWidget(coordinateFileManagerWidget.getRight() + 5, removeFile.getBottom() + 5, coordinateFileManagerWidget.getButtonWidth(), 20, Text.translatable("mcg.coordinate.clearoverlay"), press -> CoordinateHudOverlay.INSTANCE.clearCoordinate());
         this.addDrawableChild(clearOverlay);
-        config = new MCGButtonWidget(coordinateFileManagerWidget.getRight() + 5, coordinateFileManagerWidget.getBottom() - 20, coordinateFileManagerWidget.getButtonWidth(), 20, new TranslatableText("mcg.button.config"), press -> Objects.requireNonNull(client).setScreen(new ConfigScreen(this)));
+        config = new MCGButtonWidget(coordinateFileManagerWidget.getRight() + 5, coordinateFileManagerWidget.getBottom() - 20, coordinateFileManagerWidget.getButtonWidth(), 20, Text.translatable("mcg.button.config"), press -> Objects.requireNonNull(client).setScreen(new ConfigScreen(this)));
         this.addDrawableChild(config);
     }
 
@@ -66,13 +65,13 @@ public class CoordinateFileManager extends Screen {
     }
 
     @Override
-    public void onClose() {
+    public void close() {
         MCG.managerScreenInstance = this;
-        super.onClose();
+        super.close();
     }
 
     @Override
-    public boolean isPauseScreen() {
+    public boolean shouldPause() {
         return false;
     }
 }

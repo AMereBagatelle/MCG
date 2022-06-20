@@ -11,7 +11,6 @@ import net.minecraft.client.gui.widget.AlwaysSelectedEntryListWidget;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -133,7 +132,7 @@ public class CoordinateManagerWidget extends MCGListWidget<CoordinateManagerWidg
 
         @Override
         public Text getNarration() {
-            return new TranslatableText("mcg.narration.coordinateentry", coordinate.name, coordinate.x, coordinate.y, coordinate.z, coordinate.description);
+            return Text.translatable("mcg.narration.coordinateentry", coordinate.name, coordinate.x, coordinate.y, coordinate.z, coordinate.description);
         }
     }
 

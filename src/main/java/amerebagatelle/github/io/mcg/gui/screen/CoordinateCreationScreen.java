@@ -8,8 +8,7 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.text.LiteralText;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 
 import javax.annotation.Nullable;
@@ -32,7 +31,7 @@ public class CoordinateCreationScreen extends Screen {
     private final CoordinatesManagerScreen parent;
 
     public CoordinateCreationScreen(@Nullable CoordinatesSet coordinate, CoordinatesManagerScreen coordinateScreen) {
-        super(new LiteralText("CoordinateCreationScreen"));
+        super(Text.literal("CoordinateCreationScreen"));
         this.coordinate = coordinate;
         this.parent = coordinateScreen;
     }
@@ -41,19 +40,19 @@ public class CoordinateCreationScreen extends Screen {
     public void init() {
         Objects.requireNonNull(client);
 
-        nameField = new TextFieldWidget(textRenderer, 20, 40, 200, 20, new TranslatableText("mcg.button.name"));
+        nameField = new TextFieldWidget(textRenderer, 20, 40, 200, 20, Text.translatable("mcg.button.name"));
         this.addSelectableChild(nameField);
-        xField = new TextFieldWidget(textRenderer, 20, 80, 50, 20, new LiteralText("X"));
+        xField = new TextFieldWidget(textRenderer, 20, 80, 50, 20, Text.literal("X"));
         xField.setTextPredicate(coordinateFilter);
         this.addSelectableChild(xField);
-        yField = new TextFieldWidget(textRenderer, 80, 80, 50, 20, new LiteralText("Y"));
+        yField = new TextFieldWidget(textRenderer, 80, 80, 50, 20, Text.literal("Y"));
         yField.setTextPredicate(coordinateFilter);
         this.addSelectableChild(yField);
-        zField = new TextFieldWidget(textRenderer, 140, 80, 50, 20, new LiteralText("Z"));
+        zField = new TextFieldWidget(textRenderer, 140, 80, 50, 20, Text.literal("Z"));
         zField.setTextPredicate(coordinateFilter);
         this.addSelectableChild(zField);
 
-        setAtPos = new MCGButtonWidget(200, 78, 100, 25, new TranslatableText("mcg.button.setcurrent"), onPress -> {
+        setAtPos = new MCGButtonWidget(200, 78, 100, 25, Text.translatable("mcg.button.setcurrent"), onPress -> {
             BlockPos pos = Objects.requireNonNull(client.player).getBlockPos();
             xField.setText(Integer.toString(pos.getX()));
             yField.setText(Integer.toString(pos.getY()));
@@ -61,7 +60,7 @@ public class CoordinateCreationScreen extends Screen {
         });
         this.addDrawableChild(setAtPos);
 
-        descriptionField = new TextFieldWidget(textRenderer, 20, 120, 200, 20, new TranslatableText("mcg.button.description"));
+        descriptionField = new TextFieldWidget(textRenderer, 20, 120, 200, 20, Text.translatable("mcg.button.description"));
         this.addSelectableChild(descriptionField);
 
         if (coordinate != null) {
@@ -74,9 +73,9 @@ public class CoordinateCreationScreen extends Screen {
             yField.setText(Integer.toString(Objects.requireNonNull(client.player).getBlockPos().getY()));
         }
 
-        confirmButton = new MCGButtonWidget(width - 105, height - 25, 100, 20, new TranslatableText("mcg.button.confirm"), press -> confirm());
+        confirmButton = new MCGButtonWidget(width - 105, height - 25, 100, 20, Text.translatable("mcg.button.confirm"), press -> confirm());
         this.addDrawableChild(confirmButton);
-        cancelButton = new MCGButtonWidget(width - 210, height - 25, 100, 20, new TranslatableText("mcg.button.cancel"), press -> cancel());
+        cancelButton = new MCGButtonWidget(width - 210, height - 25, 100, 20, Text.translatable("mcg.button.cancel"), press -> cancel());
         this.addDrawableChild(cancelButton);
     }
 
@@ -104,7 +103,7 @@ public class CoordinateCreationScreen extends Screen {
     }
 
     @Override
-    public boolean isPauseScreen() {
+    public boolean shouldPause() {
         return false;
     }
 

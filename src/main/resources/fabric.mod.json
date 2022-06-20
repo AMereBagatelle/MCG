@@ -22,7 +22,7 @@
     "mcg.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.8.2+build.194",
-    "minecraft": "1.18.x"
+    "fabricloader": ">=0.14.8",
+    "minecraft": "1.19.x"
   }
 }
