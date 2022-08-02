@@ -82,7 +82,6 @@ public class CoordinateManagerWidget extends MCGListWidget<CoordinateManagerWidg
         Objects.requireNonNull(client.player);
         if (client.player.isCreativeLevelTwoOp()) {
             CoordinatesSet coordinateSet = ((CoordinateEntry) Objects.requireNonNull(this.getSelectedOrNull())).coordinate;
-            client.player.sendChatMessage(String.format("/tp %s %s %s", coordinateSet.x, coordinateSet.y, coordinateSet.z));
         } else {
             parent.reportError(I18n.translate("commands.help.failed"));
         }
