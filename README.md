@@ -13,10 +13,8 @@ This mod aims to solve the problems of bloat in storing coordinates. Coordinates
 
 ## Support
 
-Please use the issue tracker to report bugs. If the mod is simply not working, use
-the [discord](https://discord.gg/quvzkaV) instead.
+Please use the issue tracker to report bugs.
 
 ## Use
 
-This mod sets itself up, just drop it in your mods folder!
 The default hotkey for opening the GUI is `Y`, but it can be changed in controls.
