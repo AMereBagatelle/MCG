@@ -16,7 +16,7 @@ public class MCGListWidget<E extends AlwaysSelectedEntryListWidget.Entry<E>> ext
     @Override
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
         RenderUtils.drawBox(left, top, width, height, 0.1f, 0.1f, 0.1f, 0.30f);
-        this.renderList(matrices, this.getRowLeft(), this.top + 4 - (int) this.getScrollAmount(), mouseX, mouseY, delta);
+        this.renderList(matrices, mouseX, mouseY, delta);
         this.renderDecorations(matrices, mouseX, mouseY);
     }
 
