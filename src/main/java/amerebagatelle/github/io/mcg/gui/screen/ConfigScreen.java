@@ -4,10 +4,13 @@ import amerebagatelle.github.io.mcg.MCG;
 import amerebagatelle.github.io.mcg.gui.MCGButtonWidget;
 import amerebagatelle.github.io.mcg.utils.Config;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.widget.CyclingButtonWidget;
 import net.minecraft.client.gui.widget.TextFieldWidget;
+import net.minecraft.client.gui.widget.ToggleButtonWidget;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
+import net.minecraft.util.Language;
 
 import java.util.Objects;
 import java.util.function.Predicate;
@@ -15,6 +18,8 @@ import java.util.function.Predicate;
 public class ConfigScreen extends Screen {
     private final Predicate<String> numberPredicate = (string) -> string.matches("-?\\d+") || string.equals("-") || string.isEmpty();
     private TextFieldWidget overlayXField, overlayYField, overlayFormatField;
+    private CyclingButtonWidget<Boolean> showCompass;
+
     private MCGButtonWidget confirmButton, cancelButton;
 
     private final CoordinateFileManager parent;
@@ -40,6 +45,11 @@ public class ConfigScreen extends Screen {
         overlayFormatField.setText(MCG.config.overlayFormat);
         this.addSelectableChild(overlayFormatField);
 
+        showCompass = new CyclingButtonWidget.Builder<Boolean>(bool -> bool ? Text.translatable("options.on") : Text.translatable("options.off")).values(true, false)
+                .build(20, 160, 200, 20, Text.translatable("mcg.button.showCompass"));
+
+        this.addSelectableChild(showCompass);
+
         confirmButton = new MCGButtonWidget(width - 105, height - 25, 100, 20, Text.translatable("mcg.button.confirm"), press -> confirm());
         this.addDrawableChild(confirmButton);
         cancelButton = new MCGButtonWidget(width - 210, height - 25, 100, 20, Text.translatable("mcg.button.cancel"), press -> cancel());
@@ -60,6 +70,9 @@ public class ConfigScreen extends Screen {
         drawStringWithShadow(matrices, textRenderer, I18n.translate("mcg.button.overlayFormat"), overlayFormatField.x, overlayFormatField.y - 10, 16777215);
         overlayFormatField.render(matrices, mouseX, mouseY, delta);
 
+        drawStringWithShadow(matrices, textRenderer, I18n.translate("mcg.button.showCompass"), showCompass.x, showCompass.y - 10, 16777215);
+        showCompass.render(matrices, mouseX, mouseY, delta);
+
         super.render(matrices, mouseX, mouseY, delta);
     }
 
@@ -68,6 +81,7 @@ public class ConfigScreen extends Screen {
         config.writeSetting("overlayX", overlayXField.getText());
         config.writeSetting("overlayY", overlayYField.getText());
         config.writeSetting("overlayFormat", overlayFormatField.getText());
+        config.writeSetting("showCompass", showCompass.getValue().toString());
         config.loadSettings();
         Objects.requireNonNull(client).setScreen(parent);
     }
