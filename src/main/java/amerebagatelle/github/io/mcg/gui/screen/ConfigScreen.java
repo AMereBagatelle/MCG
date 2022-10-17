@@ -69,8 +69,6 @@ public class ConfigScreen extends Screen {
         overlayYField.render(matrices, mouseX, mouseY, delta);
         drawStringWithShadow(matrices, textRenderer, I18n.translate("mcg.button.overlayFormat"), overlayFormatField.x, overlayFormatField.y - 10, 16777215);
         overlayFormatField.render(matrices, mouseX, mouseY, delta);
-
-        drawStringWithShadow(matrices, textRenderer, I18n.translate("mcg.button.showCompass"), showCompass.x, showCompass.y - 10, 16777215);
         showCompass.render(matrices, mouseX, mouseY, delta);
 
         super.render(matrices, mouseX, mouseY, delta);

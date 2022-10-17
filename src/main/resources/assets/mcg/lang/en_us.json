@@ -17,7 +17,7 @@
   "mcg.button.overlayX": "Overlay X",
   "mcg.button.overlayY": "Overlay Y",
   "mcg.button.overlayField": "Overlay Format",
-  "mcg.button.showCompass": "Draw a compass on the screen pointing to the coordinates",
+  "mcg.button.showCompass": "Draw compass",
   "mcg.coordinate.creationtitle": "Create Coordinate",
   "mcg.coordinate.creationfail": "Could not write coordinate.",
   "mcg.coordinate.readfail": "Couldn't load coordinates from file.",
