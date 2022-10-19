@@ -47,6 +47,7 @@ public class ConfigScreen extends Screen {
 
         showCompass = new CyclingButtonWidget.Builder<Boolean>(bool -> bool ? Text.translatable("options.on") : Text.translatable("options.off")).values(true, false)
                 .build(20, 160, 200, 20, Text.translatable("mcg.button.showCompass"));
+        showCompass.setValue(MCG.config.showCompass);
 
         this.addSelectableChild(showCompass);
 

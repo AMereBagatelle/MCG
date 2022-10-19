@@ -5,6 +5,7 @@ import com.mojang.logging.LogUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.item.CompassItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtHelper;
 import net.minecraft.nbt.NbtOps;
