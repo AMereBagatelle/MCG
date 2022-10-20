@@ -3,6 +3,7 @@
   "package": "amerebagatelle.github.io.mcg.mixin",
   "compatibilityLevel": "JAVA_8",
   "client": [
+    "ClientEntityHandlerMixin",
     "ClientPlayNetworkHandlerMixin",
     "InGameHudMixin",
     "MinecraftClientMixin"

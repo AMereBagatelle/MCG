@@ -9,10 +9,15 @@ import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.world.dimension.DimensionTypes;
+
+import java.util.Optional;
 
 public class CoordinateHudOverlay {
     public static final CoordinateHudOverlay INSTANCE = new CoordinateHudOverlay();
     private final MinecraftClient client = MinecraftClient.getInstance();
+
+    private CoordinatesSet currentSet;
     private String currentCoordinate;
     private final ItemStack compass = new ItemStack(Items.COMPASS);
 
@@ -24,6 +29,10 @@ public class CoordinateHudOverlay {
     }
 
     public void setCurrentCoordinate(CoordinatesSet set) {
+        this.currentSet = set;
+        if(DimensionTypes.THE_NETHER.equals(client.player.getWorld().getDimensionKey())) {
+            set = set.toNetherCoordinateSet();
+        }
         if(MCG.config.showCompass) {
             CompassUtil.setPosition(compass, set);
         }
@@ -35,7 +44,12 @@ public class CoordinateHudOverlay {
                 .replace("%desc", set.description);
     }
 
+    public Optional<CoordinatesSet> current() {
+        return Optional.ofNullable(currentSet);
+    }
+
     public void clearCoordinate() {
         this.currentCoordinate = "";
+        this.currentSet = null;
     }
 }
