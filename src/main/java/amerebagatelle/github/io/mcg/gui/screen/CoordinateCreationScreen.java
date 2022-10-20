@@ -67,10 +67,11 @@ public class CoordinateCreationScreen extends Screen {
         this.addSelectableChild(descriptionField);
 
         netherCoordinatesField = new CyclingButtonWidget.Builder<Boolean>(bool -> bool ? Text.translatable("options.on") : Text.translatable("options.off"))
-                .values(false, true).build(20, 140, 200, 20, Text.translatable("mcg.button.netherCoordinates"));
+                .values(false, true).build(20, 160, 200, 20, Text.translatable("mcg.button.netherCoordinates"));
         this.addSelectableChild(netherCoordinatesField);
 
         if (coordinate != null) {
+            netherCoordinatesField.active = false;
             nameField.setText(coordinate.name);
             xField.setText(Integer.toString(coordinate.x));
             yField.setText(Integer.toString(coordinate.y));

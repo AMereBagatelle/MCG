@@ -16,6 +16,7 @@
   "mcg.button.config": "Configuration",
   "mcg.button.overlayX": "Overlay X",
   "mcg.button.overlayY": "Overlay Y",
+  "mcg.button.netherCoordinates": "Nether coordinates",
   "mcg.button.overlayField": "Overlay Format",
   "mcg.button.showCompass": "Draw compass",
   "mcg.coordinate.creationtitle": "Create Coordinate",
