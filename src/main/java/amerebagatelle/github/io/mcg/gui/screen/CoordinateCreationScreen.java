@@ -71,7 +71,6 @@ public class CoordinateCreationScreen extends Screen {
         this.addSelectableChild(netherCoordinatesField);
 
         if (coordinate != null) {
-            netherCoordinatesField.active = false;
             nameField.setText(coordinate.name);
             xField.setText(Integer.toString(coordinate.x));
             yField.setText(Integer.toString(coordinate.y));
