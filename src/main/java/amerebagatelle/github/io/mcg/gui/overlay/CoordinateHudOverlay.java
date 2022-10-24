@@ -44,6 +44,10 @@ public class CoordinateHudOverlay {
                 .replace("%desc", set.description);
     }
 
+    public void updateWorld() {
+        current().ifPresent(this::setCurrentCoordinate);
+    }
+
     public Optional<CoordinatesSet> current() {
         return Optional.ofNullable(currentSet);
     }

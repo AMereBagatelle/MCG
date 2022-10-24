@@ -18,23 +18,27 @@
  */
 package amerebagatelle.github.io.mcg.mixin;
 
-import amerebagatelle.github.io.mcg.gui.overlay.CoordinateHudOverlay;
-import com.mojang.logging.LogUtils;
+import amerebagatelle.github.io.mcg.coordinates.CoordinatesSet;
+import amerebagatelle.github.io.mcg.utils.Compass;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.entity.Entity;
+import net.minecraft.item.CompassItem;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.registry.RegistryKey;
+import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.Shadow;
 
-@Mixin(targets = "net.minecraft.client.world.ClientWorld$ClientEntityHandler")
-public class ClientEntityHandlerMixin {
-    @Inject(method = "startTracking(Lnet/minecraft/entity/Entity;)V", at = @At("TAIL"))
-    private void worldChange(Entity entity, CallbackInfo ci) {
-        if(entity instanceof ClientPlayerEntity) {
-            CoordinateHudOverlay.INSTANCE.updateWorld();
-        }
+@Mixin(CompassItem.class)
+public abstract class CompassItemMixin implements Compass {
+
+    @Shadow
+    protected abstract void writeNbt(RegistryKey<World> worldKey, BlockPos pos, NbtCompound nbt);
+    @Override
+    public void write(ItemStack stack, CoordinatesSet set) {
+        NbtCompound compound = stack.getOrCreateNbt();
+        writeNbt(MinecraftClient.getInstance().player.getWorld().getRegistryKey(), new BlockPos(set.x, set.y, set.z), compound);
+        stack.setNbt(compound);
     }
 }
