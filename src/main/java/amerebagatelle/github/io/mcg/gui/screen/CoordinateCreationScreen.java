@@ -5,11 +5,13 @@ import amerebagatelle.github.io.mcg.coordinates.CoordinatesSet;
 import amerebagatelle.github.io.mcg.gui.MCGButtonWidget;
 import amerebagatelle.github.io.mcg.gui.overlay.ErrorDisplayOverlay;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.widget.CyclingButtonWidget;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.dimension.DimensionTypes;
 
 import javax.annotation.Nullable;
 import java.io.IOException;
@@ -24,6 +26,7 @@ public class CoordinateCreationScreen extends Screen {
     private TextFieldWidget zField;
     private MCGButtonWidget setAtPos;
     private TextFieldWidget descriptionField;
+    private CyclingButtonWidget<Boolean> netherCoordinatesField;
     private MCGButtonWidget confirmButton;
     private MCGButtonWidget cancelButton;
     private final CoordinatesSet coordinate;
@@ -63,6 +66,10 @@ public class CoordinateCreationScreen extends Screen {
         descriptionField = new TextFieldWidget(textRenderer, 20, 120, 200, 20, Text.translatable("mcg.button.description"));
         this.addSelectableChild(descriptionField);
 
+        netherCoordinatesField = new CyclingButtonWidget.Builder<Boolean>(bool -> bool ? Text.translatable("options.on") : Text.translatable("options.off"))
+                .values(false, true).build(20, 160, 200, 20, Text.translatable("mcg.button.netherCoordinates"));
+        this.addSelectableChild(netherCoordinatesField);
+
         if (coordinate != null) {
             nameField.setText(coordinate.name);
             xField.setText(Integer.toString(coordinate.x));
@@ -72,6 +79,7 @@ public class CoordinateCreationScreen extends Screen {
         } else {
             yField.setText(Integer.toString(Objects.requireNonNull(client.player).getBlockPos().getY()));
         }
+        netherCoordinatesField.setValue(DimensionTypes.THE_NETHER.equals(client.player.getWorld().getDimensionKey()));
 
         confirmButton = new MCGButtonWidget(width - 105, height - 25, 100, 20, Text.translatable("mcg.button.confirm"), press -> confirm());
         this.addDrawableChild(confirmButton);
@@ -94,6 +102,7 @@ public class CoordinateCreationScreen extends Screen {
         zField.render(matrices, mouseX, mouseY, delta);
         drawStringWithShadow(matrices, textRenderer, I18n.translate("mcg.button.description"), descriptionField.x, descriptionField.y - 10, 16777215);
         descriptionField.render(matrices, mouseX, mouseY, delta);
+        netherCoordinatesField.render(matrices, mouseX, mouseY, delta);
         super.render(matrices, mouseX, mouseY, delta);
         ErrorDisplayOverlay.INSTANCE.render(matrices, height);
     }
@@ -110,6 +119,11 @@ public class CoordinateCreationScreen extends Screen {
     private void confirm() {
         try {
             CoordinatesSet set = parseCoordinate(nameField.getText(), xField.getText(), yField.getText(), zField.getText(), descriptionField.getText());
+            if(netherCoordinatesField.getValue()) {
+                set.x *= 8;
+                set.y *= 8;
+                set.z *= 8;
+            }
             MCG.coordinatesManager.writeToCoordinates(parent.getFilepath(), set);
         } catch (IOException | NumberFormatException e) {
             e.printStackTrace();

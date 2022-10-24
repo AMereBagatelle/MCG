@@ -3,6 +3,7 @@ package amerebagatelle.github.io.mcg.utils;
 import amerebagatelle.github.io.mcg.MCG;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.fabricmc.loader.api.FabricLoader;
 
@@ -14,6 +15,7 @@ public class Config {
     public static final Gson gson = new GsonBuilder().create();
 
     public int overlayX, overlayY = 0;
+    public boolean showCompass = true;
     public String overlayFormat = "%name @ %x %y %z";
 
     public Config() {
@@ -29,6 +31,7 @@ public class Config {
 
                 writeSetting("overlayX", "20");
                 writeSetting("overlayY", "20");
+                writeSetting("showCompass", "true");
                 writeSetting("overlayFormat", "%name @ %x %y %z");
             } catch (IOException e) {
                 MCG.logger.error("Couldn't create a settings file.");
@@ -59,12 +62,18 @@ public class Config {
                 overlayFormat = settingsJson.get("overlayFormat").getAsString();
             } catch (NullPointerException e) {
                 writeSetting("overlayFormat", "%name @ %x %y %z");
+            } try {
+                showCompass = settingsJson.get("showCompass").getAsBoolean();
+            } catch (NullPointerException e) {
+                writeSetting("showCompass", "true");
             }
         } catch (IOException e) {
             MCG.logger.error("Couldn't read the settings file.\n");
             e.printStackTrace();
         }
     }
+
+
 
     public void writeSetting(String setting, String value) {
         try {
