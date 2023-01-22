@@ -1,7 +1,7 @@
 # MCG
 
 ![Discord Shield](https://discordapp.com/api/guilds/756203400089305128/widget.png?style=shield)
-![Modrinth Shield](https://img.shields.io/badge/dynamic/json?color=blue&label=Modrinth&query=downloads&url=https%3A%2F%2Fapi.modrinth.com%2Fapi%2Fv1%2Fmod%2FeVXHt0JE)
+![Modrinth Shield](https://img.shields.io/modrinth/dt/eVXHt0JE?color=blue&label=Modrinth)
 
 MCG provides quick and easy storage of coordinates, so they don't have to be stored outside of the game. Often, I found
 myself taking out a notepad to keep track of my coordinates.
