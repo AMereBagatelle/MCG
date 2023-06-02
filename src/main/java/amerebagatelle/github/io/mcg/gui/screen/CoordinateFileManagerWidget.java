@@ -100,7 +100,7 @@ public class CoordinateFileManagerWidget extends MCGListWidget<CoordinateFileMan
 
         @Override
         public void render(MatrixStack matrices, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
-            drawStringWithShadow(matrices, client.textRenderer, name.replace(".coordinates", ""), x + 5, y + entryHeight / 2 - 4, 16777215);
+            drawTextWithShadow(matrices, client.textRenderer, name.replace(".coordinates", ""), x + 5, y + entryHeight / 2 - 4, 0xFFFFFF);
         }
 
         @Override
@@ -136,7 +136,7 @@ public class CoordinateFileManagerWidget extends MCGListWidget<CoordinateFileMan
 
         @Override
         public void render(MatrixStack matrices, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
-            drawStringWithShadow(matrices, client.textRenderer, name + "/", x + 5, y + entryHeight / 2 - 4, 16777215);
+            drawTextWithShadow(matrices, client.textRenderer, name + "/", x + 5, y + entryHeight / 2 - 4, 0xFFFFFF);
         }
 
         @Override

@@ -12,7 +12,7 @@ public class CoordinateHudOverlay {
     private String currentCoordinate;
 
     public void render(MatrixStack matrixStack) {
-        DrawableHelper.drawStringWithShadow(matrixStack, client.textRenderer, currentCoordinate, MCG.config.overlayX, MCG.config.overlayY, 16777215);
+        DrawableHelper.drawTextWithShadow(matrixStack, client.textRenderer, currentCoordinate, MCG.config.overlayX, MCG.config.overlayY, 0xFFFFFF);
     }
 
     public void setCurrentCoordinate(CoordinatesSet set) {

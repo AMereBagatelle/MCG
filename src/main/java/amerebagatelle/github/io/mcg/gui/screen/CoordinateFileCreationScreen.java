@@ -44,7 +44,7 @@ public class CoordinateFileCreationScreen extends Screen {
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
         updateButtonStates();
         this.renderBackground(matrices);
-        drawCenteredText(matrices, textRenderer, I18n.translate("mcg.file.new" + fileType), this.width / 2, 50, 16777215);
+        drawCenteredTextWithShadow(matrices, textRenderer, I18n.translate("mcg.file.new" + fileType), this.width / 2, 50, 0xFFFFFF);
         fileNameWidget.render(matrices, mouseX, mouseY, delta);
         super.render(matrices, mouseX, mouseY, delta);
         ErrorDisplayOverlay.INSTANCE.render(matrices, height);

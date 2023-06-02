@@ -13,8 +13,7 @@ public class RenderUtils {
         BufferBuilder builder = tessellator.getBuffer();
 
         GlStateManager._enableBlend();
-        GlStateManager._disableTexture();
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        RenderSystem.setShader(GameRenderer::getPositionColorProgram);
         GlStateManager.glBlendFuncSeparate(GlStateManager.SrcFactor.SRC_COLOR.value, GlStateManager.DstFactor.ONE_MINUS_SRC_ALPHA.value, GlStateManager.SrcFactor.ONE.value, GlStateManager.DstFactor.ZERO.value);
         RenderSystem.setShaderColor(red, green, blue, alpha);
 
@@ -26,7 +25,7 @@ public class RenderUtils {
 
         tessellator.draw();
 
-        GlStateManager._enableTexture();
         GlStateManager._disableBlend();
+        RenderSystem.setShaderColor(1f, 1f, 1f, 1f);
     }
 }

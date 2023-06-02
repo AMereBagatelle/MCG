@@ -11,7 +11,6 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 
-import javax.annotation.Nullable;
 import java.io.IOException;
 import java.util.Objects;
 import java.util.function.Predicate;
@@ -30,7 +29,7 @@ public class CoordinateCreationScreen extends Screen {
 
     private final CoordinatesManagerScreen parent;
 
-    public CoordinateCreationScreen(@Nullable CoordinatesSet coordinate, CoordinatesManagerScreen coordinateScreen) {
+    public CoordinateCreationScreen(CoordinatesSet coordinate, CoordinatesManagerScreen coordinateScreen) {
         super(Text.literal("CoordinateCreationScreen"));
         this.coordinate = coordinate;
         this.parent = coordinateScreen;
@@ -83,16 +82,16 @@ public class CoordinateCreationScreen extends Screen {
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
         updateButtonStates();
         this.renderBackground(matrices);
-        drawCenteredText(matrices, textRenderer, I18n.translate("mcg.coordinate.creationtitle"), width / 2, 10, 16777215);
-        drawStringWithShadow(matrices, textRenderer, I18n.translate("mcg.button.name"), nameField.x, nameField.y - 10, 16777215);
+        drawCenteredTextWithShadow(matrices, textRenderer, I18n.translate("mcg.coordinate.creationtitle"), width / 2, 10, 0xFFFFFF);
+        drawTextWithShadow(matrices, textRenderer, I18n.translate("mcg.button.name"), nameField.getX(), nameField.getY() - 10, 0xFFFFFF);
         nameField.render(matrices, mouseX, mouseY, delta);
-        drawStringWithShadow(matrices, textRenderer, "X", xField.x, xField.y - 10, 16777215);
+        drawTextWithShadow(matrices, textRenderer, "X", xField.getX(), xField.getY() - 10, 0xFFFFFF);
         xField.render(matrices, mouseX, mouseY, delta);
-        drawStringWithShadow(matrices, textRenderer, "Y", yField.x, yField.y - 10, 16777215);
+        drawTextWithShadow(matrices, textRenderer, "Y", yField.getX(), yField.getY() - 10, 0xFFFFFF);
         yField.render(matrices, mouseX, mouseY, delta);
-        drawStringWithShadow(matrices, textRenderer, "Z", zField.x, zField.y - 10, 16777215);
+        drawTextWithShadow(matrices, textRenderer, "Z", zField.getX(), zField.getY() - 10, 0xFFFFFF);
         zField.render(matrices, mouseX, mouseY, delta);
-        drawStringWithShadow(matrices, textRenderer, I18n.translate("mcg.button.description"), descriptionField.x, descriptionField.y - 10, 16777215);
+        drawTextWithShadow(matrices, textRenderer, I18n.translate("mcg.button.description"), descriptionField.getX(), descriptionField.getY() - 10, 0xFFFFFF);
         descriptionField.render(matrices, mouseX, mouseY, delta);
         super.render(matrices, mouseX, mouseY, delta);
         ErrorDisplayOverlay.INSTANCE.render(matrices, height);

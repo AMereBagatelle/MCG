@@ -17,7 +17,7 @@ public class ErrorDisplayOverlay {
     public void render(MatrixStack matrices, int windowHeight) {
         for (int i = 0; i < errors.size(); i++) {
             int height = windowHeight - 15 - (i * 20);
-            DrawableHelper.drawStringWithShadow(matrices, client.textRenderer, errors.get(i).getError(), 10, height, 16711680);
+            DrawableHelper.drawTextWithShadow(matrices, client.textRenderer, errors.get(i).getError(), 10, height, 16711680);
         }
         if (errors.size() > 10) {
             errors.removeLast();

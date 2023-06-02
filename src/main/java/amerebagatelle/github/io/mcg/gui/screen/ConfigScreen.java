@@ -51,13 +51,13 @@ public class ConfigScreen extends Screen {
         confirmButton.active = overlayXField.getText().length() > 0 && overlayYField.getText().length() > 0;
         this.renderBackground(matrices);
 
-        drawCenteredText(matrices, textRenderer, I18n.translate("mcg.config.configTitle"), width / 2, 10, 16777215);
+        drawCenteredTextWithShadow(matrices, textRenderer, I18n.translate("mcg.config.configTitle"), width / 2, 10, 0xFFFFFF);
 
-        drawStringWithShadow(matrices, textRenderer, I18n.translate("mcg.button.overlayX"), overlayXField.x, overlayXField.y - 10, 16777215);
+        drawTextWithShadow(matrices, textRenderer, I18n.translate("mcg.button.overlayX"), overlayXField.getX(), overlayXField.getY() - 10, 0xFFFFFF);
         overlayXField.render(matrices, mouseX, mouseY, delta);
-        drawStringWithShadow(matrices, textRenderer, I18n.translate("mcg.button.overlayY"), overlayYField.x, overlayYField.y - 10, 16777215);
+        drawTextWithShadow(matrices, textRenderer, I18n.translate("mcg.button.overlayY"), overlayYField.getX(), overlayYField.getY() - 10, 0xFFFFFF);
         overlayYField.render(matrices, mouseX, mouseY, delta);
-        drawStringWithShadow(matrices, textRenderer, I18n.translate("mcg.button.overlayFormat"), overlayFormatField.x, overlayFormatField.y - 10, 16777215);
+        drawTextWithShadow(matrices, textRenderer, I18n.translate("mcg.button.overlayFormat"), overlayFormatField.getX(), overlayFormatField.getY() - 10, 0xFFFFFF);
         overlayFormatField.render(matrices, mouseX, mouseY, delta);
 
         super.render(matrices, mouseX, mouseY, delta);

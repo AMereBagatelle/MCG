@@ -82,7 +82,7 @@ public class CoordinateManagerWidget extends MCGListWidget<CoordinateManagerWidg
         Objects.requireNonNull(client.player);
         if (client.player.isCreativeLevelTwoOp()) {
             CoordinatesSet coordinateSet = ((CoordinateEntry) Objects.requireNonNull(this.getSelectedOrNull())).coordinate;
-            client.player.sendCommand(String.format("tp %s %s %s", coordinateSet.x, coordinateSet.y, coordinateSet.z));
+            client.player.teleport(coordinateSet.x, coordinateSet.y, coordinateSet.z);
         } else {
             parent.reportError(I18n.translate("commands.help.failed"));
         }
@@ -108,11 +108,11 @@ public class CoordinateManagerWidget extends MCGListWidget<CoordinateManagerWidg
         @Override
         public void render(MatrixStack matrices, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
             int drawY = y + entryHeight / 2 - 5;
-            drawStringWithShadow(matrices, client.textRenderer, coordinate.name, x + 5, drawY, 16777215);
+            drawTextWithShadow(matrices, client.textRenderer, coordinate.name, x + 5, drawY, 0xFFFFFF);
             int drawX = x + entryWidth / 2;
-            drawStringWithShadow(matrices, client.textRenderer, Integer.toString(coordinate.x), drawX - 50, drawY, 16777215);
-            drawStringWithShadow(matrices, client.textRenderer, Integer.toString(coordinate.y), drawX + 30, drawY, 16777215);
-            drawStringWithShadow(matrices, client.textRenderer, Integer.toString(coordinate.z), drawX + 110, drawY, 16777215);
+            drawTextWithShadow(matrices, client.textRenderer, Integer.toString(coordinate.x), drawX - 50, drawY, 0xFFFFFF);
+            drawTextWithShadow(matrices, client.textRenderer, Integer.toString(coordinate.y), drawX + 30, drawY, 0xFFFFFF);
+            drawTextWithShadow(matrices, client.textRenderer, Integer.toString(coordinate.z), drawX + 110, drawY, 0xFFFFFF);
         }
 
         @Override
