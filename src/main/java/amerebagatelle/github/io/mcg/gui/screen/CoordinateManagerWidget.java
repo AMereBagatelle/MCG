@@ -126,11 +126,6 @@ public class CoordinateManagerWidget extends MCGListWidget<CoordinateManagerWidg
         }
 
         @Override
-        public boolean mouseReleased(double mouseX, double mouseY, int button) {
-            return false;
-        }
-
-        @Override
         public Text getNarration() {
             return Text.translatable("mcg.narration.coordinateentry", coordinate.name, coordinate.x, coordinate.y, coordinate.z, coordinate.description);
         }

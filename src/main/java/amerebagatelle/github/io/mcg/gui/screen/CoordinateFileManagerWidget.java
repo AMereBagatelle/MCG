@@ -114,15 +114,6 @@ public class CoordinateFileManagerWidget extends MCGListWidget<CoordinateFileMan
         }
 
         @Override
-        public boolean mouseReleased(double mouseX, double mouseY, int button) {
-            return false;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        @Override
         public Text getNarration() {
             return Text.literal(name.replace(".coordinates", ""));
         }
@@ -147,15 +138,6 @@ public class CoordinateFileManagerWidget extends MCGListWidget<CoordinateFileMan
                 CoordinateFileManagerWidget.this.select(this);
             }
             return false;
-        }
-
-        @Override
-        public boolean mouseReleased(double mouseX, double mouseY, int button) {
-            return false;
-        }
-
-        public String getName() {
-            return name;
         }
 
         @Override
