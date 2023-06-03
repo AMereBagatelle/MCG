@@ -13,7 +13,7 @@ import java.util.Comparator;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class CoordinateFileTest {
+public class CoordinateOperationsTest {
     CoordinateRoot root;
 
     @BeforeEach
