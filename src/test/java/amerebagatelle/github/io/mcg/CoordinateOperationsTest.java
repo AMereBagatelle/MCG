@@ -20,6 +20,7 @@ public class CoordinateOperationsTest {
     @BeforeEach
     void resetCoordinateFolder() throws IOException {
         Path rootPath = Path.of("./test/coordinates");
+        Files.createDirectories(rootPath);
         Files
                 .walk(rootPath)
                 .sorted(Comparator.reverseOrder())
