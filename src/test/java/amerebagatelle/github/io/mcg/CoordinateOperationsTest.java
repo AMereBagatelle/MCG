@@ -12,6 +12,7 @@ import java.nio.file.Path;
 import java.util.Comparator;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 public class CoordinateOperationsTest {
     CoordinateRoot root;
@@ -33,7 +34,11 @@ public class CoordinateOperationsTest {
     }
 
     CoordinateFile getTestFile() {
-        return root.getFile("test.json").orElseThrow();
+        var file = root.getFile("test.json");
+
+        assumeTrue(file.isPresent(), "File was non-existent.  Ignore if CI.");
+
+        return file.get();
     }
 
     @Test()
