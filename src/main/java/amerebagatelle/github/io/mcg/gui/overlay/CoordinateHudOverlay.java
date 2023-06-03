@@ -1,7 +1,7 @@
 package amerebagatelle.github.io.mcg.gui.overlay;
 
 import amerebagatelle.github.io.mcg.MCG;
-import amerebagatelle.github.io.mcg.coordinates.CoordinatesSet;
+import amerebagatelle.github.io.mcg.coordinates.Coordinate;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.util.math.MatrixStack;
@@ -15,7 +15,7 @@ public class CoordinateHudOverlay {
         DrawableHelper.drawTextWithShadow(matrixStack, client.textRenderer, currentCoordinate, MCG.config.overlayX, MCG.config.overlayY, 0xFFFFFF);
     }
 
-    public void setCurrentCoordinate(CoordinatesSet set) {
+    public void setCurrentCoordinate(Coordinate set) {
         this.currentCoordinate = MCG.config.overlayFormat
                 .replace("%name", set.name)
                 .replace("%x", Integer.toString(set.x))

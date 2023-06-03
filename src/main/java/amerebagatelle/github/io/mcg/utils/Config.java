@@ -1,8 +1,6 @@
 package amerebagatelle.github.io.mcg.utils;
 
-import amerebagatelle.github.io.mcg.MCG;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import amerebagatelle.github.io.mcg.Constants;
 import com.google.gson.JsonObject;
 import net.fabricmc.loader.api.FabricLoader;
 
@@ -11,7 +9,6 @@ import java.nio.file.Files;
 
 public class Config {
     public static final File settingsFile = FabricLoader.getInstance().getConfigDir().resolve("mcg.json").toFile();
-    public static final Gson gson = new GsonBuilder().create();
 
     public int overlayX, overlayY = 0;
     public String overlayFormat = "%name @ %x %y %z";
@@ -31,7 +28,7 @@ public class Config {
                 writeSetting("overlayY", "20");
                 writeSetting("overlayFormat", "%name @ %x %y %z");
             } catch (IOException e) {
-                MCG.logger.error("Couldn't create a settings file.");
+                Constants.LOGGER.error("Couldn't create a settings file.");
                 e.printStackTrace();
             }
         }
@@ -42,7 +39,7 @@ public class Config {
     public void loadSettings() {
         try {
             BufferedReader reader = new BufferedReader(new FileReader(settingsFile));
-            JsonObject settingsJson = gson.fromJson(reader, JsonObject.class);
+            JsonObject settingsJson = Constants.GSON.fromJson(reader, JsonObject.class);
             reader.close();
 
             try {
@@ -61,7 +58,7 @@ public class Config {
                 writeSetting("overlayFormat", "%name @ %x %y %z");
             }
         } catch (IOException e) {
-            MCG.logger.error("Couldn't read the settings file.\n");
+            Constants.LOGGER.error("Couldn't read the settings file.\n");
             e.printStackTrace();
         }
     }
@@ -69,14 +66,14 @@ public class Config {
     public void writeSetting(String setting, String value) {
         try {
             BufferedReader reader = new BufferedReader(new FileReader(settingsFile));
-            JsonObject settingsJson = gson.fromJson(reader, JsonObject.class);
+            JsonObject settingsJson = Constants.GSON.fromJson(reader, JsonObject.class);
             reader.close();
 
             settingsJson.addProperty(setting, value);
 
-            Files.write(settingsFile.toPath(), gson.toJson(settingsJson).getBytes());
+            Files.write(settingsFile.toPath(), Constants.GSON.toJson(settingsJson).getBytes());
         } catch (IOException e) {
-            MCG.logger.error("Couldn't write to the settings file.\n");
+            Constants.LOGGER.error("Couldn't write to the settings file.\n");
             e.printStackTrace();
         }
     }

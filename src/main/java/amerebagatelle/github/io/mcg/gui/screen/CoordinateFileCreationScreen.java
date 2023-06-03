@@ -1,6 +1,7 @@
 package amerebagatelle.github.io.mcg.gui.screen;
 
-import amerebagatelle.github.io.mcg.MCG;
+import amerebagatelle.github.io.mcg.Constants;
+import amerebagatelle.github.io.mcg.coordinates.CoordinateFolder;
 import amerebagatelle.github.io.mcg.gui.MCGButtonWidget;
 import amerebagatelle.github.io.mcg.gui.overlay.ErrorDisplayOverlay;
 import net.minecraft.client.gui.screen.Screen;
@@ -9,10 +10,7 @@ import net.minecraft.client.resource.language.I18n;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 
-import java.io.IOException;
 import java.nio.file.InvalidPathException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Objects;
 
 public class CoordinateFileCreationScreen extends Screen {
@@ -20,13 +18,18 @@ public class CoordinateFileCreationScreen extends Screen {
     private MCGButtonWidget confirmButton;
     private MCGButtonWidget cancelButton;
 
-    private final String fileType;
-    private final Path folderPath;
+    private final FileType fileType;
+    private final CoordinateFolder parentFolder;
 
-    public CoordinateFileCreationScreen(String fileType, Path folderPath) {
+    enum FileType {
+        FILE,
+        FOLDER
+    }
+
+    public CoordinateFileCreationScreen(FileType fileType, CoordinateFolder parentFolder) {
         super(Text.literal("CoordinateFileCreationScreen"));
         this.fileType = fileType;
-        this.folderPath = folderPath;
+        this.parentFolder = parentFolder;
     }
 
     @Override
@@ -57,19 +60,18 @@ public class CoordinateFileCreationScreen extends Screen {
 
     private void confirm() {
         try {
-            if (fileType.equals("folder")) {
-                MCG.coordinatesManager.createFolder(Paths.get(folderPath.toString(), fileNameWidget.getText()));
+            if (fileType == FileType.FOLDER) {
+                var folder = parentFolder.getFolder(fileNameWidget.getText());
+                if(folder.isEmpty()) ErrorDisplayOverlay.INSTANCE.addError(I18n.translate("mcg.file.creationfail"));
             } else {
-                MCG.coordinatesManager.initNewCoordinatesFile(Paths.get(folderPath.toString(), fileNameWidget.getText().endsWith(".coordinates") ? fileNameWidget.getText() : fileNameWidget.getText() + ".coordinates"));
+                var file = parentFolder.getFile(fileNameWidget.getText().endsWith(".json") ? fileNameWidget.getText() : fileNameWidget.getText() + ".json");
+                if(file.isEmpty()) ErrorDisplayOverlay.INSTANCE.addError(I18n.translate("mcg.file.creationfail"));
             }
-            Objects.requireNonNull(client).setScreen(new CoordinateFileManager());
-        } catch (IOException e) {
-            MCG.logger.debug("Can't make new coordinates file.");
-            ErrorDisplayOverlay.INSTANCE.addError(I18n.translate("mcg.file.creationfail"));
         } catch (InvalidPathException e) {
-            MCG.logger.debug("Invalid name for new coordinates file.");
+            Constants.LOGGER.error("Invalid name for new coordinates file " + fileNameWidget.getText());
             ErrorDisplayOverlay.INSTANCE.addError(I18n.translate("mcg.file.creationfail") + ": " + I18n.translate("mcg.file.invalidpath"));
         }
+        Objects.requireNonNull(client).setScreen(new CoordinateFileManager());
     }
 
     private void cancel() {

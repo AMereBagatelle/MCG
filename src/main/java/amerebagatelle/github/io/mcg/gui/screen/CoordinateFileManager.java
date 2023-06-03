@@ -1,8 +1,11 @@
 package amerebagatelle.github.io.mcg.gui.screen;
 
+import amerebagatelle.github.io.mcg.Constants;
 import amerebagatelle.github.io.mcg.MCG;
+import amerebagatelle.github.io.mcg.coordinates.CoordinateRoot;
 import amerebagatelle.github.io.mcg.gui.MCGButtonWidget;
 import amerebagatelle.github.io.mcg.gui.overlay.CoordinateHudOverlay;
+import amerebagatelle.github.io.mcg.gui.overlay.ErrorDisplayOverlay;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.client.util.math.MatrixStack;
@@ -29,7 +32,7 @@ public class CoordinateFileManager extends Screen {
 
     @Override
     public void init() {
-        coordinateFileManagerWidget = new CoordinateFileManagerWidget(this.client, width / 3 * 2, height - 60, 40, this.height - 20, 15, 10);
+        coordinateFileManagerWidget = new CoordinateFileManagerWidget(this.client, width / 3 * 2, height - 60, 40, this.height - 20, 15, 10, this, MCG.rootCoordinateFolder);
         this.addSelectableChild(coordinateFileManagerWidget);
 
         openFile = new MCGButtonWidget(coordinateFileManagerWidget.getRight() + 5, coordinateFileManagerWidget.getTop(), coordinateFileManagerWidget.getButtonWidth(), 20, Text.translatable("mcg.button.openfile"), press -> coordinateFileManagerWidget.openFile());
@@ -53,7 +56,7 @@ public class CoordinateFileManager extends Screen {
         updateButtonStates();
         this.renderBackground(matrices);
         drawCenteredTextWithShadow(matrices, textRenderer, I18n.translate("mcg.file.managertitle"), width / 2, 10, 0xFFFFFF);
-        drawTextWithShadow(matrices, textRenderer, String.format("%s" + coordinateFileManagerWidget.getCurrentDirectory().toString().substring(coordinateFileManagerWidget.getCurrentDirectory().toString().indexOf("coordinates")), Formatting.BLUE), coordinateFileManagerWidget.getLeft(), coordinateFileManagerWidget.getTop() - 10, 0xFFFFFF);
+        drawTextWithShadow(matrices, textRenderer, String.format("%s" + MCG.rootCoordinateFolder.getRootRelativePath(coordinateFileManagerWidget.getCurrentFolder()), Formatting.BLUE), coordinateFileManagerWidget.getLeft(), coordinateFileManagerWidget.getTop() - 10, 0xFFFFFF);
         coordinateFileManagerWidget.render(matrices, mouseX, mouseY, delta);
         super.render(matrices, mouseX, mouseY, delta);
     }
@@ -61,7 +64,7 @@ public class CoordinateFileManager extends Screen {
     public void updateButtonStates() {
         openFile.active = coordinateFileManagerWidget.hasFileSelected();
         removeFile.active = coordinateFileManagerWidget.hasSelected();
-        returnFolder.active = !coordinateFileManagerWidget.getCurrentDirectory().endsWith("coordinates");
+        returnFolder.active = coordinateFileManagerWidget.getCurrentFolder() instanceof CoordinateRoot;
     }
 
     @Override
@@ -73,5 +76,10 @@ public class CoordinateFileManager extends Screen {
     @Override
     public boolean shouldPause() {
         return false;
+    }
+
+    public void reportError(String error) {
+        Constants.LOGGER.warn(error);
+        ErrorDisplayOverlay.INSTANCE.addError(error);
     }
 }

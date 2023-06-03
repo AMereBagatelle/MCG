@@ -1,7 +1,8 @@
 package amerebagatelle.github.io.mcg.gui.screen;
 
 import amerebagatelle.github.io.mcg.MCG;
-import amerebagatelle.github.io.mcg.coordinates.CoordinatesSet;
+import amerebagatelle.github.io.mcg.coordinates.Coordinate;
+import amerebagatelle.github.io.mcg.coordinates.CoordinateFile;
 import amerebagatelle.github.io.mcg.gui.MCGListWidget;
 import amerebagatelle.github.io.mcg.gui.overlay.CoordinateHudOverlay;
 import net.fabricmc.api.EnvType;
@@ -18,7 +19,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class CoordinateManagerWidget extends MCGListWidget<CoordinateManagerWidget.Entry> {
-    private Path filepath;
+    private CoordinateFile file;
     private final CoordinatesManagerScreen parent;
 
     public CoordinateManagerWidget(MinecraftClient minecraftClient, CoordinatesManagerScreen parent, int width, int height, int top, int bottom, int itemHeight, int left) {
@@ -26,22 +27,18 @@ public class CoordinateManagerWidget extends MCGListWidget<CoordinateManagerWidg
         this.parent = parent;
     }
 
-    public void setFile(Path filepath) {
-        this.filepath = filepath;
+    public void setFile(CoordinateFile file) {
+        this.file = file;
         refreshEntries();
     }
 
     public void refreshEntries() {
         clearEntries();
-        try {
-            List<CoordinatesSet> list = MCG.coordinatesManager.loadCoordinates(filepath);
-            if (list != null) {
-                for (CoordinatesSet set : list) {
-                    this.addEntry(new CoordinateEntry(set));
-                }
+        List<Coordinate> list = file.getCoordinates();
+        if (list != null) {
+            for (Coordinate set : list) {
+                this.addEntry(new CoordinateEntry(set));
             }
-        } catch (IOException e) {
-            parent.reportError(I18n.translate("mcg.coordinate.readfail"));
         }
     }
 
@@ -50,9 +47,7 @@ public class CoordinateManagerWidget extends MCGListWidget<CoordinateManagerWidg
     }
 
     public void removeCoordinate() {
-        try {
-            MCG.coordinatesManager.removeCoordinate(filepath, ((CoordinateEntry) Objects.requireNonNull(this.getSelectedOrNull())).coordinate);
-        } catch (IOException e) {
+        if (!file.removeCoordinate(((CoordinateEntry) Objects.requireNonNull(this.getSelectedOrNull())).coordinate)) {
             parent.reportError(I18n.translate("mcg.coordinate.removefail"));
         }
         refreshEntries();
@@ -61,9 +56,10 @@ public class CoordinateManagerWidget extends MCGListWidget<CoordinateManagerWidg
 
     public void copyCoordinate() {
         try {
-            CoordinatesSet coordinate = ((CoordinateEntry) Objects.requireNonNull(this.getSelectedOrNull())).coordinate;
-            coordinate.name = coordinate.name + "Copy";
-            MCG.coordinatesManager.writeToCoordinates(filepath, coordinate);
+            Coordinate coordinate = ((CoordinateEntry) Objects.requireNonNull(this.getSelectedOrNull())).coordinate;
+            coordinate.name += " Copy";
+            file.addCoordinate(coordinate);
+            file.save();
         } catch (IOException e) {
             parent.reportError(I18n.translate("mcg.coordinate.copyfail"));
         }
@@ -81,7 +77,7 @@ public class CoordinateManagerWidget extends MCGListWidget<CoordinateManagerWidg
     public void teleportToCoordinate() {
         Objects.requireNonNull(client.player);
         if (client.player.isCreativeLevelTwoOp()) {
-            CoordinatesSet coordinateSet = ((CoordinateEntry) Objects.requireNonNull(this.getSelectedOrNull())).coordinate;
+            Coordinate coordinateSet = ((CoordinateEntry) Objects.requireNonNull(this.getSelectedOrNull())).coordinate;
             client.player.teleport(coordinateSet.x, coordinateSet.y, coordinateSet.z);
         } else {
             parent.reportError(I18n.translate("commands.help.failed"));
@@ -99,9 +95,9 @@ public class CoordinateManagerWidget extends MCGListWidget<CoordinateManagerWidg
     }
 
     public class CoordinateEntry extends CoordinateManagerWidget.Entry {
-        public CoordinatesSet coordinate;
+        public Coordinate coordinate;
 
-        public CoordinateEntry(CoordinatesSet coordinate) {
+        public CoordinateEntry(Coordinate coordinate) {
             this.coordinate = coordinate;
         }
 

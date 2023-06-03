@@ -1,40 +1,46 @@
 package amerebagatelle.github.io.mcg.gui.screen;
 
-import amerebagatelle.github.io.mcg.coordinates.CoordinatesManager;
+import amerebagatelle.github.io.mcg.MCG;
+import amerebagatelle.github.io.mcg.coordinates.CoordinateFile;
+import amerebagatelle.github.io.mcg.coordinates.CoordinateFolder;
 import amerebagatelle.github.io.mcg.gui.MCGListWidget;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.AlwaysSelectedEntryListWidget;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 
 import java.io.File;
-import java.nio.file.Path;
+import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.Objects;
 
 public class CoordinateFileManagerWidget extends MCGListWidget<CoordinateFileManagerWidget.Entry> {
-    private static Path currentDirectory = CoordinatesManager.getCoordinateDirectory();
+    private CoordinateFileManager parent;
+    private CoordinateFolder folder;
 
-    public CoordinateFileManagerWidget(MinecraftClient minecraftClient, int width, int height, int top, int bottom, int itemHeight, int left) {
+    public CoordinateFileManagerWidget(MinecraftClient minecraftClient, int width, int height, int top, int bottom, int itemHeight, int left, CoordinateFileManager parent, CoordinateFolder folder) {
         super(minecraftClient, width, height, top, bottom, itemHeight, left);
-        this.updateEntries(currentDirectory);
+        this.parent = parent;
+        this.folder = folder;
+        this.updateEntries(folder);
     }
 
-    public void updateEntries(Path path) {
+    private void updateEntries(CoordinateFolder folder) {
         this.clearEntries();
         this.setSelected(null);
-        File[] files = new File(path.toString()).listFiles();
-        if(files != null) {
-            for (File file : files) {
-                if (file.isDirectory()) {
-                    this.addEntry(new FolderEntry(file.getName()));
-                } else {
-                    if (file.getName().endsWith(".coordinates")) this.addEntry(new FileEntry(file.getName()));
-                }
-            }
+        for (CoordinateFolder listFolder : folder.listFolders()) {
+            this.addEntry(new FolderEntry(listFolder.getName()));
         }
+        for (CoordinateFile file : folder.listFiles()) {
+            this.addEntry(new FileEntry(file.getName()));
+        }
+    }
+
+    public CoordinateFolder getCurrentFolder() {
+        return folder;
     }
 
     public void select(Entry entry) {
@@ -47,22 +53,26 @@ public class CoordinateFileManagerWidget extends MCGListWidget<CoordinateFileMan
     }
 
     public void openFile() {
-        CoordinatesManagerScreen screen = new CoordinatesManagerScreen(new File(currentDirectory.toString(), (Objects.requireNonNull(this.getSelectedOrNull()).getName())).toPath());
+        @SuppressWarnings("OptionalGetWithoutIsPresent")
+        CoordinatesManagerScreen screen = new CoordinatesManagerScreen(folder.getFile(Objects.requireNonNull(this.getSelectedOrNull()).getName()).get());
         client.setScreen(screen);
     }
 
     public void newFile() {
-        client.setScreen(new CoordinateFileCreationScreen("file", currentDirectory));
+        client.setScreen(new CoordinateFileCreationScreen(CoordinateFileCreationScreen.FileType.FILE, folder));
     }
 
     public void newFolder() {
-        client.setScreen(new CoordinateFileCreationScreen("folder", currentDirectory));
+        client.setScreen(new CoordinateFileCreationScreen(CoordinateFileCreationScreen.FileType.FOLDER, folder));
     }
 
     public void removeFile() {
-        //noinspection ResultOfMethodCallIgnored
-        new File(currentDirectory.toString(), Objects.requireNonNull(this.getSelectedOrNull()).getName()).delete();
-        updateEntries(currentDirectory);
+        try {
+            folder.getFile(Objects.requireNonNull(this.getSelectedOrNull()).getName()).get().delete();
+        } catch (IOException e) {
+            parent.reportError("Could not delete file %s.".formatted(Objects.requireNonNull(this.getSelectedOrNull()).getName()));
+        }
+        updateEntries(folder);
     }
 
     public boolean hasFileSelected() {
@@ -73,18 +83,13 @@ public class CoordinateFileManagerWidget extends MCGListWidget<CoordinateFileMan
         return this.getSelectedOrNull() != null;
     }
 
-    public Path getCurrentDirectory() {
-        return currentDirectory;
-    }
-
-    public void addToDirectory(String toAdd) {
-        currentDirectory = Paths.get(currentDirectory.toString(), toAdd);
-        updateEntries(currentDirectory);
+    public void enterFolder(String folderName) {
+        this.folder = folder.getFolder(folderName).orElse(MCG.rootCoordinateFolder);
     }
 
     public void backUpFolder() {
-        currentDirectory = currentDirectory.getParent();
-        updateEntries(currentDirectory);
+        folder = folder.getParent();
+        updateEntries(folder);
     }
 
     @Override
@@ -133,7 +138,7 @@ public class CoordinateFileManagerWidget extends MCGListWidget<CoordinateFileMan
         @Override
         public boolean mouseClicked(double mouseX, double mouseY, int button) {
             if (CoordinateFileManagerWidget.this.isEntrySelected(this)) {
-                CoordinateFileManagerWidget.this.addToDirectory(name);
+                CoordinateFileManagerWidget.this.enterFolder(name);
             } else {
                 CoordinateFileManagerWidget.this.select(this);
             }

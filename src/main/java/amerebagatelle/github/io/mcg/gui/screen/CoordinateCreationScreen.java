@@ -1,7 +1,7 @@
 package amerebagatelle.github.io.mcg.gui.screen;
 
 import amerebagatelle.github.io.mcg.MCG;
-import amerebagatelle.github.io.mcg.coordinates.CoordinatesSet;
+import amerebagatelle.github.io.mcg.coordinates.Coordinate;
 import amerebagatelle.github.io.mcg.gui.MCGButtonWidget;
 import amerebagatelle.github.io.mcg.gui.overlay.ErrorDisplayOverlay;
 import net.minecraft.client.gui.screen.Screen;
@@ -25,11 +25,11 @@ public class CoordinateCreationScreen extends Screen {
     private TextFieldWidget descriptionField;
     private MCGButtonWidget confirmButton;
     private MCGButtonWidget cancelButton;
-    private final CoordinatesSet coordinate;
+    private final Coordinate coordinate;
 
     private final CoordinatesManagerScreen parent;
 
-    public CoordinateCreationScreen(CoordinatesSet coordinate, CoordinatesManagerScreen coordinateScreen) {
+    public CoordinateCreationScreen(Coordinate coordinate, CoordinatesManagerScreen coordinateScreen) {
         super(Text.literal("CoordinateCreationScreen"));
         this.coordinate = coordinate;
         this.parent = coordinateScreen;
@@ -108,9 +108,9 @@ public class CoordinateCreationScreen extends Screen {
 
     private void confirm() {
         try {
-            CoordinatesSet set = parseCoordinate(nameField.getText(), xField.getText(), yField.getText(), zField.getText(), descriptionField.getText());
-            MCG.coordinatesManager.writeToCoordinates(parent.getFilepath(), set);
-        } catch (IOException | NumberFormatException e) {
+            Coordinate set = parseCoordinate(nameField.getText(), xField.getText(), yField.getText(), zField.getText(), descriptionField.getText());
+            parent.getFile().addCoordinate(set);
+        } catch (NumberFormatException e) {
             e.printStackTrace();
             parent.reportError(I18n.translate("mcg.coordinate.creationfail"));
         }
@@ -118,10 +118,10 @@ public class CoordinateCreationScreen extends Screen {
         Objects.requireNonNull(client).setScreen(parent);
     }
 
-    private CoordinatesSet parseCoordinate(String name, String x, String y, String z, String desc) {
+    private Coordinate parseCoordinate(String name, String x, String y, String z, String desc) {
         Objects.requireNonNull(client);
         Objects.requireNonNull(client.player);
-        CoordinatesSet result = new CoordinatesSet(name, 0, 0, 0, desc);
+        Coordinate result = new Coordinate(name, 0, 0, 0, desc);
         if (x.equals("~")) {
             result.x = client.player.getBlockPos().getX();
         } else {
