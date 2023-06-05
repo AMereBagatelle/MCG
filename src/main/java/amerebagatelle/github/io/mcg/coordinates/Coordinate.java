@@ -30,6 +30,10 @@ public class Coordinate {
         return new Coordinate(name, x / 8, y / 8, z / 8, description, true);
     }
 
+    public Coordinate copy() {
+        return new Coordinate(name, x, y, z, description, isNether);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

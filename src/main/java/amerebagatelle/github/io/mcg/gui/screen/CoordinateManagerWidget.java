@@ -62,7 +62,7 @@ public class CoordinateManagerWidget extends MCGListWidget<CoordinateManagerWidg
 
     public void copyCoordinate() {
         try {
-            Coordinate coordinate = ((CoordinateEntry) Objects.requireNonNull(this.getSelectedOrNull())).coordinate;
+            Coordinate coordinate = ((CoordinateEntry) Objects.requireNonNull(this.getSelectedOrNull())).coordinate.copy();
             coordinate.name += " Copy";
             file.addCoordinate(coordinate);
             file.save();
