@@ -15,8 +15,8 @@ public class MCGButtonWidget extends ButtonWidget {
 
     @Override
     public void renderButton(MatrixStack matrices, int mouseX, int mouseY, float delta) {
-        float darkness = this.isHovered() && active ? 0.3f : 0.1f;
-        RenderUtils.drawBox(this.getX(), this.getY(), this.width, this.height, darkness, darkness, darkness, 0.3f);
+        float darkness = this.isHovered() && active ? 0.1f : 0.3f;
+        RenderUtils.drawBox(this.getX(), this.getY(), this.width, this.height, 1f, 1f, 1f, darkness);
         drawCenteredTextWithShadow(matrices, MinecraftClient.getInstance().textRenderer, this.getMessage().getString(), this.getX() + (this.width / 2), this.getY() + (this.height / 2) - 5, active ? 0xFFFFFF : 0xAAAAAA);
     }
 
