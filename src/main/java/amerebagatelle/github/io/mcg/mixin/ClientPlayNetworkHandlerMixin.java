@@ -16,6 +16,6 @@ public class ClientPlayNetworkHandlerMixin {
     @Environment(EnvType.CLIENT)
     @Inject(method = "onDisconnect", at = @At("HEAD"))
     public void resetScreenOnDisconnect(DisconnectS2CPacket packet, CallbackInfo ci) {
-        MCG.managerScreenInstance = new CoordinateFileManager();
+        MCG.managerScreenInstance = new CoordinateFileManager(MCG.rootCoordinateFolder);
     }
 }

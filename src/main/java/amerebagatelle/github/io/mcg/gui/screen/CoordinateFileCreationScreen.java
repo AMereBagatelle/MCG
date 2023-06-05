@@ -47,7 +47,7 @@ public class CoordinateFileCreationScreen extends Screen {
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
         updateButtonStates();
         this.renderBackground(matrices);
-        drawCenteredTextWithShadow(matrices, textRenderer, I18n.translate("mcg.file.new" + fileType), this.width / 2, 50, 0xFFFFFF);
+        drawCenteredTextWithShadow(matrices, textRenderer, I18n.translate("mcg.file.new" + fileType.name().toLowerCase()), this.width / 2, 50, 0xFFFFFF);
         fileNameWidget.render(matrices, mouseX, mouseY, delta);
         super.render(matrices, mouseX, mouseY, delta);
         ErrorDisplayOverlay.INSTANCE.render(matrices, height);
@@ -71,11 +71,11 @@ public class CoordinateFileCreationScreen extends Screen {
             Constants.LOGGER.error("Invalid name for new coordinates file " + fileNameWidget.getText());
             ErrorDisplayOverlay.INSTANCE.addError(I18n.translate("mcg.file.creationfail") + ": " + I18n.translate("mcg.file.invalidpath"));
         }
-        Objects.requireNonNull(client).setScreen(new CoordinateFileManager());
+        Objects.requireNonNull(client).setScreen(new CoordinateFileManager(parentFolder));
     }
 
     private void cancel() {
-        Objects.requireNonNull(client).setScreen(new CoordinateFileManager());
+        Objects.requireNonNull(client).setScreen(new CoordinateFileManager(parentFolder));
     }
 
     private void updateButtonStates() {

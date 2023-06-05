@@ -2,6 +2,7 @@ package amerebagatelle.github.io.mcg.gui.screen;
 
 import amerebagatelle.github.io.mcg.Constants;
 import amerebagatelle.github.io.mcg.MCG;
+import amerebagatelle.github.io.mcg.coordinates.CoordinateFolder;
 import amerebagatelle.github.io.mcg.coordinates.CoordinateRoot;
 import amerebagatelle.github.io.mcg.gui.MCGButtonWidget;
 import amerebagatelle.github.io.mcg.gui.overlay.CoordinateHudOverlay;
@@ -15,6 +16,7 @@ import net.minecraft.util.Formatting;
 import java.util.Objects;
 
 public class CoordinateFileManager extends Screen {
+    private final CoordinateFolder baseFolder;
 
     // Widgets/Buttons
     private CoordinateFileManagerWidget coordinateFileManagerWidget;
@@ -26,13 +28,16 @@ public class CoordinateFileManager extends Screen {
     private MCGButtonWidget clearOverlay;
     private MCGButtonWidget config;
 
-    public CoordinateFileManager() {
+
+    public CoordinateFileManager(CoordinateFolder baseFolder) {
         super(Text.literal("CoordinateFileManagerScreen"));
+
+        this.baseFolder = baseFolder;
     }
 
     @Override
     public void init() {
-        coordinateFileManagerWidget = new CoordinateFileManagerWidget(this.client, width / 3 * 2, height - 60, 40, this.height - 20, 15, 10, this, MCG.rootCoordinateFolder);
+        coordinateFileManagerWidget = new CoordinateFileManagerWidget(this.client, width / 3 * 2, height - 60, 40, this.height - 20, 15, 10, this, baseFolder);
         this.addSelectableChild(coordinateFileManagerWidget);
 
         openFile = new MCGButtonWidget(coordinateFileManagerWidget.getRight() + 5, coordinateFileManagerWidget.getTop(), coordinateFileManagerWidget.getButtonWidth(), 20, Text.translatable("mcg.button.openfile"), press -> coordinateFileManagerWidget.openFile());

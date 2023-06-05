@@ -61,7 +61,7 @@ public class CoordinateOperationsTest {
 
         Coordinate testSet = new Coordinate("test1", 1, 1, 1, "test2");
         file.addCoordinate(testSet);
-        assertThrows(IllegalArgumentException.class, () -> file.addCoordinate(testSet));
+        assertEquals(1, file.getCoordinates().size());
     }
 
     @Test()

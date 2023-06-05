@@ -21,7 +21,7 @@ public class MCG implements ClientModInitializer {
     public static final Config config = new Config();
 
     public static KeyBinding binding;
-    public static Screen managerScreenInstance = new CoordinateFileManager();
+    public static Screen managerScreenInstance;
 
     @Override
     public void onInitializeClient() {
@@ -33,6 +33,8 @@ public class MCG implements ClientModInitializer {
             Constants.LOGGER.error("Failed to create root coordinates folder.");
             throw new RuntimeException(e);
         }
+
+        managerScreenInstance = new CoordinateFileManager(rootCoordinateFolder);
 
         binding = KeyBindingHelper.registerKeyBinding(new KeyBinding(
                 "mcg.keybinding.main",

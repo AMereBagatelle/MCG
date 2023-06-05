@@ -51,7 +51,7 @@ public class CoordinatesManagerScreen extends Screen {
         this.addDrawableChild(overlayCoordinate);
         clearOverlay = new MCGButtonWidget(coordinateManagerWidget.getRight() + 5, overlayCoordinate.getBottom() + 5, coordinateManagerWidget.getButtonWidth(), 20, Text.translatable("mcg.coordinate.clearoverlay"), press -> CoordinateHudOverlay.INSTANCE.clearCoordinate());
         this.addDrawableChild(clearOverlay);
-        back = new MCGButtonWidget(coordinateManagerWidget.getRight() + 5, clearOverlay.getBottom() + 5, coordinateManagerWidget.getButtonWidth(), 20, Text.translatable("mcg.button.back"), press -> client.setScreen(new CoordinateFileManager()));
+        back = new MCGButtonWidget(coordinateManagerWidget.getRight() + 5, clearOverlay.getBottom() + 5, coordinateManagerWidget.getButtonWidth(), 20, Text.translatable("mcg.button.back"), press -> client.setScreen(new CoordinateFileManager(MCG.rootCoordinateFolder)));
         this.addDrawableChild(back);
     }
 
