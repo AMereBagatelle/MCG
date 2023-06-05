@@ -20,7 +20,7 @@ public class CoordinateFile {
     private final List<Coordinate> coordinates;
 
     public CoordinateFile(Path filePath) throws IOException {
-        if(!Files.exists(filePath)) Files.write(Files.createFile(filePath), "[]".getBytes());
+        if (!Files.exists(filePath)) Files.write(Files.createFile(filePath), "[]".getBytes());
         this.filePath = filePath;
 
         coordinates = loadCoordinates();
@@ -47,7 +47,7 @@ public class CoordinateFile {
         JsonArray coordinatesJson;
         try {
             coordinatesJson = Constants.GSON.fromJson(reader, JsonArray.class);
-        } catch(JsonSyntaxException e) {
+        } catch (JsonSyntaxException e) {
             return loadOldCoordinates();
         }
 
@@ -63,7 +63,7 @@ public class CoordinateFile {
 
     public void addCoordinate(Coordinate coordinate) throws IllegalArgumentException {
         // Update instead of just adding if a coordinate has the same name
-        if(!coordinates.stream().filter(coord -> Objects.equals(coord.name, coordinate.name)).toList().isEmpty()) {
+        if (!coordinates.stream().filter(coord -> Objects.equals(coord.name, coordinate.name)).toList().isEmpty()) {
             this.removeCoordinate(coordinate);
         }
 

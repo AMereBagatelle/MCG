@@ -1,6 +1,5 @@
 package amerebagatelle.github.io.mcg.gui.screen;
 
-import amerebagatelle.github.io.mcg.MCG;
 import amerebagatelle.github.io.mcg.coordinates.Coordinate;
 import amerebagatelle.github.io.mcg.coordinates.CoordinateFile;
 import amerebagatelle.github.io.mcg.gui.MCGListWidget;
@@ -14,7 +13,6 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 
 import java.io.IOException;
-import java.nio.file.Path;
 import java.util.List;
 import java.util.Objects;
 

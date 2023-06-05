@@ -1,7 +1,5 @@
 package amerebagatelle.github.io.mcg.coordinates;
 
-import net.minecraft.world.dimension.DimensionType;
-
 import java.util.Objects;
 
 public class Coordinate {

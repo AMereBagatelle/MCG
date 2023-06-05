@@ -1,6 +1,5 @@
 package amerebagatelle.github.io.mcg;
 
-import amerebagatelle.github.io.mcg.coordinates.Coordinate;
 import amerebagatelle.github.io.mcg.coordinates.CoordinateRoot;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;

@@ -1,7 +1,5 @@
 package amerebagatelle.github.io.mcg.coordinates;
 
-import net.fabricmc.loader.api.FabricLoader;
-
 import java.io.IOException;
 import java.nio.file.Path;
 

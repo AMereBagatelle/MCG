@@ -1,6 +1,5 @@
 package amerebagatelle.github.io.mcg.gui.screen;
 
-import amerebagatelle.github.io.mcg.MCG;
 import amerebagatelle.github.io.mcg.coordinates.Coordinate;
 import amerebagatelle.github.io.mcg.gui.MCGButtonWidget;
 import amerebagatelle.github.io.mcg.gui.overlay.ErrorDisplayOverlay;

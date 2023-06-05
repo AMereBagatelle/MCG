@@ -62,10 +62,10 @@ public class CoordinateFileCreationScreen extends Screen {
         try {
             if (fileType == FileType.FOLDER) {
                 var folder = parentFolder.getFolder(fileNameWidget.getText());
-                if(folder.isEmpty()) ErrorDisplayOverlay.INSTANCE.addError(I18n.translate("mcg.file.creationfail"));
+                if (folder.isEmpty()) ErrorDisplayOverlay.INSTANCE.addError(I18n.translate("mcg.file.creationfail"));
             } else {
                 var file = parentFolder.getFile(fileNameWidget.getText().endsWith(".json") ? fileNameWidget.getText() : fileNameWidget.getText() + ".json");
-                if(file.isEmpty()) ErrorDisplayOverlay.INSTANCE.addError(I18n.translate("mcg.file.creationfail"));
+                if (file.isEmpty()) ErrorDisplayOverlay.INSTANCE.addError(I18n.translate("mcg.file.creationfail"));
             }
         } catch (InvalidPathException e) {
             Constants.LOGGER.error("Invalid name for new coordinates file " + fileNameWidget.getText());

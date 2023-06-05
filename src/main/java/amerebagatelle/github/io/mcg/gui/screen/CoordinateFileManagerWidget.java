@@ -1,20 +1,16 @@
 package amerebagatelle.github.io.mcg.gui.screen;
 
-import amerebagatelle.github.io.mcg.MCG;
 import amerebagatelle.github.io.mcg.coordinates.CoordinateFile;
 import amerebagatelle.github.io.mcg.coordinates.CoordinateFolder;
 import amerebagatelle.github.io.mcg.gui.MCGListWidget;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.AlwaysSelectedEntryListWidget;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Paths;
 import java.util.Objects;
 
 public class CoordinateFileManagerWidget extends MCGListWidget<CoordinateFileManagerWidget.Entry> {
@@ -69,7 +65,7 @@ public class CoordinateFileManagerWidget extends MCGListWidget<CoordinateFileMan
     public void removeFile() {
         try {
             var selected = this.getSelectedOrNull();
-            if(selected instanceof FileEntry) {
+            if (selected instanceof FileEntry) {
                 folder.getFile(selected.getName()).orElseThrow().delete();
             } else if (selected instanceof FolderEntry) {
                 folder.getFolder(selected.getName()).orElseThrow().delete();

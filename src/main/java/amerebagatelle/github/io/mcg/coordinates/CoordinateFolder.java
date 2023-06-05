@@ -1,14 +1,14 @@
 package amerebagatelle.github.io.mcg.coordinates;
 
-import net.fabricmc.loader.api.FabricLoader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Optional;
 
 public class CoordinateFolder {
     protected final CoordinateFolder parent;
@@ -29,7 +29,7 @@ public class CoordinateFolder {
      */
     public void delete() throws IOException {
         Files.createDirectories(folder);
-        try(var files = Files.walk(folder)) {
+        try (var files = Files.walk(folder)) {
             files.sorted(Comparator.reverseOrder())
                     .forEach(path -> {
                         try {
@@ -60,7 +60,7 @@ public class CoordinateFolder {
     }
 
     public List<CoordinateFile> listFiles() {
-        try(var pathStream = Files.list(folder)) {
+        try (var pathStream = Files.list(folder)) {
             return pathStream.filter(Files::isRegularFile).map((path) -> {
                 try {
                     return new CoordinateFile(path);
@@ -75,7 +75,7 @@ public class CoordinateFolder {
     }
 
     public List<CoordinateFolder> listFolders() {
-        try(var pathStream = Files.list(folder).filter((other) -> !other.equals(folder))) {
+        try (var pathStream = Files.list(folder).filter((other) -> !other.equals(folder))) {
             return pathStream.filter(Files::isDirectory).map((path) -> {
                 try {
                     return new CoordinateFolder(this, path);
