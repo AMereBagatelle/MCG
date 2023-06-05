@@ -64,7 +64,7 @@ public class CoordinateFileManager extends Screen {
     public void updateButtonStates() {
         openFile.active = coordinateFileManagerWidget.hasFileSelected();
         removeFile.active = coordinateFileManagerWidget.hasSelected();
-        returnFolder.active = coordinateFileManagerWidget.getCurrentFolder() instanceof CoordinateRoot;
+        returnFolder.active = !(coordinateFileManagerWidget.getCurrentFolder() instanceof CoordinateRoot);
     }
 
     @Override

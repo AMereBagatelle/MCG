@@ -18,7 +18,7 @@ import java.nio.file.Paths;
 import java.util.Objects;
 
 public class CoordinateFileManagerWidget extends MCGListWidget<CoordinateFileManagerWidget.Entry> {
-    private CoordinateFileManager parent;
+    private final CoordinateFileManager parent;
     private CoordinateFolder folder;
 
     public CoordinateFileManagerWidget(MinecraftClient minecraftClient, int width, int height, int top, int bottom, int itemHeight, int left, CoordinateFileManager parent, CoordinateFolder folder) {
@@ -68,7 +68,12 @@ public class CoordinateFileManagerWidget extends MCGListWidget<CoordinateFileMan
 
     public void removeFile() {
         try {
-            folder.getFile(Objects.requireNonNull(this.getSelectedOrNull()).getName()).get().delete();
+            var selected = this.getSelectedOrNull();
+            if(selected instanceof FileEntry) {
+                folder.getFile(selected.getName()).orElseThrow().delete();
+            } else if (selected instanceof FolderEntry) {
+                folder.getFolder(selected.getName()).orElseThrow().delete();
+            }
         } catch (IOException e) {
             parent.reportError("Could not delete file %s.".formatted(Objects.requireNonNull(this.getSelectedOrNull()).getName()));
         }
@@ -84,7 +89,8 @@ public class CoordinateFileManagerWidget extends MCGListWidget<CoordinateFileMan
     }
 
     public void enterFolder(String folderName) {
-        this.folder = folder.getFolder(folderName).orElse(MCG.rootCoordinateFolder);
+        this.folder = folder.getFolder(folderName).orElseThrow();
+        updateEntries(this.folder);
     }
 
     public void backUpFolder() {
@@ -105,7 +111,7 @@ public class CoordinateFileManagerWidget extends MCGListWidget<CoordinateFileMan
 
         @Override
         public void render(MatrixStack matrices, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
-            drawTextWithShadow(matrices, client.textRenderer, name.replace(".coordinates", ""), x + 5, y + entryHeight / 2 - 4, 0xFFFFFF);
+            drawTextWithShadow(matrices, client.textRenderer, name.substring(0, name.lastIndexOf('.')), x + 5, y + entryHeight / 2 - 4, 0xFFFFFF);
         }
 
         @Override

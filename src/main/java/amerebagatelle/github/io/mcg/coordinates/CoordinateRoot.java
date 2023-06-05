@@ -11,7 +11,7 @@ public class CoordinateRoot extends CoordinateFolder {
     }
 
     public String getRootRelativePath(CoordinateFolder folder) {
-        return folder.folder.relativize(this.folder).toString();
+        return this.folder.relativize(folder.folder).toString();
     }
 
     @Override

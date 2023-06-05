@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.nio.file.Path;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class CoordinateLoadingTest {
@@ -20,14 +21,14 @@ public class CoordinateLoadingTest {
 
     @Test()
     void loadNewCoordinateSet() {
-        var file = root.getFile("testCoordinates.json").orElseThrow();
+        var file = assertDoesNotThrow(() -> root.getFile("testCoordinates.json").orElseThrow());
 
         assertFalse(file.getCoordinates().isEmpty());
     }
 
     @Test()
     void loadOldCoordinateSet() {
-        var file = root.getFile("oldStyleCoordinates.coordinates").orElseThrow();
+        var file = assertDoesNotThrow(() -> root.getFile("oldStyleCoordinates.coordinates").orElseThrow());
 
         assertFalse(file.getCoordinates().isEmpty());
     }

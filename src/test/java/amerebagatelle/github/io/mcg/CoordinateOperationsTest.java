@@ -37,7 +37,7 @@ public class CoordinateOperationsTest {
     CoordinateFile getTestFile() {
         var file = root.getFile("test.json");
 
-        assumeTrue(file.isPresent(), "File was non-existent.  Ignore if CI.");
+        assumeTrue(file.isPresent(), "File was non-existent.  Assuming there were problems, not worried about it.");
 
         return file.get();
     }
