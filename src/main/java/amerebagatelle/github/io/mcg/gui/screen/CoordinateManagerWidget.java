@@ -47,7 +47,13 @@ public class CoordinateManagerWidget extends MCGListWidget<CoordinateManagerWidg
     }
 
     public void removeCoordinate() {
-        if (!file.removeCoordinate(((CoordinateEntry) Objects.requireNonNull(this.getSelectedOrNull())).coordinate)) {
+        if (file.removeCoordinate(((CoordinateEntry) Objects.requireNonNull(this.getSelectedOrNull())).coordinate)) {
+            try {
+                file.save();
+            } catch (IOException e) {
+                parent.reportError(I18n.translate("mcg.coordinate.removefail"));
+            }
+        } else {
             parent.reportError(I18n.translate("mcg.coordinate.removefail"));
         }
         refreshEntries();
@@ -78,7 +84,7 @@ public class CoordinateManagerWidget extends MCGListWidget<CoordinateManagerWidg
         Objects.requireNonNull(client.player);
         if (client.player.isCreativeLevelTwoOp()) {
             Coordinate coordinateSet = ((CoordinateEntry) Objects.requireNonNull(this.getSelectedOrNull())).coordinate;
-            client.player.teleport(coordinateSet.x, coordinateSet.y, coordinateSet.z);
+            client.player.networkHandler.sendChatCommand("tp %s %s %s".formatted(coordinateSet.x, coordinateSet.y, coordinateSet.z));
         } else {
             parent.reportError(I18n.translate("commands.help.failed"));
         }

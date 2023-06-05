@@ -62,9 +62,9 @@ public class CoordinateFile {
     }
 
     public void addCoordinate(Coordinate coordinate) throws IllegalArgumentException {
-        // Sanity checking
+        // Update instead of just adding if a coordinate has the same name
         if(!coordinates.stream().filter(coord -> Objects.equals(coord.name, coordinate.name)).toList().isEmpty()) {
-            throw new IllegalArgumentException("New coordinate set cannot have the same name as another coordinate set.");
+            this.removeCoordinate(coordinate);
         }
 
         coordinates.add(coordinate);

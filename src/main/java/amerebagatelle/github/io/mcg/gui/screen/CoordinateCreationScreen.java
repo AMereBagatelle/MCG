@@ -110,7 +110,8 @@ public class CoordinateCreationScreen extends Screen {
         try {
             Coordinate set = parseCoordinate(nameField.getText(), xField.getText(), yField.getText(), zField.getText(), descriptionField.getText());
             parent.getFile().addCoordinate(set);
-        } catch (NumberFormatException e) {
+            parent.getFile().save();
+        } catch (NumberFormatException | IOException e) {
             e.printStackTrace();
             parent.reportError(I18n.translate("mcg.coordinate.creationfail"));
         }
