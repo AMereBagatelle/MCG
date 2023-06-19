@@ -2,8 +2,8 @@ package amerebagatelle.github.io.mcg.gui;
 
 import amerebagatelle.github.io.mcg.utils.RenderUtils;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.widget.ButtonWidget;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 
 import java.util.function.Supplier;
@@ -14,10 +14,10 @@ public class MCGButtonWidget extends ButtonWidget {
     }
 
     @Override
-    public void renderButton(MatrixStack matrices, int mouseX, int mouseY, float delta) {
+    public void renderButton(DrawContext context, int mouseX, int mouseY, float delta) {
         float darkness = this.isHovered() && active ? 0.1f : 0.3f;
         RenderUtils.drawBox(this.getX(), this.getY(), this.width, this.height, 1f, 1f, 1f, darkness);
-        drawCenteredTextWithShadow(matrices, MinecraftClient.getInstance().textRenderer, this.getMessage().getString(), this.getX() + (this.width / 2), this.getY() + (this.height / 2) - 5, active ? 0xFFFFFF : 0xAAAAAA);
+        context.drawCenteredTextWithShadow(MinecraftClient.getInstance().textRenderer, this.getMessage().getString(), this.getX() + (this.width / 2), this.getY() + (this.height / 2) - 5, active ? 0xFFFFFF : 0xAAAAAA);
     }
 
     public int getBottom() {

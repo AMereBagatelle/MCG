@@ -7,9 +7,9 @@ import amerebagatelle.github.io.mcg.coordinates.CoordinateRoot;
 import amerebagatelle.github.io.mcg.gui.MCGButtonWidget;
 import amerebagatelle.github.io.mcg.gui.overlay.CoordinateHudOverlay;
 import amerebagatelle.github.io.mcg.gui.overlay.ErrorDisplayOverlay;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.resource.language.I18n;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 
@@ -57,13 +57,13 @@ public class CoordinateFileManager extends Screen {
     }
 
     @Override
-    public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
+    public void render(DrawContext context, int mouseX, int mouseY, float delta) {
         updateButtonStates();
-        this.renderBackground(matrices);
-        drawCenteredTextWithShadow(matrices, textRenderer, I18n.translate("mcg.file.managertitle"), width / 2, 10, 0xFFFFFF);
-        drawTextWithShadow(matrices, textRenderer, String.format("%s" + MCG.rootCoordinateFolder.getRootRelativePath(coordinateFileManagerWidget.getCurrentFolder()), Formatting.BLUE), coordinateFileManagerWidget.getLeft(), coordinateFileManagerWidget.getTop() - 10, 0xFFFFFF);
-        coordinateFileManagerWidget.render(matrices, mouseX, mouseY, delta);
-        super.render(matrices, mouseX, mouseY, delta);
+        this.renderBackground(context);
+        context.drawCenteredTextWithShadow(textRenderer, I18n.translate("mcg.file.managertitle"), width / 2, 10, 0xFFFFFF);
+        context.drawTextWithShadow(textRenderer, String.format("%s" + MCG.rootCoordinateFolder.getRootRelativePath(coordinateFileManagerWidget.getCurrentFolder()), Formatting.BLUE), coordinateFileManagerWidget.getLeft(), coordinateFileManagerWidget.getTop() - 10, 0xFFFFFF);
+        coordinateFileManagerWidget.render(context, mouseX, mouseY, delta);
+        super.render(context, mouseX, mouseY, delta);
     }
 
     public void updateButtonStates() {

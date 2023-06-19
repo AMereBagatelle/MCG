@@ -2,8 +2,8 @@ package amerebagatelle.github.io.mcg.gui;
 
 import amerebagatelle.github.io.mcg.utils.RenderUtils;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.widget.AlwaysSelectedEntryListWidget;
-import net.minecraft.client.util.math.MatrixStack;
 
 import java.util.Objects;
 
@@ -14,10 +14,10 @@ public class MCGListWidget<E extends AlwaysSelectedEntryListWidget.Entry<E>> ext
     }
 
     @Override
-    public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
+    public void render(DrawContext context, int mouseX, int mouseY, float delta) {
         RenderUtils.drawBox(left, top, width, height, 0.1f, 0.1f, 0.1f, 0.30f);
-        this.renderList(matrices, mouseX, mouseY, delta);
-        this.renderDecorations(matrices, mouseX, mouseY);
+        this.renderList(context, mouseX, mouseY, delta);
+        this.renderDecorations(context, mouseX, mouseY);
     }
 
     public int getLeft() {

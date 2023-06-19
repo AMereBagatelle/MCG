@@ -4,10 +4,10 @@ import amerebagatelle.github.io.mcg.Constants;
 import amerebagatelle.github.io.mcg.coordinates.CoordinateFolder;
 import amerebagatelle.github.io.mcg.gui.MCGButtonWidget;
 import amerebagatelle.github.io.mcg.gui.overlay.ErrorDisplayOverlay;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.resource.language.I18n;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 
 import java.nio.file.InvalidPathException;
@@ -44,13 +44,13 @@ public class CoordinateFileCreationScreen extends Screen {
     }
 
     @Override
-    public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
+    public void render(DrawContext context, int mouseX, int mouseY, float delta) {
         updateButtonStates();
-        this.renderBackground(matrices);
-        drawCenteredTextWithShadow(matrices, textRenderer, I18n.translate("mcg.file.new" + fileType.name().toLowerCase()), this.width / 2, 50, 0xFFFFFF);
-        fileNameWidget.render(matrices, mouseX, mouseY, delta);
-        super.render(matrices, mouseX, mouseY, delta);
-        ErrorDisplayOverlay.INSTANCE.render(matrices, height);
+        this.renderBackground(context);
+        context.drawCenteredTextWithShadow(textRenderer, I18n.translate("mcg.file.new" + fileType.name().toLowerCase()), this.width / 2, 50, 0xFFFFFF);
+        fileNameWidget.render(context, mouseX, mouseY, delta);
+        super.render(context, mouseX, mouseY, delta);
+        ErrorDisplayOverlay.INSTANCE.render(context, height);
     }
 
     @Override

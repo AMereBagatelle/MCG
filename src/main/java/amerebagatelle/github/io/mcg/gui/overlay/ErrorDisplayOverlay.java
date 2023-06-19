@@ -1,8 +1,7 @@
 package amerebagatelle.github.io.mcg.gui.overlay;
 
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawableHelper;
-import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.gui.DrawContext;
 
 import java.util.LinkedList;
 
@@ -14,10 +13,10 @@ public class ErrorDisplayOverlay {
     public ErrorDisplayOverlay() {
     }
 
-    public void render(MatrixStack matrices, int windowHeight) {
+    public void render(DrawContext context, int windowHeight) {
         for (int i = 0; i < errors.size(); i++) {
             int height = windowHeight - 15 - (i * 20);
-            DrawableHelper.drawTextWithShadow(matrices, client.textRenderer, errors.get(i).getError(), 10, height, 16711680);
+            context.drawTextWithShadow(client.textRenderer, errors.get(i).getError(), 10, height, 16711680);
         }
         if (errors.size() > 10) {
             errors.removeLast();

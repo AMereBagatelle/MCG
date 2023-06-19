@@ -7,9 +7,9 @@ import amerebagatelle.github.io.mcg.gui.overlay.CoordinateHudOverlay;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.widget.AlwaysSelectedEntryListWidget;
 import net.minecraft.client.resource.language.I18n;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 
 import java.io.IOException;
@@ -106,13 +106,13 @@ public class CoordinateManagerWidget extends MCGListWidget<CoordinateManagerWidg
         }
 
         @Override
-        public void render(MatrixStack matrices, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
+        public void render(DrawContext context, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
             int drawY = y + entryHeight / 2 - 5;
-            drawTextWithShadow(matrices, client.textRenderer, coordinate.name, x + 5, drawY, 0xFFFFFF);
+            context.drawTextWithShadow(client.textRenderer, coordinate.name, x + 5, drawY, 0xFFFFFF);
             int drawX = x + entryWidth / 2;
-            drawTextWithShadow(matrices, client.textRenderer, Integer.toString(coordinate.x), drawX - 50, drawY, 0xFFFFFF);
-            drawTextWithShadow(matrices, client.textRenderer, Integer.toString(coordinate.y), drawX + 30, drawY, 0xFFFFFF);
-            drawTextWithShadow(matrices, client.textRenderer, Integer.toString(coordinate.z), drawX + 110, drawY, 0xFFFFFF);
+            context.drawTextWithShadow(client.textRenderer, Integer.toString(coordinate.x), drawX - 50, drawY, 0xFFFFFF);
+            context.drawTextWithShadow(client.textRenderer, Integer.toString(coordinate.y), drawX + 30, drawY, 0xFFFFFF);
+            context.drawTextWithShadow(client.textRenderer, Integer.toString(coordinate.z), drawX + 110, drawY, 0xFFFFFF);
         }
 
         @Override

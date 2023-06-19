@@ -6,8 +6,8 @@ import amerebagatelle.github.io.mcg.gui.MCGListWidget;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.widget.AlwaysSelectedEntryListWidget;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 
 import java.io.IOException;
@@ -106,8 +106,8 @@ public class CoordinateFileManagerWidget extends MCGListWidget<CoordinateFileMan
         }
 
         @Override
-        public void render(MatrixStack matrices, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
-            drawTextWithShadow(matrices, client.textRenderer, name.substring(0, name.lastIndexOf('.')), x + 5, y + entryHeight / 2 - 4, 0xFFFFFF);
+        public void render(DrawContext context, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
+            context.drawTextWithShadow(client.textRenderer, name.substring(0, name.lastIndexOf('.')), x + 5, y + entryHeight / 2 - 4, 0xFFFFFF);
         }
 
         @Override
@@ -133,8 +133,8 @@ public class CoordinateFileManagerWidget extends MCGListWidget<CoordinateFileMan
         }
 
         @Override
-        public void render(MatrixStack matrices, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
-            drawTextWithShadow(matrices, client.textRenderer, name + "/", x + 5, y + entryHeight / 2 - 4, 0xFFFFFF);
+        public void render(DrawContext context, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
+            context.drawTextWithShadow(client.textRenderer, name + "/", x + 5, y + entryHeight / 2 - 4, 0xFFFFFF);
         }
 
         @Override

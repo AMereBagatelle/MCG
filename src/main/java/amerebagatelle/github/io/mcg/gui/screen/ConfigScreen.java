@@ -3,10 +3,10 @@ package amerebagatelle.github.io.mcg.gui.screen;
 import amerebagatelle.github.io.mcg.MCG;
 import amerebagatelle.github.io.mcg.gui.MCGButtonWidget;
 import amerebagatelle.github.io.mcg.utils.Config;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.resource.language.I18n;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 
 import java.util.Objects;
@@ -47,20 +47,20 @@ public class ConfigScreen extends Screen {
     }
 
     @Override
-    public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
+    public void render(DrawContext context, int mouseX, int mouseY, float delta) {
         confirmButton.active = overlayXField.getText().length() > 0 && overlayYField.getText().length() > 0;
-        this.renderBackground(matrices);
+        this.renderBackground(context);
 
-        drawCenteredTextWithShadow(matrices, textRenderer, I18n.translate("mcg.config.configTitle"), width / 2, 10, 0xFFFFFF);
+        context.drawCenteredTextWithShadow(textRenderer, I18n.translate("mcg.config.configTitle"), width / 2, 10, 0xFFFFFF);
 
-        drawTextWithShadow(matrices, textRenderer, I18n.translate("mcg.button.overlayX"), overlayXField.getX(), overlayXField.getY() - 10, 0xFFFFFF);
-        overlayXField.render(matrices, mouseX, mouseY, delta);
-        drawTextWithShadow(matrices, textRenderer, I18n.translate("mcg.button.overlayY"), overlayYField.getX(), overlayYField.getY() - 10, 0xFFFFFF);
-        overlayYField.render(matrices, mouseX, mouseY, delta);
-        drawTextWithShadow(matrices, textRenderer, I18n.translate("mcg.button.overlayFormat"), overlayFormatField.getX(), overlayFormatField.getY() - 10, 0xFFFFFF);
-        overlayFormatField.render(matrices, mouseX, mouseY, delta);
+        context.drawTextWithShadow(textRenderer, I18n.translate("mcg.button.overlayX"), overlayXField.getX(), overlayXField.getY() - 10, 0xFFFFFF);
+        overlayXField.render(context, mouseX, mouseY, delta);
+        context.drawTextWithShadow(textRenderer, I18n.translate("mcg.button.overlayY"), overlayYField.getX(), overlayYField.getY() - 10, 0xFFFFFF);
+        overlayYField.render(context, mouseX, mouseY, delta);
+        context.drawTextWithShadow(textRenderer, I18n.translate("mcg.button.overlayFormat"), overlayFormatField.getX(), overlayFormatField.getY() - 10, 0xFFFFFF);
+        overlayFormatField.render(context, mouseX, mouseY, delta);
 
-        super.render(matrices, mouseX, mouseY, delta);
+        super.render(context, mouseX, mouseY, delta);
     }
 
     private void confirm() {
