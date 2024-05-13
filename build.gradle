@@ -1,21 +1,12 @@
 plugins {
     id 'fabric-loom' version '1.+'
     id 'maven-publish'
-    id "com.modrinth.minotaur" version "2+"
 }
 
 archivesBaseName = project.archives_base_name + "-" + project.minecraft_version
 version = project.mod_version
 
 repositories {
-    maven {
-        name = "Modrinth"
-        url = "https://api.modrinth.com/maven"
-
-        content {
-            includeGroup "maven.modrinth"
-        }
-    }
 }
 
 dependencies {
@@ -50,17 +41,4 @@ java {
 
 test {
     useJUnitPlatform()
-}
-
-modrinth {
-    token = System.getenv('MODRINTH_TOKEN')
-    projectId = 'eVXHt0JE'
-    versionName = "${project.archives_base_name} ${project.version}"
-    versionNumber = project.version
-    changelog = System.getenv('CHANGELOG_BODY')
-    versionType = 'release'
-    uploadFile = remapJar
-    gameVersions = ["${project.minecraft_version}"]
-    loaders = ['fabric']
-    syncBodyFrom = rootProject.file("README.md").text
 }

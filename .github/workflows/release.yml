@@ -8,6 +8,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Dump GitHub context
         env:
@@ -22,13 +24,13 @@ jobs:
           distribution: 'temurin'
       - name: Build
         run: ./gradlew build
-      - name: Publish to Modrinth
-        run: ./gradlew modrinth
-        env:
-          MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
-          CHANGELOG_BODY: ${{ github.event.release.body }}
-      - name: Upload assets to release
-        uses: AButler/upload-release-assets@v3.0
+      - name: Publish Assets to Platforms
+        uses: Kir-Antipov/mc-publish@v3.3
         with:
-          files: 'build/libs/*'
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          modrinth-id: eVXHt0JE
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+
+          curseforge-id: 396948
+          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+
+          github-token: ${{ secrets.GITHUB_TOKEN }}
