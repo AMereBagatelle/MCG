@@ -8,39 +8,34 @@ import net.minecraft.client.gui.widget.AlwaysSelectedEntryListWidget;
 import java.util.Objects;
 
 public class MCGListWidget<E extends AlwaysSelectedEntryListWidget.Entry<E>> extends AlwaysSelectedEntryListWidget<E> {
-    public MCGListWidget(MinecraftClient minecraftClient, int width, int height, int top, int bottom, int itemHeight, int left) {
-        super(minecraftClient, width, height, top, bottom, itemHeight);
-        this.left = left;
+    public MCGListWidget(MinecraftClient minecraftClient, int width, int height, int y, int itemHeight) {
+        super(minecraftClient, width, height, y, itemHeight);
     }
 
     @Override
-    public void render(DrawContext context, int mouseX, int mouseY, float delta) {
-        RenderUtils.drawBox(left, top, width, height, 0.1f, 0.1f, 0.1f, 0.30f);
+    public void renderWidget(DrawContext context, int mouseX, int mouseY, float delta) {
+        RenderUtils.drawBox(getX(), getY(), width, height, 0.1f, 0.1f, 0.1f, 0.50f);
         this.renderList(context, mouseX, mouseY, delta);
         this.renderDecorations(context, mouseX, mouseY);
     }
 
     public int getLeft() {
-        return left;
+        return getX();
     }
 
     public int getRight() {
-        return left + width;
+        return getX() + width;
     }
 
     public int getTop() {
-        return top;
-    }
-
-    public int getWidth() {
-        return width;
+        return getY();
     }
 
     public int getBottom() {
-        return top + height;
+        return getY() + height;
     }
 
     public int getButtonWidth() {
-        return Objects.requireNonNull(client.currentScreen).width - left - width - 10;
+        return Objects.requireNonNull(client.currentScreen).width - getX() - width - 10;
     }
 }

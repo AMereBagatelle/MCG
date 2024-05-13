@@ -46,10 +46,9 @@ public class CoordinateFileCreationScreen extends Screen {
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
         updateButtonStates();
-        this.renderBackground(context);
+        super.render(context, mouseX, mouseY, delta);
         context.drawCenteredTextWithShadow(textRenderer, I18n.translate("mcg.file.new" + fileType.name().toLowerCase()), this.width / 2, 50, 0xFFFFFF);
         fileNameWidget.render(context, mouseX, mouseY, delta);
-        super.render(context, mouseX, mouseY, delta);
         ErrorDisplayOverlay.INSTANCE.render(context, height);
     }
 
@@ -79,6 +78,6 @@ public class CoordinateFileCreationScreen extends Screen {
     }
 
     private void updateButtonStates() {
-        confirmButton.active = fileNameWidget.getText().length() != 0;
+        confirmButton.active = !fileNameWidget.getText().isEmpty();
     }
 }

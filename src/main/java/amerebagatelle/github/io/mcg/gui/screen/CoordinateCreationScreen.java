@@ -80,7 +80,7 @@ public class CoordinateCreationScreen extends Screen {
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
         updateButtonStates();
-        this.renderBackground(context);
+        super.render(context, mouseX, mouseY, delta);
         context.drawCenteredTextWithShadow(textRenderer, I18n.translate("mcg.coordinate.creationtitle"), width / 2, 10, 0xFFFFFF);
         context.drawTextWithShadow(textRenderer, I18n.translate("mcg.button.name"), nameField.getX(), nameField.getY() - 10, 0xFFFFFF);
         nameField.render(context, mouseX, mouseY, delta);
@@ -92,12 +92,11 @@ public class CoordinateCreationScreen extends Screen {
         zField.render(context, mouseX, mouseY, delta);
         context.drawTextWithShadow(textRenderer, I18n.translate("mcg.button.description"), descriptionField.getX(), descriptionField.getY() - 10, 0xFFFFFF);
         descriptionField.render(context, mouseX, mouseY, delta);
-        super.render(context, mouseX, mouseY, delta);
         ErrorDisplayOverlay.INSTANCE.render(context, height);
     }
 
     private void updateButtonStates() {
-        confirmButton.active = nameField.getText().length() != 0 && xField.getText().length() != 0 && yField.getText().length() != 0 && zField.getText().length() != 0;
+        confirmButton.active = !nameField.getText().isEmpty() && !xField.getText().isEmpty() && !yField.getText().isEmpty() && !zField.getText().isEmpty();
     }
 
     @Override

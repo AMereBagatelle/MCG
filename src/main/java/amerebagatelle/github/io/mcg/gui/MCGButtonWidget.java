@@ -14,8 +14,8 @@ public class MCGButtonWidget extends ButtonWidget {
     }
 
     @Override
-    public void renderButton(DrawContext context, int mouseX, int mouseY, float delta) {
-        float darkness = this.isHovered() && active ? 0.1f : 0.3f;
+    public void renderWidget(DrawContext context, int mouseX, int mouseY, float delta) {
+        float darkness = this.isHovered() && active ? 0.4f : 0.5f;
         RenderUtils.drawBox(this.getX(), this.getY(), this.width, this.height, 1f, 1f, 1f, darkness);
         context.drawCenteredTextWithShadow(MinecraftClient.getInstance().textRenderer, this.getMessage().getString(), this.getX() + (this.width / 2), this.getY() + (this.height / 2) - 5, active ? 0xFFFFFF : 0xAAAAAA);
     }

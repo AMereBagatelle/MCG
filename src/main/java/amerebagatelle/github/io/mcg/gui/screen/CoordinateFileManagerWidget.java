@@ -17,8 +17,8 @@ public class CoordinateFileManagerWidget extends MCGListWidget<CoordinateFileMan
     private final CoordinateFileManager parent;
     private CoordinateFolder folder;
 
-    public CoordinateFileManagerWidget(MinecraftClient minecraftClient, int width, int height, int top, int bottom, int itemHeight, int left, CoordinateFileManager parent, CoordinateFolder folder) {
-        super(minecraftClient, width, height, top, bottom, itemHeight, left);
+    public CoordinateFileManagerWidget(MinecraftClient minecraftClient, int width, int height, int y, int itemHeight, CoordinateFileManager parent, CoordinateFolder folder) {
+        super(minecraftClient, width, height, y, itemHeight);
         this.parent = parent;
         this.folder = folder;
         this.updateEntries(folder);

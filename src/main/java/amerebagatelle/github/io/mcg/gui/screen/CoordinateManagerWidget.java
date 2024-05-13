@@ -20,8 +20,8 @@ public class CoordinateManagerWidget extends MCGListWidget<CoordinateManagerWidg
     private CoordinateFile file;
     private final CoordinatesManagerScreen parent;
 
-    public CoordinateManagerWidget(MinecraftClient minecraftClient, CoordinatesManagerScreen parent, int width, int height, int top, int bottom, int itemHeight, int left) {
-        super(minecraftClient, width, height, top, bottom, itemHeight, left);
+    public CoordinateManagerWidget(MinecraftClient minecraftClient, CoordinatesManagerScreen parent, int width, int height, int y, int itemHeight) {
+        super(minecraftClient, width, height, y, itemHeight);
         this.parent = parent;
     }
 

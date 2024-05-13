@@ -36,7 +36,7 @@ public class ConfigScreen extends Screen {
         overlayYField.setText(Integer.toString(MCG.config.overlayY));
         this.addSelectableChild(overlayYField);
 
-        overlayFormatField = new TextFieldWidget(textRenderer, 20, 120, 200, 20, Text.translatable("mcg.button.overlayFormat"));
+        overlayFormatField = new TextFieldWidget(textRenderer, 20, 120, 200, 20, Text.translatable("mcg.button.overlayField"));
         overlayFormatField.setText(MCG.config.overlayFormat);
         this.addSelectableChild(overlayFormatField);
 
@@ -48,8 +48,8 @@ public class ConfigScreen extends Screen {
 
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
-        confirmButton.active = overlayXField.getText().length() > 0 && overlayYField.getText().length() > 0;
-        this.renderBackground(context);
+        confirmButton.active = !overlayXField.getText().isEmpty() && !overlayYField.getText().isEmpty();
+        this.renderBackground(context, mouseX, mouseY, delta);
 
         context.drawCenteredTextWithShadow(textRenderer, I18n.translate("mcg.config.configTitle"), width / 2, 10, 0xFFFFFF);
 
@@ -57,7 +57,7 @@ public class ConfigScreen extends Screen {
         overlayXField.render(context, mouseX, mouseY, delta);
         context.drawTextWithShadow(textRenderer, I18n.translate("mcg.button.overlayY"), overlayYField.getX(), overlayYField.getY() - 10, 0xFFFFFF);
         overlayYField.render(context, mouseX, mouseY, delta);
-        context.drawTextWithShadow(textRenderer, I18n.translate("mcg.button.overlayFormat"), overlayFormatField.getX(), overlayFormatField.getY() - 10, 0xFFFFFF);
+        context.drawTextWithShadow(textRenderer, I18n.translate("mcg.button.overlayField"), overlayFormatField.getX(), overlayFormatField.getY() - 10, 0xFFFFFF);
         overlayFormatField.render(context, mouseX, mouseY, delta);
 
         super.render(context, mouseX, mouseY, delta);

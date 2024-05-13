@@ -36,7 +36,7 @@ public class CoordinatesManagerScreen extends Screen {
     public void init() {
         Objects.requireNonNull(client);
 
-        coordinateManagerWidget = new CoordinateManagerWidget(client, this, width / 3 * 2, height - 60, 40, this.height - 20, 15, 10);
+        coordinateManagerWidget = new CoordinateManagerWidget(client, this, width / 3 * 2, height - 60, 40, 20);
         coordinateManagerWidget.setFile(file);
         this.addSelectableChild(coordinateManagerWidget);
         newCoordinate = new MCGButtonWidget(coordinateManagerWidget.getRight() + 5, coordinateManagerWidget.getTop(), coordinateManagerWidget.getButtonWidth(), 20, Text.translatable("mcg.coordinate.newcoordinate"), press -> coordinateManagerWidget.newCoordinate(this));
@@ -58,7 +58,7 @@ public class CoordinatesManagerScreen extends Screen {
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
         updateButtonStates();
-        this.renderBackground(context);
+        super.render(context, mouseX, mouseY, delta);
         context.drawCenteredTextWithShadow(textRenderer, I18n.translate("mcg.coordinate.coordinatesof") + file.getName().substring(0, file.getName().lastIndexOf(".")), width / 2, 10, 0xFFFFFF);
         coordinateManagerWidget.render(context, mouseX, mouseY, delta);
 
@@ -78,7 +78,6 @@ public class CoordinatesManagerScreen extends Screen {
             context.drawTextWithShadow(textRenderer, "Y: " + netherCoords.y, coordinateManagerWidget.getRight() + 5, drawY + 110, 0xFFFFFF);
             context.drawTextWithShadow(textRenderer, "Z: " + netherCoords.z, coordinateManagerWidget.getRight() + 5, drawY + 120, 0xFFFFFF);
         }
-        super.render(context, mouseX, mouseY, delta);
         ErrorDisplayOverlay.INSTANCE.render(context, height);
     }
 

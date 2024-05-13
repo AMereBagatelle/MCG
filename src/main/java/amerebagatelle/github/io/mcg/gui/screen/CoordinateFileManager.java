@@ -37,7 +37,7 @@ public class CoordinateFileManager extends Screen {
 
     @Override
     public void init() {
-        coordinateFileManagerWidget = new CoordinateFileManagerWidget(this.client, width / 3 * 2, height - 60, 40, this.height - 20, 15, 10, this, baseFolder);
+        coordinateFileManagerWidget = new CoordinateFileManagerWidget(this.client, width / 3 * 2, height - 60, 40, 20, this, baseFolder);
         this.addSelectableChild(coordinateFileManagerWidget);
 
         openFile = new MCGButtonWidget(coordinateFileManagerWidget.getRight() + 5, coordinateFileManagerWidget.getTop(), coordinateFileManagerWidget.getButtonWidth(), 20, Text.translatable("mcg.button.openfile"), press -> coordinateFileManagerWidget.openFile());
@@ -59,11 +59,10 @@ public class CoordinateFileManager extends Screen {
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
         updateButtonStates();
-        this.renderBackground(context);
+        super.render(context, mouseX, mouseY, delta);
         context.drawCenteredTextWithShadow(textRenderer, I18n.translate("mcg.file.managertitle"), width / 2, 10, 0xFFFFFF);
         context.drawTextWithShadow(textRenderer, String.format("%s" + MCG.rootCoordinateFolder.getRootRelativePath(coordinateFileManagerWidget.getCurrentFolder()), Formatting.BLUE), coordinateFileManagerWidget.getLeft(), coordinateFileManagerWidget.getTop() - 10, 0xFFFFFF);
         coordinateFileManagerWidget.render(context, mouseX, mouseY, delta);
-        super.render(context, mouseX, mouseY, delta);
     }
 
     public void updateButtonStates() {
