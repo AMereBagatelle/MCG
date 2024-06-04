@@ -48,8 +48,8 @@ public class ConfigScreen extends Screen {
 
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
+        super.render(context, mouseX, mouseY, delta);
         confirmButton.active = !overlayXField.getText().isEmpty() && !overlayYField.getText().isEmpty();
-        this.renderBackground(context, mouseX, mouseY, delta);
 
         context.drawCenteredTextWithShadow(textRenderer, I18n.translate("mcg.config.configTitle"), width / 2, 10, 0xFFFFFF);
 
@@ -59,8 +59,6 @@ public class ConfigScreen extends Screen {
         overlayYField.render(context, mouseX, mouseY, delta);
         context.drawTextWithShadow(textRenderer, I18n.translate("mcg.button.overlayField"), overlayFormatField.getX(), overlayFormatField.getY() - 10, 0xFFFFFF);
         overlayFormatField.render(context, mouseX, mouseY, delta);
-
-        super.render(context, mouseX, mouseY, delta);
     }
 
     private void confirm() {
